@@ -285,6 +285,7 @@ body.dark .more-menu{background:var(--card);border-color:var(--border)}
 <h2 style="font-size:1rem;margin-bottom:.8rem">Réglages</h2>
 <div class="setting"><div><label>Mode sombre</label><small>Pour réviser le soir</small></div><div><label class="toggle"><input type="checkbox" id="sDark" onchange="toggleDark(this.checked)"><span class="toggle-slider"></span></label></div></div>
 <div class="setting"><div><label>Questions / session</label><small>Quiz du jour</small></div><div><input type="range" min="5" max="25" step="5" id="sQps" oninput="S.qps=+this.value;document.getElementById('vQps').textContent=this.value;save()"><span id="vQps" style="font-weight:700;margin-left:.4rem">15</span></div></div>
+<div class="setting" id="syncSetting"><div><label>Synchronisation <span id="syncDot" style="display:inline-block;width:8px;height:8px;border-radius:50%;margin-left:6px;vertical-align:middle"></span></label><small>Synchro entre appareils</small></div><div id="syncUI"></div></div>
 <div class="setting"><div><label>Reset progression</label><small>Tout effacer (irréversible)</small></div><div><button onclick="if(confirm('Effacer toute la progression ?')&&confirm('Vraiment ?')){localStorage.removeItem(SK);location.reload()}" style="background:var(--red);color:white;border:none;padding:.4rem .7rem;border-radius:6px;font-size:.78rem;cursor:pointer">Reset</button></div></div>
 <div class="setting"><div><label>Exporter</label><small>Sauvegarde JSON</small></div><div><button onclick="let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,2)]));a.download='hub_backup.json';a.click()" style="background:var(--pri);color:white;border:none;padding:.4rem .7rem;border-radius:6px;font-size:.78rem;cursor:pointer">Export</button></div></div>
 <div class="setting"><div><label>Importer</label><small>Restaurer une sauvegarde JSON</small></div><div><button onclick="document.getElementById('importFile').click()" style="background:var(--green);color:white;border:none;padding:.4rem .7rem;border-radius:6px;font-size:.78rem;cursor:pointer">Import</button><input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(this)"></div></div>
@@ -308,7 +309,16 @@ const SK='lhub_v4';
 let S={streak:0,lastDate:null,sessionN:0,qps:15,boxes:{},lessonsDone:{},bestScores:{},notepad:'',lessonNotes:{},qIdVer:0,dark:false,history:[]};
 try{const d=JSON.parse(localStorage.getItem(SK));if(d)S=Object.assign(S,d)}catch(e){}
 if(!S.lessonNotes)S.lessonNotes={};
-function save(){localStorage.setItem(SK,JSON.stringify(S))}
+function save(){S._ts=Date.now();localStorage.setItem(SK,JSON.stringify(S));syncDebounce()}
+var SYNC_SK='_hub_sync',HUB_FILE='aero.json',syncCfg={},syncTimer=null;
+try{syncCfg=JSON.parse(localStorage.getItem(SYNC_SK)||'{}')}catch(e){}
+function isSyncOn(){return!!(syncCfg.token&&syncCfg.gistId)}
+function syncDebounce(){if(!isSyncOn())return;clearTimeout(syncTimer);syncTimer=setTimeout(syncPush,3000)}
+async function syncPush(){if(!isSyncOn())return;try{await fetch('https://api.github.com/gists/'+syncCfg.gistId,{method:'PATCH',headers:{'Authorization':'token '+syncCfg.token,'Content-Type':'application/json'},body:JSON.stringify({files:{[HUB_FILE]:{content:JSON.stringify(S)}}})});syncStatus('ok')}catch(e){syncStatus('err')}}
+async function syncPull(){if(!isSyncOn())return false;try{var r=await fetch('https://api.github.com/gists/'+syncCfg.gistId,{headers:{'Authorization':'token '+syncCfg.token}});if(!r.ok)return false;var g=await r.json(),f=g.files&&g.files[HUB_FILE];if(!f)return false;var remote=JSON.parse(f.content);if((remote._ts||0)>(S._ts||0)){Object.assign(S,remote);localStorage.setItem(SK,JSON.stringify(S));return true}}catch(e){}return false}
+async function syncSetup(token){try{var r=await fetch('https://api.github.com/gists?per_page=100',{headers:{'Authorization':'token '+token}});var gs=await r.json();if(!Array.isArray(gs))return false;var ex=gs.find(function(g){return g.description==='learning-hubs-sync'});if(ex){syncCfg={token:token,gistId:ex.id}}else{var r2=await fetch('https://api.github.com/gists',{method:'POST',headers:{'Authorization':'token '+token,'Content-Type':'application/json'},body:JSON.stringify({description:'learning-hubs-sync',public:false,files:{[HUB_FILE]:{content:JSON.stringify(S)}}})});var g2=await r2.json();if(!g2.id)return false;syncCfg={token:token,gistId:g2.id}}localStorage.setItem(SYNC_SK,JSON.stringify(syncCfg));return true}catch(e){return false}}
+function syncDisconnect(){syncCfg={};localStorage.removeItem(SYNC_SK)}
+function syncStatus(st){var el=document.getElementById('syncDot');if(el)el.style.background=st==='ok'?'var(--green)':st==='err'?'var(--red)':'var(--yellow)'}
 function markLesson(cId,i,el){const k=cId+'_'+i;if(el.checked)S.lessonsDone[k]=1;else delete S.lessonsDone[k];save();openCourse(cId);const les=document.getElementById('les_'+i);if(les)les.classList.add('open')}
 function isLessonDone(cId,i){return!!S.lessonsDone[cId+'_'+i]}
 function getBest(cId,lvl){return S.bestScores[cId+'_L'+lvl]||0}
@@ -1414,7 +1424,7 @@ function showPage(id){
   if(id==='stats')renderStats();
   if(id==='glossary')renderGlossary('');
   if(id==='memo')renderMemo();
-  if(id==='settings'){document.getElementById('sQps').value=S.qps;document.getElementById('vQps').textContent=S.qps;if(S.dark)document.getElementById('sDark').checked=true}
+  if(id==='settings'){document.getElementById('sQps').value=S.qps;document.getElementById('vQps').textContent=S.qps;if(S.dark)document.getElementById('sDark').checked=true;renderSyncUI()}
   closeMore();
 }
 
@@ -2329,9 +2339,28 @@ function renderItwResult(){
   `;
 }
 
+function renderSyncUI(){
+  var el=document.getElementById('syncUI');if(!el)return;
+  var dot=document.getElementById('syncDot');
+  if(isSyncOn()){
+    if(dot)dot.style.background='var(--green)';
+    el.innerHTML='<div style="display:flex;gap:6px;align-items:center"><button onclick="syncPull().then(function(u){if(u){renderDash();alert(\'Progression mise à jour !\')}else{alert(\'Déjà à jour.\')}})" style="background:var(--pri2);color:white;border:none;padding:.4rem .7rem;border-radius:6px;font-size:.78rem;cursor:pointer">Synchro</button><button onclick="syncDisconnect();renderSyncUI()" style="background:var(--muted);color:white;border:none;padding:.4rem .7rem;border-radius:6px;font-size:.78rem;cursor:pointer">Déco.</button></div>';
+  }else{
+    if(dot)dot.style.background='';
+    el.innerHTML='<button onclick="promptSyncSetup()" style="background:var(--pri2);color:white;border:none;padding:.4rem .7rem;border-radius:6px;font-size:.78rem;cursor:pointer">Activer</button>';
+  }
+}
+function promptSyncSetup(){
+  var t=prompt('Colle ton token GitHub (gist scope).\\n\\nCrée-le sur :\\ngithub.com/settings/tokens?type=beta\\n→ Fine-grained token → Gists: Read and Write');
+  if(!t)return;
+  var btn=document.querySelector('#syncUI button');if(btn)btn.textContent='Connexion...';
+  syncSetup(t).then(function(ok){if(ok){alert('Synchro activée !');renderSyncUI()}else{alert('Token invalide.');renderSyncUI()}});
+}
+
 // INIT
 initDark();
 renderDash();
+syncPull().then(function(u){if(u)renderDash()});
 </script>
 
 </body>
