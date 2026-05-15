@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#4f46e5">
+<title>Hub Anglais — Cours Preply</title>
+<style>
+:root{--pri:#4f46e5;--pri2:#6366f1;--acc:#f59e0b;--bg:#f8fafc;--card:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--green:#059669;--red:#dc2626;--yellow:#d97706;--teal:#0d9488;--purple:#7c3aed;--pink:#ec4899;--shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 12px 32px rgba(0,0,0,.12);--ease:cubic-bezier(.23,1,.32,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
+nav{background:linear-gradient(135deg,#312e81 0%,var(--pri) 40%,var(--pri2) 100%);padding:.6rem .8rem .5rem;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(79,70,229,.35);border-bottom:2px solid var(--acc)}
+nav h1{color:white;font-size:.92rem;text-align:center;margin-bottom:.2rem;font-weight:700;letter-spacing:-.3px;text-shadow:0 1px 2px rgba(0,0,0,.15)}
+nav h1 span{color:var(--acc);font-weight:800}
+nav .nav-sub{color:rgba(255,255,255,.6);font-size:.65rem;text-align:center;margin-bottom:.35rem}
+.nav-tabs{display:flex;gap:.25rem;overflow-x:auto;justify-content:center;-webkit-overflow-scrolling:touch;padding-bottom:2px}.nav-tabs::-webkit-scrollbar{display:none}
+.tab{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);border:none;padding:.32rem .65rem;border-radius:16px;font-size:.7rem;cursor:pointer;white-space:nowrap;transition:all .3s var(--ease);font-weight:500;backdrop-filter:blur(4px)}
+.tab:hover{background:rgba(255,255,255,.2);color:white;transform:translateY(-1px)}.tab.active{background:var(--acc);color:#1e293b;font-weight:700;box-shadow:0 4px 12px rgba(245,158,11,.3)}
+main{max-width:700px;margin:0 auto;padding:.8rem}
+.page{display:none;animation:fadeIn .3s var(--ease)}.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border-radius:14px;padding:.9rem;border:1px solid var(--border);margin-bottom:.6rem;box-shadow:var(--shadow-sm);transition:all .3s var(--ease)}
+.card:hover{box-shadow:var(--shadow)}
+.card h3{font-size:.85rem;color:var(--pri);margin-bottom:.4rem}
+.card p,.card li{font-size:.8rem;line-height:1.55}
+.badge{display:inline-block;padding:.1rem .45rem;border-radius:8px;font-size:.62rem;font-weight:700;color:white}
+.bg{background:var(--green)}.by{background:var(--yellow)}.br{background:var(--red)}.bp{background:var(--purple)}.bt{background:var(--teal)}.ba{background:var(--acc)}.bpk{background:var(--pink)}
+.stitle{font-size:.72rem;color:var(--acc);font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin:1.2rem 0 .5rem;display:flex;align-items:center;gap:.5rem}
+.stitle::after{content:'';flex:1;height:1px;background:var(--border)}
+.btn{padding:.5rem 1rem;border:none;border-radius:10px;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s var(--ease)}
+.btn:active{transform:scale(.97)}
+.btn:hover{transform:translateY(-1px)}
+.btn-pri{background:linear-gradient(135deg,var(--pri),var(--pri2));color:white;box-shadow:0 2px 8px rgba(79,70,229,.2)}.btn-pri:hover{box-shadow:0 4px 16px rgba(79,70,229,.3)}
+.btn-green{background:linear-gradient(135deg,var(--green),#34d399);color:white;box-shadow:0 2px 8px rgba(5,150,105,.2)}
+.btn-acc{background:linear-gradient(135deg,var(--acc),#fbbf24);color:#1e293b;box-shadow:0 2px 8px rgba(245,158,11,.2)}
+.btn-out{background:transparent;border:2px solid var(--border);color:var(--text)}.btn-out:hover{border-color:var(--pri);background:rgba(79,70,229,.03)}
+.btn-sm{padding:.35rem .7rem;font-size:.72rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;margin-bottom:.7rem}
+.stat{background:var(--card);border-radius:12px;padding:.55rem;text-align:center;border:1px solid var(--border);box-shadow:var(--shadow-sm);transition:all .2s var(--ease)}
+.stat:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.stat .n{font-size:1.3rem;font-weight:800}.stat .l{font-size:.6rem;color:var(--muted);font-weight:500}
+.highlight{background:linear-gradient(135deg,#ecfdf5,#f0fdf4);border:1px solid #bbf7d0;border-radius:14px;padding:.8rem 1rem;margin-bottom:.7rem;box-shadow:0 2px 8px rgba(5,150,105,.08)}
+.highlight h4{color:var(--green);font-size:.8rem;margin-bottom:.3rem}
+.highlight p{font-size:.8rem;line-height:1.55}
+/* Accordion */
+.acc{background:var(--card);border-radius:12px;border:1px solid var(--border);margin-bottom:.4rem;overflow:hidden;box-shadow:var(--shadow-sm);transition:all .3s var(--ease)}
+.acc:hover{box-shadow:var(--shadow)}
+.acc-h{padding:.65rem .9rem;display:flex;align-items:center;gap:.5rem;cursor:pointer;transition:all .25s var(--ease)}
+.acc-h:hover{background:rgba(79,70,229,.03)}
+.acc-h h4{flex:1;font-size:.82rem;color:var(--pri);font-weight:600}
+.acc-h .arr{color:var(--muted);font-size:.65rem;transition:transform .3s var(--ease)}
+.acc.open .arr{transform:rotate(180deg)}
+.acc-b{display:none;padding:0 .9rem .9rem;font-size:.78rem;line-height:1.6}
+.acc.open .acc-b{display:block;animation:slideUp .25s var(--ease)}
+table{width:100%;border-collapse:collapse;font-size:.76rem;margin:.4rem 0}
+th{background:#f1f5f9;color:var(--pri);text-align:left;padding:.35rem .5rem;font-weight:600;font-size:.7rem}
+td{padding:.35rem .5rem;border-top:1px solid var(--border);line-height:1.35}
+.formula{background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:.4rem .6rem;font-family:monospace;font-size:.8rem;margin:.4rem 0}
+/* Quiz/Drill */
+.dots{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:.6rem}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border)}.dot.ok{background:var(--green)}.dot.ko{background:var(--red)}.dot.cur{border:2px solid var(--pri);background:white}
+.qcard{background:var(--card);border-radius:14px;padding:1.1rem;border:1px solid var(--border);margin-bottom:.6rem;box-shadow:var(--shadow-sm)}
+.qnum{font-size:.65rem;color:var(--muted);font-weight:600;margin-bottom:.3rem}
+.qtxt{font-size:.92rem;font-weight:600;color:var(--pri);line-height:1.5;margin-bottom:.7rem}
+.qinput{width:100%;padding:.6rem .75rem;border:2px solid var(--border);border-radius:10px;font-size:.85rem;font-family:system-ui;outline:none;transition:all .2s}
+.qinput:focus{border-color:var(--pri2);box-shadow:0 0 0 3px rgba(99,102,241,.1)}
+.qinput.ok{border-color:var(--green);background:#ecfdf5}.qinput.ko{border-color:var(--red);background:#fef2f2}
+.qexp{display:none;background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:.6rem;margin-top:.5rem;font-size:.78rem;line-height:1.45}
+.qexp.show{display:block}
+.qexp .ans{color:var(--green);font-weight:700}
+.mcq{display:flex;flex-direction:column;gap:.3rem}
+.mcq-o{background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:.5rem .75rem;cursor:pointer;font-size:.8rem;transition:all .15s;line-height:1.35}
+.mcq-o:hover{border-color:var(--pri2);background:#eef2ff}
+.mcq-o.ok{border-color:var(--green);background:#ecfdf5;pointer-events:none}
+.mcq-o.ko{border-color:var(--red);background:#fef2f2;pointer-events:none}
+.mcq-o.dim{opacity:.4;pointer-events:none}
+.result{background:var(--card);border-radius:14px;padding:1.5rem;text-align:center;border:1px solid var(--border);box-shadow:var(--shadow)}
+.result .score{font-size:2.8rem;font-weight:800;background:linear-gradient(135deg,var(--pri),var(--pri2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.result .msg{font-size:.85rem;color:var(--muted);margin:.4rem 0}
+/* Flashcards */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.4rem}
+.fc{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:.7rem;cursor:pointer;transition:all .25s var(--ease);min-height:110px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;box-shadow:var(--shadow-sm)}
+.fc:hover{border-color:var(--pri2);box-shadow:var(--shadow);transform:translateY(-2px)}.fc.flip{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-color:var(--pri2);box-shadow:0 4px 12px rgba(99,102,241,.15)}
+.fc .w{font-size:.88rem;font-weight:700;color:var(--pri)}.fc .s{font-size:.65rem;color:var(--muted);margin-top:.15rem}
+.fc .tt{font-size:.58rem;color:white;background:var(--teal);padding:.08rem .3rem;border-radius:5px;margin-top:.2rem}
+.fc .m{display:none;font-size:.75rem;line-height:1.35}
+.fc.flip .w,.fc.flip .s,.fc.flip .tt{display:none}.fc.flip .m{display:block}
+.fc .ck{position:absolute;top:.3rem;right:.3rem;font-size:.75rem;display:none}.fc.known .ck{display:block}
+/* Corrections */
+.corr{background:var(--card);border-radius:12px;border:1px solid var(--border);margin-bottom:.4rem;overflow:hidden;box-shadow:var(--shadow-sm);transition:all .3s var(--ease)}
+.corr:hover{box-shadow:var(--shadow)}
+.corr-h{padding:.6rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .2s}
+.corr-h:hover{background:rgba(220,38,38,.03)}
+.corr-h .wt{flex:1;font-size:.8rem;color:var(--red);text-decoration:line-through}
+.corr-h .arr{color:var(--muted);font-size:.65rem;transition:transform .3s var(--ease)}
+.corr.open .arr{transform:rotate(180deg)}
+.corr-b{display:none;padding:0 .9rem .7rem}
+.corr.open .corr-b{display:block;animation:slideUp .2s var(--ease)}
+.corr-b .rt{font-size:.84rem;color:var(--green);font-weight:600;margin-bottom:.2rem}
+.corr-b .why{font-size:.78rem;line-height:1.5}
+/* Sentences */
+.sent{background:var(--card);border-radius:10px;border:1px solid var(--border);padding:.65rem .9rem;margin-bottom:.35rem;display:flex;align-items:center;gap:.6rem;box-shadow:var(--shadow-sm);transition:all .2s var(--ease)}
+.sent:hover{box-shadow:var(--shadow);border-color:var(--pri2)}
+.sent .sn{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--pri2));color:white;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sent .st{flex:1;font-size:.8rem;line-height:1.45}
+/* Drill specific */
+.drill-bar{background:linear-gradient(135deg,var(--pri),var(--pri2));border-radius:12px;padding:.75rem 1rem;border:none;margin-bottom:.6rem;display:flex;align-items:center;gap:.8rem;color:white;box-shadow:0 4px 16px rgba(79,70,229,.25)}
+.drill-bar .streak{font-size:1.6rem;font-weight:800;color:var(--acc);text-shadow:0 1px 2px rgba(0,0,0,.15)}
+.drill-bar .info{flex:1}
+.drill-bar .info h4{font-size:.82rem;margin-bottom:.1rem;color:white}
+.drill-bar .info p{font-size:.68rem;color:rgba(255,255,255,.7)}
+.lvl-pills{display:flex;gap:.3rem;margin-bottom:.6rem}
+.lvl{flex:1;padding:.55rem;border-radius:10px;border:2px solid var(--border);text-align:center;cursor:pointer;transition:all .25s var(--ease);box-shadow:var(--shadow-sm)}
+.lvl.active{border-color:var(--pri);background:linear-gradient(135deg,#eef2ff,#e0e7ff);box-shadow:0 4px 12px rgba(99,102,241,.12)}
+.lvl.locked{opacity:.4;cursor:not-allowed}
+.lvl h5{font-size:.72rem;margin-bottom:.1rem}.lvl p{font-size:.6rem;color:var(--muted)}
+.lvl .lscore{font-size:.82rem;font-weight:700;color:var(--green)}
+/* Idiom */
+.idiom{background:linear-gradient(135deg,#fef3c7,#fefce8);border:1px solid #fde68a;border-left:3px solid var(--yellow);border-radius:0 12px 12px 0;padding:.75rem 1rem;margin-bottom:.5rem;box-shadow:0 2px 8px rgba(217,119,6,.08);transition:all .2s var(--ease)}
+.idiom:hover{box-shadow:0 4px 12px rgba(217,119,6,.12)}
+.idiom h4{color:var(--yellow);font-size:.82rem;margin-bottom:.3rem}
+.idiom p{font-size:.8rem;line-height:1.55}
+.idiom .ex{font-style:italic;color:var(--muted);margin-top:.3rem}
+@media(max-width:500px){main{padding:.5rem}.stats{grid-template-columns:repeat(2,1fr)}.fgrid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<nav>
+<h1>Hub <span>Anglais</span> — Cours Preply</h1>
+<div class="nav-sub">9 lessons &middot; 72 words &middot; Grammar drill &middot; B2 → C1</div>
+<div class="nav-tabs">
+<button class="tab active" onclick="go('home')">Home</button>
+<button class="tab" onclick="go('drill')">Drill</button>
+<button class="tab" onclick="go('grammar')">Grammar</button>
+<button class="tab" onclick="go('vocab')">Vocab</button>
+<button class="tab" onclick="go('sentences')">Sentences</button>
+<button class="tab" onclick="go('corrections')">Corrections</button>
+<button class="tab" onclick="go('calques')">Calques</button>
+</div>
+</nav>
+<main>
+
+<!-- HOME -->
+<div id="home" class="page active">
+<div class="stats" id="homeStats"></div>
+<div class="highlight">
+<h4>Progress since Lesson 0</h4>
+<p>Comprehension B2, Speaking A2-B1 → B2. Present perfect, present perfect continuous, past perfect, modals, indirect questions mastered. "I hold myself to very high standards" came out naturally. 72 vocabulary words, 36 key sentences, 7 idioms.</p>
+</div>
+<button class="btn btn-pri" style="width:100%;margin-bottom:.8rem;padding:.8rem;font-size:.88rem;border-radius:12px" onclick="go('drill')">Start Grammar Drill</button>
+<div class="stitle">7 Idioms / Expressions idiomatiques — FR &amp; EN</div>
+<div id="idiomList"></div>
+<div class="stitle">Lessons covered</div>
+<div id="lessonList"></div>
+</div>
+
+<!-- DRILL -->
+<div id="drill" class="page">
+<div class="drill-bar">
+<div class="streak" id="drStreak">0</div>
+<div class="info"><h4>Grammar Drill</h4><p id="drInfo">Endless practice — gets harder as you improve</p></div>
+<button class="btn btn-sm btn-out" onclick="resetDrill()">Reset</button>
+</div>
+<div class="lvl-pills" id="drLevels"></div>
+<div id="drQuestion"></div>
+<div id="drResult" style="display:none"></div>
+</div>
+
+<!-- GRAMMAR -->
+<div id="grammar" class="page">
+<div class="card" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-color:#c7d2fe">
+<h3>The one question before every sentence</h3>
+<p>Still relevant today? → <strong>present perfect</strong><br>
+Still doing this right now? → <strong>present perfect continuous</strong><br>
+Happened before something else? → <strong>past perfect</strong></p>
+</div>
+<div id="grammarCards"></div>
+</div>
+
+<!-- VOCAB -->
+<div id="vocab" class="page">
+<div style="display:flex;gap:.3rem;margin-bottom:.6rem;flex-wrap:wrap">
+<button class="btn btn-sm btn-pri" onclick="filterVocab('all')">All</button>
+<button class="btn btn-sm btn-out" onclick="filterVocab(2)">L2</button>
+<button class="btn btn-sm btn-out" onclick="filterVocab(3)">L3</button>
+<button class="btn btn-sm btn-out" onclick="filterVocab(4)">L4</button>
+<button class="btn btn-sm btn-out" onclick="filterVocab(5)">L5</button>
+<button class="btn btn-sm btn-out" onclick="filterVocab(7)">L7</button>
+<button class="btn btn-sm btn-out" onclick="filterVocab(9)">L9</button>
+<span style="flex:1"></span>
+<span id="vCount" style="font-size:.72rem;color:var(--green);font-weight:600">0/72</span>
+</div>
+<div class="fgrid" id="vocabGrid"></div>
+</div>
+
+<!-- SENTENCES -->
+<div id="sentences" class="page">
+<div class="stitle">36 Key Sentences / Phrases cles — FR &amp; EN</div>
+<div id="sentList"></div>
+</div>
+
+<!-- CORRECTIONS -->
+<div id="corrections" class="page">
+<div class="card" style="background:#fef2f2;border-color:#fecaca">
+<h3 style="color:var(--red)">Learn from your mistakes</h3>
+<p>Try to correct each one in your head before clicking. All corrections from lessons 2-9.</p>
+</div>
+<div style="display:flex;gap:.3rem;margin-bottom:.6rem;flex-wrap:wrap">
+<button class="btn btn-sm btn-pri" onclick="filterCorr('all')">All</button>
+<button class="btn btn-sm btn-out" onclick="filterCorr(2)">L2</button>
+<button class="btn btn-sm btn-out" onclick="filterCorr(3)">L3</button>
+<button class="btn btn-sm btn-out" onclick="filterCorr(4)">L4</button>
+<button class="btn btn-sm btn-out" onclick="filterCorr(5)">L5</button>
+<button class="btn btn-sm btn-out" onclick="filterCorr(6)">L6</button>
+<button class="btn btn-sm btn-out" onclick="filterCorr(7)">L7</button>
+<button class="btn btn-sm btn-out" onclick="filterCorr(8)">L8</button>
+<button class="btn btn-sm btn-out" onclick="filterCorr(9)">L9</button>
+</div>
+<div id="corrList"></div>
+</div>
+
+<!-- CALQUES -->
+<div id="calques" class="page">
+<div class="card">
+<h3>Calques francais a eliminer / French calques to eliminate</h3>
+<p>Ce sont des traductions directes du francais qui n'existent pas en anglais. Ton cerveau fait : pensee en francais → traduction → anglais. L'objectif : pensee → anglais directement.<br><em style="color:var(--muted)">These are direct translations from French that do not exist in English. The goal: thought → English directly.</em></p>
+</div>
+<div class="stitle">Reference list</div>
+<div id="calqueRef"></div>
+<div class="stitle" style="margin-top:1rem">Quiz — Pick the correct English</div>
+<div id="calqueQuiz"></div>
+</div>
+
+</main>
+
+<script>
+// ===== NAVIGATION =====
+function go(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>{if(t.getAttribute('onclick')?.includes("'"+id+"'"))t.classList.add('active')});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===== DATA: GRAMMAR =====
+const grammarTopics=[
+{lesson:2,title:'Present Simple & Past Simple',badge:'bg',formula:'Present: I work / She works\nPast: I worked / She worked',
+rules:[
+{rule:'Present simple for facts, habits, descriptions of your job',ex:'I specialise in polymer science.'},
+{rule:'Past simple for finished actions with a time marker',ex:'I worked on polymers during my internship.'},
+{rule:'Never say "I am work" or "I am specialise" — drop the am',ex:''},
+{rule:'Always add a time word for past simple: yesterday, last year, during my internship',ex:''}
+]},
+{lesson:3,title:'Present Perfect vs Past Simple',badge:'bp',formula:'have/has + past participle',
+rules:[
+{rule:'Present perfect: past action still relevant NOW, or accumulated experience',ex:'I have developed a testing panel.'},
+{rule:'Signal words: already, yet, just, never, ever, since, for',ex:'I have never worked in aeronautics.'},
+{rule:'Past simple: finished at a specific moment. Present perfect: relevant now.',ex:'I contributed to a patent in 2024. (past simple) / I have contributed to a patent. (present perfect)'},
+{rule:'"Already" = done before expected. "Yet" = not done but expected. "Just" = very short time ago.',ex:'I have just finished my degree.'}
+]},
+{lesson:5,title:'Present Perfect Continuous',badge:'by',formula:'have/has + been + verb-ing',
+rules:[
+{rule:'An ongoing action that started in the past and is STILL happening',ex:'I have been applying to companies for three months.'},
+{rule:'"Since" needs a POINT in time: since January, since I graduated',ex:'I have been studying since February.'},
+{rule:'"For" needs a DURATION: for a month, for three years',ex:'I have been training for one year.'},
+{rule:'Never say "since one month" — that is a duration, use "for one month"',ex:''}
+]},
+{lesson:6,title:'Modal Verbs',badge:'ba',formula:'would / could / should / might + base verb',
+rules:[
+{rule:'Would: polite requests, offers, conditionals',ex:'I would be happy to discuss this further.'},
+{rule:'Could: possibility, polite requests',ex:'Could you let me know your availability?'},
+{rule:'Should: advice, recommendations',ex:'You should consider applying before the deadline.'},
+{rule:'Might: tentative suggestion, possibility',ex:'This might be a good opportunity.'},
+{rule:'French directness does not always translate. "I want a job" → "I would like a position."',ex:''}
+]},
+{lesson:7,title:'Indirect Questions',badge:'bpk',formula:'Polite opener + normal word order (NOT question order)',
+rules:[
+{rule:'Direct → Indirect: embed the question in a polite opener',ex:'What does the role involve? → Could you tell me what the role involves?'},
+{rule:'Three polite openers: Could you tell me... / I was wondering... / Do you mind me asking...',ex:''},
+{rule:'TRAP: word order goes back to NORMAL, not question order',ex:'How big is the team? → I was wondering how big the team is. (NOT "how big is the team")'},
+{rule:'"I wanted to check whether..." for polite follow-ups',ex:'Did you receive my CV? → I wanted to check whether you had received my CV.'}
+]},
+{lesson:8,title:'Past Perfect',badge:'bp',formula:'had + past participle',
+rules:[
+{rule:'An action that happened BEFORE another past action',ex:'Before I started testing, I had already completed a literature review.'},
+{rule:'Signal words: before, already, by the time, because',ex:'By the time I joined, no proof of concept had existed yet.'},
+{rule:'The storytelling formula: Before [past perfect]... I [past simple]... which meant that [result]',ex:'Because no methodology had existed, I developed one from scratch.'},
+{rule:'Use for background/context in CAR answers. Simple past for YOUR action.',ex:'Nobody had taken the time to question the method. I took the initiative.'}
+]}
+];
+
+// ===== DATA: VOCABULARY (72 words) =====
+const allVocab=[
+// L2 - Interview basics
+{w:'internship',s:'IN-tern-ship',fr:'stage',m:'A temporary work placement to gain experience',l:2,t:'n'},
+{w:'specialism',s:'SPEC-ial-ism',fr:'specialite',m:'The specific area you are an expert in',l:2,t:'n'},
+{w:'achievement',s:'a-CHIEVE-ment',fr:'reussite',m:'Something important you have done successfully',l:2,t:'n'},
+{w:'strength',s:'STRENGTH',fr:'point fort',m:'A quality or skill you are particularly good at',l:2,t:'n'},
+{w:'challenge',s:'CHAL-lenge',fr:'defi',m:'A difficulty or problem you had to overcome',l:2,t:'n'},
+{w:'background',s:'BACK-ground',fr:'parcours',m:'Your education, experience, and where you come from professionally',l:2,t:'n'},
+{w:'specialise',s:'SPEC-ial-ise',fr:'se specialiser',m:'To focus your work or study in one area',l:2,t:'v'},
+{w:'contribute',s:'con-TRIB-ute',fr:'contribuer',m:'To give your effort or ideas to a project or team',l:2,t:'v'},
+{w:'develop',s:'de-VEL-op',fr:'developper',m:'To improve or grow something over time',l:2,t:'v'},
+{w:'overcome',s:'o-ver-COME',fr:'surmonter',m:'To successfully deal with a difficulty',l:2,t:'v'},
+{w:'demonstrate',s:'DEM-on-strate',fr:'demontrer',m:'To show clearly that you have a skill or quality',l:2,t:'v'},
+{w:'achieve',s:'a-CHIEVE',fr:'atteindre',m:'To successfully reach a goal',l:2,t:'v'},
+// L3 - Career goals
+{w:'ambition',s:'am-BI-tion',fr:'ambition',m:'A strong desire to succeed and achieve something',l:3,t:'n'},
+{w:'vision',s:'VI-sion',fr:'vision',m:'A clear idea of what you want to achieve in the future',l:3,t:'n'},
+{w:'expertise',s:'ex-per-TISE',fr:'expertise',m:'A high level of skill or knowledge in a specific area',l:3,t:'n'},
+{w:'trajectory',s:'tra-JEC-to-ry',fr:'trajectoire',m:'The path or direction your career is taking',l:3,t:'n'},
+{w:'opportunity',s:'op-por-TU-ni-ty',fr:'opportunite',m:'A situation that makes it possible to do something',l:3,t:'n'},
+{w:'contribution',s:'con-tri-BU-tion',fr:'contribution',m:'Something you give or do that helps a team or project',l:3,t:'n'},
+{w:'aim',s:'AIM',fr:'viser',m:'To have something as your goal or target',l:3,t:'v'},
+{w:'pursue',s:'pur-SUE',fr:'poursuivre',m:'To follow or work toward something over time',l:3,t:'v'},
+{w:'transition',s:'tran-SI-tion',fr:'faire la transition',m:'To move from one role, field, or area to another',l:3,t:'v'},
+{w:'expand',s:'ex-PAND',fr:'elargir',m:'To make something bigger or broader',l:3,t:'v'},
+{w:'lead',s:'LEAD',fr:'diriger',m:'To be in charge of a project or team',l:3,t:'v'},
+{w:'apply',s:'ap-PLY',fr:'appliquer',m:'To put your skills into practice in a new context',l:3,t:'v'},
+// L4 - Resilience
+{w:'weakness',s:'WEAK-ness',fr:'point faible',m:'An area where you are less strong or need to improve',l:4,t:'n'},
+{w:'resilience',s:'re-SIL-ience',fr:'resilience',m:'The ability to recover quickly from difficulties',l:4,t:'n'},
+{w:'setback',s:'SET-back',fr:'contretemps',m:'A problem or difficulty that slows your progress',l:4,t:'n'},
+{w:'pressure',s:'PRES-sure',fr:'pression',m:'The stress or demands of a difficult situation',l:4,t:'n'},
+{w:'gap',s:'GAP',fr:'lacune, periode creuse',m:'A period of time where you were not working or studying',l:4,t:'n'},
+{w:'expectation',s:'ex-pec-TA-tion',fr:'attente',m:'What someone believes or hopes will happen',l:4,t:'n'},
+{w:'handle',s:'HAN-dle',fr:'gerer',m:'To deal with a situation or problem effectively',l:4,t:'v'},
+{w:'adapt',s:'a-DAPT',fr:'s\'adapter',m:'To change your approach to fit a new situation',l:4,t:'v'},
+{w:'reflect',s:'re-FLECT',fr:'reflechir',m:'To think carefully about something',l:4,t:'v'},
+{w:'improve',s:'im-PROVE',fr:'ameliorer',m:'To get better at something over time',l:4,t:'v'},
+{w:'recover',s:'re-COV-er',fr:'se remettre',m:'To return to a normal state after a difficulty',l:4,t:'v'},
+{w:'acknowledge',s:'ac-KNOW-ledge',fr:'reconnaitre',m:'To admit or accept that something is true',l:4,t:'v'},
+// L5 - Networking
+{w:'connection',s:'con-NEC-tion',fr:'contact',m:'A person you know professionally who can help',l:5,t:'n'},
+{w:'impression',s:'im-PRES-sion',fr:'impression',m:'The effect you have on someone when they first meet you',l:5,t:'n'},
+{w:'introduction',s:'in-tro-DUC-tion',fr:'presentation',m:'The moment when you tell someone who you are',l:5,t:'n'},
+{w:'common ground',s:'COM-mon ground',fr:'terrain commun',m:'Something two people share: an interest, experience, goal',l:5,t:'n'},
+{w:'follow-up',s:'FOL-low-up',fr:'relance, suivi',m:'An action or message after a first meeting',l:5,t:'n'},
+{w:'introduce',s:'in-tro-DUCE',fr:'se presenter',m:'To tell someone who you are',l:5,t:'v'},
+{w:'connect',s:'con-NECT',fr:'creer un lien',m:'To build a relationship professionally',l:5,t:'v'},
+{w:'mention',s:'MEN-tion',fr:'mentionner',m:'To refer to something briefly in conversation',l:5,t:'v'},
+{w:'exchange',s:'ex-CHANGE',fr:'echanger',m:'To give and receive: information, contact details',l:5,t:'v'},
+{w:'follow up',s:'FOL-low up',fr:'relancer',m:'To contact someone again after a first meeting',l:5,t:'v'},
+{w:'stand out',s:'stand OUT',fr:'se demarquer',m:'To be noticeably different or better than others',l:5,t:'v'},
+// L7 - Phone/video calls
+{w:'agenda',s:'a-GEN-da',fr:'ordre du jour',m:'The list of topics to discuss during a call or meeting',l:7,t:'n'},
+{w:'clarification',s:'clar-i-fi-CA-tion',fr:'clarification',m:'An explanation that makes something clearer',l:7,t:'n'},
+{w:'availability',s:'a-vail-a-BIL-i-ty',fr:'disponibilite',m:'The times when someone is free to meet or speak',l:7,t:'n'},
+{w:'rapport',s:'rap-PORT',fr:'bon contact',m:'A warm, comfortable relationship through conversation',l:7,t:'n'},
+{w:'initiative',s:'i-NI-tia-tive',fr:'initiative',m:'The ability to start things without being told',l:7,t:'n'},
+{w:'bandwidth',s:'BAND-width',fr:'disponibilite (argot pro)',m:'The time and energy someone has available',l:7,t:'n'},
+{w:'confirm',s:'con-FIRM',fr:'confirmer',m:'To make sure something is definitely agreed',l:7,t:'v'},
+{w:'clarify',s:'CLAR-i-fy',fr:'clarifier',m:'To make something clearer or easier to understand',l:7,t:'v'},
+{w:'elaborate',s:'e-LAB-o-rate',fr:'developper, detailler',m:'To give more detail about something',l:7,t:'v'},
+{w:'wrap up',s:'wrap UP',fr:'conclure',m:'To bring something to a close',l:7,t:'v'},
+{w:'bear with',s:'bear WITH',fr:'patienter',m:'To ask someone to be patient for a moment',l:7,t:'v'},
+{w:'reach out',s:'reach OUT',fr:'contacter',m:'To make contact with someone',l:7,t:'v'},
+// L9 - Research
+{w:'methodology',s:'meth-od-OL-o-gy',fr:'methodologie',m:'The system of methods used in a particular area',l:9,t:'n'},
+{w:'hypothesis',s:'hy-POTH-e-sis',fr:'hypothese',m:'An idea or explanation not yet proved',l:9,t:'n'},
+{w:'findings',s:'FIND-ings',fr:'resultats, conclusions',m:'The results or conclusions of a study',l:9,t:'n'},
+{w:'variable',s:'VAR-i-a-ble',fr:'variable',m:'A factor that can change and affect results',l:9,t:'n'},
+{w:'limitation',s:'lim-i-TA-tion',fr:'limite',m:'A factor that restricts scope',l:9,t:'n'},
+{w:'framework',s:'FRAME-work',fr:'cadre',m:'A basic structure used to approach a problem',l:9,t:'n'},
+{w:'validate',s:'VAL-i-date',fr:'valider',m:'To confirm something is correct or acceptable',l:9,t:'v'},
+{w:'replicate',s:'REP-li-cate',fr:'reproduire',m:'To repeat an experiment to verify results',l:9,t:'v'},
+{w:'analyse',s:'AN-a-lyse',fr:'analyser',m:'To examine in detail to understand better',l:9,t:'v'},
+{w:'hypothesise',s:'hy-POTH-e-sise',fr:'emettre une hypothese',m:'To suggest a possible explanation before proving it',l:9,t:'v'},
+{w:'interpret',s:'in-TER-pret',fr:'interpreter',m:'To explain the meaning of results or data',l:9,t:'v'}
+];
+
+// ===== DATA: KEY SENTENCES (36) =====
+const allSentences=[
+{sit:'Se presenter',en:'My background is in chemistry and materials engineering.',fr:'Mon parcours est en chimie et sciences des materiaux.',l:2},
+{sit:'Sa specialite',en:'I specialise in polymers, but I am looking to move into metallic materials.',fr:'Je suis specialisee en polymeres, mais je cherche a evoluer vers les materiaux metalliques.',l:2},
+{sit:'Son stage',en:'During my internship, I worked on developing new polymer composites.',fr:'Pendant mon stage, j\'ai travaille sur le developpement de nouveaux composites polymeres.',l:2},
+{sit:'Un point fort',en:'One of my main strengths is my ability to analyse complex data.',fr:'L\'une de mes principales forces est ma capacite a analyser des donnees complexes.',l:2},
+{sit:'Un defi surmonte',en:'One challenge I overcame was developing a chemical immersion panel from scratch.',fr:'Un defi que j\'ai surmonte a ete de developper un panel d\'immersion chimique a partir de zero.',l:2},
+{sit:'Motivation',en:'I am really motivated to contribute to a team working on advanced materials.',fr:'Je suis tres motivee pour contribuer a une equipe travaillant sur les materiaux avances.',l:2},
+{sit:'Objectif court terme',en:'In the next two years, I am aiming to transition into metallic materials and surface treatments.',fr:'Dans les deux prochaines annees, je vise une transition vers les materiaux metalliques et les traitements de surface.',l:3},
+{sit:'Vision long terme',en:'My long-term vision is to build expertise in materials science and eventually work as a freelance engineer.',fr:'Ma vision a long terme est de developper une expertise en sciences des materiaux et de travailler a terme comme ingenieure independante.',l:3},
+{sit:'Lier passe et futur',en:'The experience I have gained in polymers has given me a strong foundation to expand into new areas.',fr:'L\'experience acquise en polymeres m\'a donne une base solide pour m\'orienter vers de nouveaux domaines.',l:3},
+{sit:'Sa contribution',en:'I believe my contribution to your team would be a fresh perspective combined with strong analytical skills.',fr:'Je pense que ma contribution a votre equipe serait un regard neuf combine a de solides competences analytiques.',l:3},
+{sit:'Montrer son ambition',en:'I am always looking for opportunities to learn, grow, and take on more responsibility.',fr:'Je suis toujours a la recherche d\'opportunites pour apprendre, progresser et prendre plus de responsabilites.',l:3},
+{sit:'Conclure fort',en:'I am excited about where this role could take my career, and I am ready to pursue it fully.',fr:'Ce poste m\'enthousiasme, et je suis prete a m\'y investir pleinement.',l:3},
+{sit:'Parler d\'une faiblesse',en:'One area I am working to improve is my experience with metallic materials, which is exactly why I am pursuing this role.',fr:'Un domaine que je cherche a ameliorer est mon experience avec les materiaux metalliques, c\'est precisement pourquoi je vise ce poste.',l:4},
+{sit:'Justifier une periode creuse',en:'After my internship, I have been actively applying and continuing to develop my knowledge independently.',fr:'Apres mon stage, j\'ai activement postule tout en continuant a developper mes connaissances de maniere autonome.',l:4},
+{sit:'Gerer la pression',en:'I handle pressure by focusing on what I can control and breaking the problem into smaller steps.',fr:'Je gere la pression en me concentrant sur ce que je peux controler et en decoupant le probleme en etapes.',l:4},
+{sit:'Montrer sa resilience',en:'When I face a setback, I take time to reflect on what I can learn from it and then I move forward.',fr:'Quand je fais face a un obstacle, je prends le temps de reflechir a ce que je peux en apprendre, puis j\'avance.',l:4},
+{sit:'Gagner du temps',en:'That is a great question. Let me think for just a moment.',fr:'C\'est une tres bonne question. Laissez-moi reflechir un instant.',l:4},
+{sit:'Se reprendre',en:'What I mean to say is that...',fr:'Ce que je veux dire, c\'est que...',l:4},
+{sit:'Se presenter (evenement)',en:'Hi, I am Caother. I am a materials engineer, currently looking for opportunities in aeronautics.',fr:'Bonjour, je suis Caother. Je suis ingenieure materiaux, actuellement a la recherche d\'opportunites dans l\'aeronautique.',l:5},
+{sit:'Trouver un terrain commun',en:'That is interesting, I actually have experience with surface treatments as well.',fr:'C\'est interessant, j\'ai justement de l\'experience en traitements de surface egalement.',l:5},
+{sit:'Poser des questions',en:'What kind of projects are you working on at the moment?',fr:'Sur quel type de projets travaillez-vous en ce moment ?',l:5},
+{sit:'Montrer son interet',en:'I would love to hear more about that. How long have you been working in that area?',fr:'J\'aimerais beaucoup en savoir plus. Depuis combien de temps travaillez-vous dans ce domaine ?',l:5},
+{sit:'Mentionner son objectif',en:'I am really looking to transition into metallic materials and surface treatments.',fr:'Je cherche vraiment a faire la transition vers les materiaux metalliques et les traitements de surface.',l:5},
+{sit:'Garder le contact',en:'It was really great talking to you. Would it be okay if I followed up with you on LinkedIn?',fr:'C\'etait vraiment un plaisir d\'echanger. Puis-je vous recontacter sur LinkedIn ?',l:5},
+{sit:'Ouvrir un appel',en:'Hi, this is Caother. Thank you so much for taking the time to speak with me today.',fr:'Bonjour, c\'est Caother. Merci beaucoup de prendre le temps de me parler aujourd\'hui.',l:7},
+{sit:'Verifier l\'audio',en:'Just to confirm, can you hear me clearly?',fr:'Juste pour confirmer, vous m\'entendez bien ?',l:7},
+{sit:'Demander une precision',en:'I am sorry, could you clarify what you mean by that?',fr:'Excusez-moi, pourriez-vous preciser ce que vous entendez par la ?',l:7},
+{sit:'Gagner du temps (appel)',en:'That is a great question. Could I take just a moment to think about that?',fr:'C\'est une excellente question. Puis-je prendre un instant pour y reflechir ?',l:7},
+{sit:'Question de suivi',en:'Could you tell me a little more about what the day-to-day role looks like?',fr:'Pourriez-vous m\'en dire un peu plus sur le quotidien du poste ?',l:7},
+{sit:'Conclure un appel',en:'Thank you so much for your time today. I really look forward to the next steps.',fr:'Merci beaucoup pour votre temps. J\'ai hate de connaitre les prochaines etapes.',l:7},
+{sit:'Expliquer sa recherche',en:'My research focused on surface treatment techniques to improve the chemical resistance of polyolefins.',fr:'Ma recherche portait sur les techniques de traitement de surface pour ameliorer la resistance chimique des polyolefines.',l:9},
+{sit:'Decrire sa methodologie',en:'The approach I used involved a systematic literature review followed by laboratory testing and scale-up.',fr:'L\'approche utilisee comprenait un etat de l\'art systematique suivi d\'essais en laboratoire et d\'une montee en echelle.',l:9},
+{sit:'Parler des resultats',en:'The findings showed a significant improvement in resistance, from 20 to 100 percent compliance.',fr:'Les resultats ont montre une amelioration significative, passant de 20 a 100 % de conformite.',l:9},
+{sit:'Reconnaitre une limite',en:'One limitation of the study was that the testing was initially conducted only on laboratory samples.',fr:'Une limite de l\'etude etait que les essais ont d\'abord ete realises uniquement sur des echantillons de laboratoire.',l:9},
+{sit:'Lier recherche et impact',en:'What makes this work relevant is its direct application to industrial components in demanding environments.',fr:'Ce qui rend ce travail pertinent, c\'est son application directe aux composants industriels en environnements exigeants.',l:9},
+{sit:'Montrer sa curiosite',en:'What I find most interesting about this field is the way surface properties directly determine performance under extreme conditions.',fr:'Ce qui me fascine dans ce domaine, c\'est la facon dont les proprietes de surface determinent directement les performances en conditions extremes.',l:9}
+];
+
+// ===== DATA: IDIOMS =====
+const idioms=[
+{phrase:'To put your best foot forward',fr:'Se montrer sous son meilleur jour',meaning:'To present yourself in the best possible way, especially at the start of something important.',meaningFr:'Se presenter de la meilleure facon possible, surtout au debut de quelque chose d\'important.',ex:'"She stayed up late preparing because she wanted to put her best foot forward in front of the clients."',exFr:'"Elle a prepare tard le soir parce qu\'elle voulait se montrer sous son meilleur jour devant les clients."',l:2},
+{phrase:'To think outside the box',fr:'Sortir des sentiers battus',meaning:'To approach a problem in a creative, unconventional way.',meaningFr:'Aborder un probleme de maniere creative et non conventionnelle.',ex:'"When there was no standard test, she thought outside the box and designed her own panel from scratch."',exFr:'"Quand il n\'y avait pas de test standard, elle a sorti des sentiers battus et a concu son propre panel."',l:3},
+{phrase:'To bite the bullet',fr:'Avaler le crapaud / Se jeter a l\'eau',meaning:'To force yourself to do something difficult because it needs to be done.',meaningFr:'Se forcer a faire quelque chose de difficile parce que c\'est necessaire.',ex:'"She had never done an interview in English before, but she bit the bullet and walked in with confidence."',exFr:'"Elle n\'avait jamais passe d\'entretien en anglais, mais elle s\'est jetee a l\'eau et y est allee avec confiance."',l:4},
+{phrase:'To break the ice',fr:'Briser la glace',meaning:'To say or do something that makes a new situation feel more relaxed.',meaningFr:'Dire ou faire quelque chose pour detendre une situation nouvelle.',ex:'"The interviewer broke the ice by asking about her journey. After that, the conversation felt natural."',exFr:'"Le recruteur a brise la glace en lui demandant comment s\'etait passe son trajet. Apres ca, la conversation etait naturelle."',l:5},
+{phrase:'To touch base',fr:'Prendre contact / Faire le point',meaning:'To make brief contact with someone: check in, share an update, or confirm something.',meaningFr:'Prendre brievement contact avec quelqu\'un : faire le point, donner une mise a jour.',ex:'"She sent a quick email to the recruiter to touch base before their scheduled call."',exFr:'"Elle a envoye un email rapide au recruteur pour faire le point avant leur appel prevu."',l:7},
+{phrase:'To go the extra mile',fr:'Aller au-dela de ce qui est demande',meaning:'To make more effort than expected. To do something beyond what was asked.',meaningFr:'Faire plus d\'efforts que ce qui est attendu. Aller au-dela de ce qui est demande.',ex:'"When no testing methodology existed, she went the extra mile and designed her own panel from scratch."',exFr:'"Quand aucune methodologie n\'existait, elle est allee au-dela et a concu son propre panel a partir de zero."',l:8},
+{phrase:'To be on the same page',fr:'Etre sur la meme longueur d\'onde',meaning:'To have the same understanding of a situation, plan, or idea.',meaningFr:'Avoir la meme comprehension d\'une situation, d\'un plan ou d\'une idee.',ex:'"The lead engineer made sure everyone was on the same page about the testing methodology."',exFr:'"L\'ingenieur responsable s\'est assure que tout le monde etait sur la meme longueur d\'onde concernant la methodologie."',l:9}
+];
+
+// ===== DATA: CORRECTIONS =====
+const allCorr=[
+// L2
+{w:'I face no methodical way to chose material to test him',r:'I faced a challenge: there was no methodical approach for selecting materials to test',why:'Past tense needed. "Chose" → "selecting". "Test him" → "test" (materials are not "him").',whyFr:'Passe necessaire. "Chose" est le passe de choose, ici il faut "selecting". Les materiaux ne sont pas "him".',l:2},
+{w:'I think you have to chose me',r:'I believe you should choose me',why:'"Think" → "believe" for interview register. "Chose" is past tense; the base form is "choose".',l:2},
+{w:'I am the person who is the best in academic research scientific',r:'I am someone who thrives in research. I have strong academic and scientific skills',why:'Restructure: "academic research scientific" is not natural word order. Scientific goes before the noun.',l:2},
+// L3
+{w:'I m graduated on master degrees',r:'I hold a master\'s degree',why:'"I\'m graduated" doesn\'t work. You hold a degree. Master\'s with apostrophe-s. Singular.',l:3},
+{w:'My first experiecne, it was an intership that I made development',r:'My first experience was an internship where I developed innovative materials',why:'"That I made development" → "where I developed". Simpler, more natural.',l:3},
+{w:'I am specialised on the aging polymers',r:'I specialise in the ageing of polymers',why:'"I am specialised" → "I specialise". Drop the am. "On" → "in".',whyFr:'En francais "je suis specialisee" → en anglais "I specialise" (sans am). Preposition : "in" pas "on".',l:3},
+{w:'I was make a lot of efforts',r:'I made a lot of effort',why:'"I was make" is not a valid tense. Simple past: I made. "Efforts" → "effort" (uncountable here).',l:3},
+{w:'My weekend was tired',r:'I had a tiring weekend',why:'"My weekend was tired" means the weekend itself is tired. The weekend was tiring, or "I had a tiring weekend".',l:3},
+// L4
+{w:'I take a lot of times to understand',r:'Sometimes it takes too much time',why:'"A lot of times" doesn\'t work here. Time is uncountable. Say "too much time".',l:4},
+{w:'I have learning to stop when it\'s needed',r:'I have learned to stop when it is needed',why:'"I have learning" → "I have learned". Past participle after have.',l:4},
+{w:'I have traveling around the world',r:'I have been traveling around the world',why:'Missing "been": I have been traveling. Present perfect continuous.',l:4},
+{w:'for me myself a solution',r:'a solution myself / on my own',why:'Double construction. Just say "myself" or "on my own".',l:4},
+// L5
+{w:'coating in polymers',r:'polymer coatings',why:'In English the material comes first as an adjective: polymer coatings, metallic surfaces.',l:5},
+{w:'I can send you my CV at mail',r:'I can send you my CV by email',why:'"Mail" alone means a letter in an envelope. Always say "email" in full. "At" → "by".',l:5},
+{w:'I take them the context',r:'I give them the context',why:'French calque from "apporter le contexte". In English: give context, not take it.',l:5},
+{w:'fix my problems',r:'help solve it',why:'"Fix my problems" is too casual for a professional context.',l:5},
+// L6
+{w:'I have been watching TV since one month',r:'I have been watching TV for the past month',why:'"Since" needs a point in time. A duration needs "for". "Since one month" doesn\'t exist.',whyFr:'"Since" = un moment precis (since January). "For" = une duree (for one month). "Since one month" n\'existe pas.',l:6},
+{w:'I took English lessons to prepare',r:'I have been taking English lessons to prepare',why:'Still taking lessons now → present perfect continuous, not past simple.',l:6},
+{w:'Dear Mister',r:'Dear [Name] or Dear Mr Smith',why:'"Dear Mister" does not exist in English. Use the person\'s name.',whyFr:'"Dear Mister" n\'existe pas en anglais. Utiliser le nom : "Dear Sarah" ou "Dear Mr Smith".',l:6},
+{w:'how your team use it',r:'the work your team does',why:'Missing -s: "uses". Or restructure: "the work your team does".',l:6},
+{w:'I send you my CV',r:'Please find my CV attached',why:'"I send" reads as present simple. Standard phrase: "Please find my CV attached".',whyFr:'"I send" sonne comme une habitude. La formule standard en anglais pro : "Please find my CV attached".',l:6},
+{w:'opportunity for my profil',r:'any openings that might suit my profile',why:'Direct translation of "opportunite pour mon profil". Not natural in English.',l:6},
+// L7
+{w:'I lead a project on surface treatment',r:'I led a project on surface treatments',why:'"Lead" is present. Past tense of lead is "led". Plural: treatments.',l:7},
+{w:'I make different testings',r:'I ran various tests',why:'"Make testings" is not natural. You run tests or carry out tests.',l:7},
+{w:'all what I do in polymers field I can transfer',r:'Everything I have done in the polymer field transfers directly',why:'"All what" → "everything". Present perfect for relevance: "I have done".',l:7},
+{w:'You have to know we worked...',r:'I would like to point out that...',why:'"You have to know" is too direct for a professional call.',l:7},
+{w:'Could you advise me about my application',r:'Could you advise me on how I might improve my application',why:'"Advise about" → "advise on". "How I might improve" softens with a modal.',l:7},
+// L8
+{w:'interested by surface treatment',r:'interested in surface treatments',why:'French calque from "interesse par". In English: interested IN. Very common error.',whyFr:'Calque de "interesse par". En anglais : interested IN, jamais "by". Erreur tres frequente.',l:8},
+{w:'Master degrees',r:'master\'s degree',why:'Singular. With apostrophe-s.',l:8},
+{w:'we learn about all materials',r:'we studied all material families',why:'Past tense (happened in the past). "We learn" slips to present.',l:8},
+{w:'made me a strong knowledge',r:'gives me a strong foundation',why:'Knowledge is not something you are "made". Say "gives me a strong foundation".',l:8},
+{w:'I took initiative that made my group more efficient',r:'I took the initiative to develop a panel that allowed my team to test multiple materials',why:'"My group" → "my team" professionally. Be specific about what you built.',l:8},
+// L9
+{w:'ageing phenomenols',r:'ageing phenomena',why:'Phenomena is already plural. No -s. Spelling: phenomena, not phenomenols.',l:9},
+{w:'with less tests',r:'with fewer tests',why:'Tests is countable → fewer. Less is for uncountable (less time).',whyFr:'Tests = denombrable → fewer. Less = indenombrable (less time, less work). Fewer tests, less time.',l:9},
+{w:'shortcut the validation cycles',r:'shortened the validation cycles',why:'Shortcut is a noun. The verb is to shorten.',whyFr:'"Shortcut" est un nom (un raccourci). Le verbe est "to shorten" (raccourcir).',l:9},
+{w:'nobody had take time to questioned',r:'nobody had taken the time to question',why:'After had: past participle (taken). After to: base form (question).',l:9},
+{w:'I had took the initiative',r:'I took the initiative',why:'Past participle of take = taken. But here simple past is correct — this is YOUR action.',l:9},
+{w:'When I understand these mechanisms',r:'Once I had understood these mechanisms',why:'Present tense slip. Past perfect is perfect: understanding came BEFORE the improvement.',l:9},
+{w:'more shorter',r:'shorter',why:'Double comparative. Shorter is already comparative.',whyFr:'Double comparatif interdit. "Shorter" est deja le comparatif. Jamais "more shorter".',l:9},
+{w:'the choice of the material was empiric',r:'the way we selected materials was based entirely on experience',why:'Empirical (with -al) is standard. "Based on experience" is cleaner.',l:9},
+{w:'I take the responsibility',r:'I took the initiative',why:'Past tense: took. "Took the initiative" is the stronger professional phrase.',l:9},
+{w:'improve the comprehension of the mechanism',r:'build an understanding of the mechanisms',why:'Comprehension = language/texts. Scientific context: understanding.',l:9},
+{w:'For next I want to apply',r:'My next step is to move into the aeronautics sector',why:'Calque from "pour la suite". Say: my next step is...',l:9},
+{w:'I love the demanding company',r:'I am drawn to demanding environments',why:'"I love the demanding company" can be misread. Professional: "drawn to".',l:9},
+{w:'it\'s not mean that',r:'that does not mean',why:'Contraction error. Correct: "it does not mean" or "that does not mean".',l:9},
+{w:'we are not implicated in the work',r:'being less invested in the work',why:'"Implicated" = involved in a crime. For work: invested, committed.',whyFr:'"Implicated" = implique dans un crime. Pour le travail : invested (investi), committed (engage).',l:9}
+];
+
+// ===== DATA: CALQUES =====
+const calques=[
+{fr:'interesse par',wrong:'interested by',right:'interested in',why:'French: interesse par. English: interested IN.'},
+{fr:'pour la suite',wrong:'for next',right:'my next step is / looking ahead',why:'Calque from "pour la suite". No equivalent in English.'},
+{fr:'faire une recherche',wrong:'make a research',right:'conduct research / carry out research',why:'"Make a research" doesn\'t exist. Research is usually uncountable.'},
+{fr:'je suis d\'accord',wrong:'I am agree',right:'I agree',why:'"Agree" is a verb, not an adjective. "I am agree" copies the French structure.'},
+{fr:'ca depend de',wrong:'it depends of',right:'it depends on',why:'French: dependre DE. English: depend ON.'},
+{fr:'depuis un mois',wrong:'since one month',right:'for one month',why:'Since = point in time. For = duration. "Since one month" doesn\'t exist.'},
+{fr:'revetement en polymeres',wrong:'coating in polymers',right:'polymer coatings',why:'English: material as adjective first. Polymer coatings, metallic surfaces.'},
+{fr:'prendre la responsabilite',wrong:'take the responsibility',right:'take the initiative',why:'"Take the initiative" is the professional phrase.'},
+{fr:'envoyer un mail',wrong:'send a mail',right:'send an email',why:'"Mail" alone = physical letter. Always say "email" in full.'},
+{fr:'apporter le contexte',wrong:'take them the context',right:'give them the context',why:'French "apporter" ≠ English "take". You give context.'},
+{fr:'echanger sur',wrong:'exchange about',right:'discuss / talk about',why:'"Exchange about" is a calque. You discuss or talk about something.'},
+{fr:'ingenieur materiaux',wrong:'engineer materials',right:'materials engineer',why:'In English the adjective comes first.'},
+{fr:'Cher Monsieur',wrong:'Dear Mister',right:'Dear [Name] / Dear Mr Smith',why:'"Dear Mister" does not exist in English. Use the name.'},
+{fr:'opportunite pour mon profil',wrong:'opportunity for my profile',right:'openings that might suit my profile',why:'Direct translation. Not natural in English.'},
+{fr:'je vous envoie mon CV',wrong:'I send you my CV',right:'Please find my CV attached',why:'Standard professional phrase. "I send" sounds like present habit.'}
+];
+
+// ===== DATA: GRAMMAR DRILL (50+ questions) =====
+const drillQs=[
+// Level 1: Identify tense (MCQ)
+{lvl:1,type:'mcq',q:'I worked on polymers during my internship.',opts:['Present simple','Past simple','Present perfect','Past perfect'],ans:1,exp:'Finished action + time marker "during my internship" = past simple.'},
+{lvl:1,type:'mcq',q:'I have developed a chemical immersion panel.',opts:['Past simple','Present perfect','Present perfect continuous','Past perfect'],ans:1,exp:'Past action still relevant now, no specific time = present perfect.'},
+{lvl:1,type:'mcq',q:'I have been applying to companies for three months.',opts:['Present perfect','Present perfect continuous','Past simple','Past perfect'],ans:1,exp:'Ongoing action + "for three months" (still happening) = present perfect continuous.'},
+{lvl:1,type:'mcq',q:'Before I started testing, I had already completed a review.',opts:['Present perfect','Past simple','Past perfect','Present perfect continuous'],ans:2,exp:'"Had completed" = action before another past action = past perfect.'},
+{lvl:1,type:'mcq',q:'I specialise in polymer science.',opts:['Present simple','Present perfect','Past simple','Present continuous'],ans:0,exp:'General fact about yourself = present simple.'},
+{lvl:1,type:'mcq',q:'I have been studying English since February.',opts:['Present perfect','Present perfect continuous','Past perfect','Past simple'],ans:1,exp:'Action started in past, still happening + "since" = present perfect continuous.'},
+{lvl:1,type:'mcq',q:'Nobody had taken the time to question the method.',opts:['Past simple','Present perfect','Past perfect','Past simple passive'],ans:2,exp:'"Had taken" before another past event = past perfect.'},
+{lvl:1,type:'mcq',q:'She would be happy to discuss this further.',opts:['Present simple','Conditional (modal)','Present perfect','Future simple'],ans:1,exp:'"Would" = modal verb for polite/conditional statements.'},
+{lvl:1,type:'mcq',q:'Could you tell me what the role involves?',opts:['Direct question','Indirect question','Past simple','Present perfect'],ans:1,exp:'Polite opener "Could you tell me" + normal word order = indirect question.'},
+{lvl:1,type:'mcq',q:'By the time I joined, no proof of concept had existed.',opts:['Past simple','Present perfect','Past perfect','Past continuous'],ans:2,exp:'"Had existed" = state before "I joined" = past perfect.'},
+
+// Level 2: Fill blank WITH tense hint
+{lvl:2,type:'fill',q:'I _____ (work) on CVD coatings during my internship. [Past simple]',ans:'worked',exp:'Finished action + "during my internship" = past simple.'},
+{lvl:2,type:'fill',q:'I _____ (develop) a chemical immersion panel, which is still used today. [Present perfect]',ans:'have developed',exp:'Past action still relevant now ("still used today") = present perfect.'},
+{lvl:2,type:'fill',q:'I _____ (apply) to companies for three months now. [Present perfect continuous]',ans:'have been applying',exp:'Ongoing action + "for three months now" = present perfect continuous.'},
+{lvl:2,type:'fill',q:'Before I _____ (start) testing, I _____ (already/complete) a review. [Past perfect]',ans:'started, had already completed',exp:'Earlier action (review) = past perfect. Later action (testing) = past simple.'},
+{lvl:2,type:'fill',q:'She _____ (never/do) a job interview in English before. [Present perfect]',ans:'has never done',exp:'Experience up to now + "never" = present perfect.'},
+{lvl:2,type:'fill',q:'I _____ (study) English every week since February. [Present perfect continuous]',ans:'have been studying',exp:'Action started in past, still ongoing + "since" = present perfect continuous.'},
+{lvl:2,type:'fill',q:'Because no method _____ (exist), I _____ (take) the initiative. [Past perfect + past simple]',ans:'had existed, took',exp:'Background condition = past perfect. Your action = past simple.'},
+{lvl:2,type:'fill',q:'I _____ (just/send) my CV to three companies. [Present perfect]',ans:'have just sent',exp:'"Just" = very short time ago = present perfect.'},
+{lvl:2,type:'fill',q:'We _____ (finish) the project last Friday. [Past simple]',ans:'finished',exp:'Specific time "last Friday" = past simple.'},
+{lvl:2,type:'fill',q:'I _____ (not/hear) back from the company yet. [Present perfect]',ans:'have not heard',exp:'"Yet" = not done but expected = present perfect.'},
+{lvl:2,type:'fill',q:'I _____ (train) in CrossFit for one year. [Present perfect continuous]',ans:'have been training',exp:'Ongoing activity + "for one year" = present perfect continuous.'},
+{lvl:2,type:'fill',q:'By the time I _____ (join), no proof of concept _____ (exist) yet. [Past perfect]',ans:'joined, had existed',exp:'Reference point = past simple. State before that = past perfect.'},
+
+// Level 3: Fill blank WITHOUT hint
+{lvl:3,type:'fill',q:'I _____ (work) in a lab during my second year at university.',ans:'worked',exp:'Specific past time = past simple.'},
+{lvl:3,type:'fill',q:'I _____ (already/apply) to four companies this week.',ans:'have already applied',exp:'"This week" = period still in progress + "already" = present perfect.'},
+{lvl:3,type:'fill',q:'She _____ (develop) a new test panel during her internship.',ans:'developed',exp:'"During her internship" = specific past period = past simple.'},
+{lvl:3,type:'fill',q:'I _____ (contribute) to a patent in 2024.',ans:'contributed',exp:'Specific year = past simple.'},
+{lvl:3,type:'fill',q:'_____ you ever _____ (work) in the aeronautics sector?',ans:'Have, worked',exp:'Asking about experience up to now = present perfect.'},
+{lvl:3,type:'fill',q:'I _____ (watch) TV series in English for the past month.',ans:'have been watching',exp:'Duration + still happening = present perfect continuous.'},
+{lvl:3,type:'fill',q:'Nobody _____ (take) the time to question the method before I arrived.',ans:'had taken',exp:'Action before "I arrived" = past perfect.'},
+{lvl:3,type:'fill',q:'I _____ (take) English lessons to prepare for job interviews.',ans:'have been taking',exp:'Still taking lessons now = present perfect continuous.'},
+{lvl:3,type:'fill',q:'Once I _____ (understand) the mechanisms, the selection improved.',ans:'had understood',exp:'Understanding came BEFORE improvement = past perfect.'},
+{lvl:3,type:'fill',q:'The compliance rate _____ (increase) from 20 to 100 percent.',ans:'increased',exp:'Completed result = past simple. (Or "has increased" if emphasizing current relevance.)'},
+
+// Level 3: Transform sentences
+{lvl:3,type:'transform',q:'Make professional: "I want to schedule a meeting with you."',ans:'I would like to schedule a meeting with you.',exp:'Replace "I want" with "I would like" for professional register.'},
+{lvl:3,type:'transform',q:'Make professional: "Tell me more about the role."',ans:'I would be very interested to hear more about the role.',exp:'Use modal verbs to soften direct requests.'},
+{lvl:3,type:'transform',q:'Make indirect: "What does the role involve?"',ans:'Could you tell me what the role involves?',exp:'Polite opener + normal word order (not "what does the role involve").'},
+{lvl:3,type:'transform',q:'Make indirect: "When will you make a decision?"',ans:'I was wondering when you might make a decision.',exp:'"I was wondering" + normal word order + "might" for softening.'},
+{lvl:3,type:'transform',q:'Make indirect: "How big is the team?"',ans:'Do you mind me asking how big the team is?',exp:'Word order changes: "how big is the team" → "how big the team is".'},
+{lvl:3,type:'transform',q:'Fix: "I have been watching TV since one month."',ans:'I have been watching TV for the past month.',exp:'"Since" = point in time. Duration = "for". "Since one month" doesn\'t exist.'}
+];
+
+// ===== LESSONS DATA =====
+const lessons=[
+{n:0,title:'Trial Lesson',date:'Apr 2026',theme:'Level assessment + icebreaker',level:'Comprehension B2, Speaking A2-B1'},
+{n:2,title:'Lesson 2',date:'22 Apr 2026',theme:'Telling your story professionally',level:'Present simple + past simple, 12 words, 6 sentences'},
+{n:3,title:'Lesson 3',date:'26 Apr 2026',theme:'Career goals and vision',level:'Present perfect vs past simple, 12 words, 6 sentences'},
+{n:4,title:'Lesson 4',date:'28 Apr 2026',theme:'Hard interview questions',level:'Resilience vocab, surface treatment glossary, 6 sentences'},
+{n:5,title:'Lesson 5',date:'1 May 2026',theme:'Networking and small talk',level:'Present perfect continuous, 12 words, 6 sentences'},
+{n:6,title:'Lesson 6',date:'5 May 2026',theme:'Professional writing',level:'Modal verbs, email structure, no new vocab'},
+{n:7,title:'Lesson 7',date:'8 May 2026',theme:'Phone and video calls',level:'Indirect questions, 12 words, 6 sentences'},
+{n:8,title:'Lesson 8',date:'12 May 2026',theme:'Mock interview (6 questions)',level:'Past perfect, CAR structure, Chatter Learning'},
+{n:9,title:'Lesson 9',date:'15 May 2026',theme:'Research and scientific English',level:'Grammar revision, 12 words, 6 sentences, calques'}
+];
+
+// ===== RENDERING =====
+function renderHome(){
+  document.getElementById('homeStats').innerHTML=`
+    <div class="stat"><div class="n" style="color:var(--green)">9</div><div class="l">Lessons</div></div>
+    <div class="stat"><div class="n" style="color:var(--purple)">72</div><div class="l">Words</div></div>
+    <div class="stat"><div class="n" style="color:var(--teal)">36</div><div class="l">Sentences</div></div>
+    <div class="stat"><div class="n" style="color:var(--acc)">7</div><div class="l">Idioms</div></div>`;
+  document.getElementById('idiomList').innerHTML=idioms.map(i=>`
+    <div class="idiom"><h4>${i.phrase} <span class="badge bt">L${i.l}</span></h4><p style="font-size:.7rem;color:var(--yellow);font-weight:600;margin-bottom:.2rem">${i.fr}</p><p>${i.meaning}</p><p style="color:var(--muted);font-size:.75rem;font-style:italic">${i.meaningFr}</p><p class="ex">${i.ex}</p><p class="ex" style="margin-top:.1rem">${i.exFr}</p></div>`).join('');
+  document.getElementById('lessonList').innerHTML=lessons.map(l=>`
+    <div class="card" style="padding:.6rem .8rem"><h3 style="margin-bottom:.15rem">${l.title} <span style="font-size:.68rem;color:var(--muted);font-weight:400">${l.date}</span></h3><p style="font-size:.75rem">${l.theme}</p><p style="font-size:.68rem;color:var(--muted)">${l.level}</p></div>`).join('');
+}
+
+function renderGrammar(){
+  document.getElementById('grammarCards').innerHTML=grammarTopics.map(g=>`
+    <div class="acc" onclick="this.classList.toggle('open')">
+      <div class="acc-h"><span class="badge ${g.badge}">L${g.lesson}</span><h4>${g.title}</h4><span class="arr">&#9660;</span></div>
+      <div class="acc-b">
+        <div class="formula">${g.formula}</div>
+        ${g.rules.map(r=>`<p style="margin:.3rem 0"><strong>${r.rule}</strong>${r.ex?'<br><em style="color:var(--teal)">'+r.ex+'</em>':''}</p>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function renderVocab(filter){
+  const words=filter==='all'?allVocab:allVocab.filter(v=>v.l===filter);
+  document.getElementById('vocabGrid').innerHTML=words.map((v,i)=>`
+    <div class="fc" data-idx="${i}" onclick="this.classList.toggle('flip')">
+      <span class="ck">&#10003;</span>
+      <div class="w">${v.w}</div>
+      <div class="s">${v.s}</div>
+      <div class="tt">${v.t==='n'?'noun':'verb'} &middot; L${v.l}</div>
+      <div class="m">
+        <div style="font-weight:600;color:var(--pri);margin-bottom:.15rem">${v.fr}</div>
+        <div>${v.m}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('vCount').textContent=`${words.length} words`;
+}
+function filterVocab(f){renderVocab(f)}
+
+function renderSentences(){
+  document.getElementById('sentList').innerHTML=allSentences.map((s,i)=>`
+    <div class="sent"><div class="sn">${i+1}</div><div class="st"><div style="font-size:.65rem;color:var(--muted)">${s.sit} <span class="badge bt" style="font-size:.55rem">L${s.l}</span></div><div style="color:var(--pri);font-weight:500">${s.en}</div><div style="color:var(--teal);font-size:.75rem;font-style:italic;margin-top:.15rem">${s.fr}</div></div></div>`).join('');
+}
+
+function renderCorrections(filter){
+  const corrs=filter==='all'?allCorr:allCorr.filter(c=>c.l===filter);
+  document.getElementById('corrList').innerHTML=corrs.map(c=>`
+    <div class="corr" onclick="this.classList.toggle('open')">
+      <div class="corr-h"><span class="badge bt" style="font-size:.55rem">L${c.l}</span><span class="wt">${c.w}</span><span class="arr">&#9660;</span></div>
+      <div class="corr-b"><div class="rt">${c.r}</div><div class="why">${c.why}</div>${c.whyFr?'<div style="color:var(--teal);font-size:.72rem;font-style:italic;margin-top:.2rem">'+c.whyFr+'</div>':''}</div>
+    </div>`).join('');
+}
+function filterCorr(f){renderCorrections(f)}
+
+function renderCalques(){
+  document.getElementById('calqueRef').innerHTML=calques.map(c=>`
+    <div class="card" style="padding:.5rem .7rem">
+      <p style="font-size:.7rem;color:var(--muted);font-style:italic">${c.fr}</p>
+      <p style="font-size:.78rem"><span style="color:var(--red);text-decoration:line-through">${c.wrong}</span> → <strong style="color:var(--green)">${c.right}</strong></p>
+      <p style="font-size:.7rem;color:var(--muted)">${c.why}</p>
+    </div>`).join('');
+
+  const shuffled=[...calques].sort(()=>Math.random()-.5).slice(0,8);
+  document.getElementById('calqueQuiz').innerHTML=shuffled.map((c,i)=>{
+    const opts=[c.wrong,c.right].sort(()=>Math.random()-.5);
+    return `<div class="card" id="cq${i}" style="padding:.7rem">
+      <p style="font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:.2rem">${c.fr}</p>
+      <div class="mcq">${opts.map(o=>`<div class="mcq-o" onclick="checkCQ(${i},'${o===c.right?'ok':'ko'}',this,'${c.right.replace(/'/g,"\\'")}','${c.why.replace(/'/g,"\\'")}')">${o}</div>`).join('')}</div>
+      <div class="qexp" id="cqe${i}"></div>
+    </div>`}).join('');
+}
+function checkCQ(i,result,el,right,why){
+  const card=document.getElementById('cq'+i);
+  card.querySelectorAll('.mcq-o').forEach(o=>{
+    o.style.pointerEvents='none';
+    if(o.textContent===right)o.classList.add('ok');
+  });
+  if(result==='ko')el.classList.add('ko');
+  const exp=document.getElementById('cqe'+i);
+  exp.innerHTML=`<span class="ans">${right}</span> — ${why}`;
+  exp.classList.add('show');
+}
+
+// ===== GRAMMAR DRILL ENGINE =====
+let dr={lvl:1,streak:0,best:0,idx:0,score:[0,0,0],total:[0,0,0],pool:[],history:[]};
+const drSave=()=>localStorage.setItem('hub_ang_drill',JSON.stringify({lvl:dr.lvl,best:dr.best,score:dr.score,total:dr.total}));
+function drLoad(){
+  const s=JSON.parse(localStorage.getItem('hub_ang_drill')||'{}');
+  if(s.lvl)dr.lvl=s.lvl;if(s.best)dr.best=s.best;if(s.score)dr.score=s.score;if(s.total)dr.total=s.total;
+}
+
+function buildPool(){
+  dr.pool=drillQs.filter(q=>q.lvl<=dr.lvl).sort(()=>Math.random()-.5);
+  dr.idx=0;dr.history=[];
+}
+
+function renderDrillLevels(){
+  const names=['Identify','Construct','Master'];
+  const descs=['Choose the tense','Fill with hint','Fill without hint'];
+  document.getElementById('drLevels').innerHTML=[1,2,3].map(l=>{
+    const locked=l>dr.lvl;
+    const pct=dr.total[l-1]>0?Math.round(dr.score[l-1]/dr.total[l-1]*100):0;
+    return `<div class="lvl${l===dr.lvl?' active':''}${locked?' locked':''}" onclick="${locked?'':'dr.lvl='+l+';buildPool();renderDrill()'}">
+      <h5>${names[l-1]}</h5><p>${descs[l-1]}</p>${dr.total[l-1]>0?`<div class="lscore">${pct}%</div>`:''}
+    </div>`}).join('');
+}
+
+function renderDrill(){
+  document.getElementById('drStreak').textContent=dr.streak;
+  document.getElementById('drInfo').textContent=`Best streak: ${dr.best} | Level ${dr.lvl}/3`;
+  renderDrillLevels();
+
+  if(dr.idx>=dr.pool.length){
+    buildPool();
+  }
+  const q=dr.pool[dr.idx];
+  if(!q){buildPool();return renderDrill();}
+
+  let html=`<div class="qcard"><div class="qnum">Level ${q.lvl} &middot; ${q.type==='mcq'?'Choose the tense':q.type==='fill'?'Fill in the blank':'Transform'}</div>`;
+  html+=`<div class="qtxt">${q.q}</div>`;
+
+  if(q.type==='mcq'){
+    html+=`<div class="mcq">${q.opts.map((o,i)=>`<div class="mcq-o" onclick="checkDrill(${i})">${o}</div>`).join('')}</div>`;
+  } else {
+    const blanks=q.ans.split(', ');
+    html+=blanks.map((_,i)=>`<input type="text" class="qinput" id="dri${i}" placeholder="${blanks.length>1?'Answer '+(i+1):'Your answer'}" onkeydown="if(event.key==='Enter')submitDrill()">`).join('<div style="height:.2rem"></div>');
+    html+=`<div style="margin-top:.5rem"><button class="btn btn-pri" onclick="submitDrill()">Check</button></div>`;
+  }
+  html+=`<div class="qexp" id="drExp"></div></div>`;
+  document.getElementById('drQuestion').innerHTML=html;
+  document.getElementById('drResult').style.display='none';
+  document.getElementById('drQuestion').style.display='block';
+  if(q.type!=='mcq')document.getElementById('dri0')?.focus();
+}
+
+function checkDrill(picked){
+  const q=dr.pool[dr.idx];
+  const opts=document.querySelectorAll('#drQuestion .mcq-o');
+  opts.forEach((o,i)=>{
+    o.style.pointerEvents='none';
+    if(i===q.ans)o.classList.add('ok');
+    else if(i===picked)o.classList.add('ko');
+    else o.classList.add('dim');
+  });
+  const correct=picked===q.ans;
+  finishDrillQ(correct,q);
+}
+
+function submitDrill(){
+  const q=dr.pool[dr.idx];
+  const blanks=q.ans.split(', ');
+  let allOk=true;
+  blanks.forEach((ans,i)=>{
+    const input=document.getElementById('dri'+i);
+    const val=input.value.trim().toLowerCase().replace(/['']/g,"'");
+    const expected=ans.toLowerCase().replace(/['']/g,"'");
+    if(val===expected){input.classList.add('ok');}
+    else{input.classList.add('ko');allOk=false;}
+    input.disabled=true;
+  });
+  finishDrillQ(allOk,q);
+}
+
+function finishDrillQ(correct,q){
+  if(correct){dr.streak++;if(dr.streak>dr.best)dr.best=dr.streak;dr.score[q.lvl-1]++;}
+  else{dr.streak=0;dr.pool.push(q);}
+  dr.total[q.lvl-1]++;
+  document.getElementById('drStreak').textContent=dr.streak;
+  document.getElementById('drInfo').textContent=`Best streak: ${dr.best} | Level ${dr.lvl}/3`;
+
+  const exp=document.getElementById('drExp');
+  exp.innerHTML=`<span class="ans">Answer: ${q.ans}</span><div style="margin-top:.2rem">${q.exp}</div>`;
+  exp.classList.add('show');
+
+  const nextBtn=document.createElement('button');
+  nextBtn.className='btn btn-pri';nextBtn.style.marginTop='.5rem';nextBtn.textContent='Next';
+  nextBtn.onclick=()=>{dr.idx++;checkLevelUp();renderDrill();drSave();};
+  exp.appendChild(nextBtn);
+
+  drSave();
+}
+
+function checkLevelUp(){
+  if(dr.lvl<3&&dr.total[dr.lvl-1]>=8){
+    const pct=dr.score[dr.lvl-1]/dr.total[dr.lvl-1];
+    if(pct>=0.75){dr.lvl++;buildPool();}
+  }
+}
+
+function resetDrill(){
+  dr={lvl:1,streak:0,best:0,idx:0,score:[0,0,0],total:[0,0,0],pool:[],history:[]};
+  localStorage.removeItem('hub_ang_drill');
+  buildPool();renderDrill();
+}
+
+// ===== INIT =====
+drLoad();buildPool();
+renderHome();renderGrammar();renderVocab('all');renderSentences();renderCorrections('all');renderCalques();renderDrill();
+</script>
+</body>
+</html>

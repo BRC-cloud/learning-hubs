@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen Civique - Preparation Naturalisation Française</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">Examen Civique</a>
+  <a href="index.html" class="active">Accueil</a>
+  <a href="principes-valeurs.html">Principes & Valeurs</a>
+  <a href="institutions.html">Institutions</a>
+  <a href="droits-devoirs.html">Droits & Devoirs</a>
+  <a href="histoire-culture.html">Histoire & Culture</a>
+  <a href="vie-societe.html">Vie en société</a>
+  <a href="simulation.html">Simulation</a>
+</nav>
+
+<div class="hero">
+  <h1>Examen Civique</h1>
+  <p>Preparation complète au QCM de naturalisation française. 258 questions officielles, fiches de révision et simulations en conditions réelles.</p>
+  <div class="tricolore">
+    <span class="b"></span><span class="w"></span><span class="r"></span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="alert-box">
+    <strong>Nouveau depuis janvier 2026</strong> — L'entretien en prefecture est remplace par un examen civique sous forme de QCM numérique en centre agree.
+  </div>
+
+  <h2>Format de l'examen</h2>
+
+  <div class="cards-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+    <div class="fact-card">
+      <div class="label">Format</div>
+      <p><strong>QCM numérique</strong> sur tablette ou ordinateur</p>
+    </div>
+    <div class="fact-card">
+      <div class="label">Questions</div>
+      <p><strong>40 questions</strong> (28 connaissances + 12 mises en situation)</p>
+    </div>
+    <div class="fact-card">
+      <div class="label">Durée</div>
+      <p><strong>45 minutes</strong> maximum</p>
+    </div>
+    <div class="fact-card">
+      <div class="label">Seuil de réussite</div>
+      <p><strong>80%</strong> soit 32/40 bonnes reponses</p>
+    </div>
+    <div class="fact-card">
+      <div class="label">Lieu</div>
+      <p><strong>Centre agree</strong> (reseau CCI / France Education International)</p>
+    </div>
+    <div class="fact-card">
+      <div class="label">Resultats</div>
+      <p>Disponibles sous <strong>12 heures</strong>, validite illimitée</p>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Niveau requis :</strong> Le QCM est concu pour un niveau de comprehension <strong>B2</strong> du CECRL (arrete du 10 octobre 2025). Les questions sont issues du Livret du citoyen publie par le Ministère de l'Intérieur.
+  </div>
+
+  <div class="progress-wrap">
+    <h3>Progression globale</h3>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="global-progress-fill" style="width: 0%"></div>
+    </div>
+    <div class="progress-text" id="global-progress-text">Reponds aux quiz pour suivre ta progression</div>
+    <div style="margin-top: 10px; text-align: right; display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap;">
+      <button class="btn-outline btn" style="font-size: 0.82em; padding: 6px 14px;" onclick="if(confirm('Reinitialiser les scores des quiz ?')){Progress.reset(); location.reload();}">Scores quiz</button>
+      <button class="btn-outline btn" style="font-size: 0.82em; padding: 6px 14px;" onclick="if(confirm('Reinitialiser la repetition espacee (Leitner) ?')){Leitner.reset(); location.reload();}">Leitner</button>
+      <button class="btn-outline btn" style="font-size: 0.82em; padding: 6px 14px;" onclick="if(confirm('Reinitialiser le marquage des flashcards ?')){FlashMastery.reset(); location.reload();}">Flashcards</button>
+      <button class="btn btn-rouge" style="font-size: 0.82em; padding: 6px 14px;" onclick="if(confirm('Tout reinitialiser ? Scores, Leitner et flashcards seront effaces.')){Progress.reset(); Leitner.reset(); FlashMastery.reset(); location.reload();}">Tout reinitialiser</button>
+    </div>
+  </div>
+
+  <h2>Les 5 thèmes officiels</h2>
+  <p>Le programme de l'examen civique couvre 5 thematiques definies par l'arrete du 10 octobre 2025. Chaque page contient des fiches de révision, les questions officielles en flashcards, et un quiz d'entrainement.</p>
+
+  <div class="cards-grid">
+    <a href="principes-valeurs.html" class="topic-card">
+      <span class="card-emoji">&#9878;</span>
+      <h3>Principes et valeurs de la République</h3>
+      <p>Devise, laïcité, symboles, liberté d'expression, égalité, Marseillaise.</p>
+      <div class="card-count">39 questions officielles + quiz</div>
+      <div class="card-mastery" data-mastery="principes"></div>
+    </a>
+    <a href="institutions.html" class="topic-card">
+      <span class="card-emoji">&#127963;</span>
+      <h3>Système institutionnel et politique</h3>
+      <p>Président, Parlement, collectivités, élections, Union européenne.</p>
+      <div class="card-count">55 questions officielles + quiz</div>
+      <div class="card-mastery" data-mastery="institutions"></div>
+    </a>
+    <a href="droits-devoirs.html" class="topic-card">
+      <span class="card-emoji">&#128214;</span>
+      <h3>Droits et devoirs</h3>
+      <p>DDHC, libertés fondamentales, Constitution, citoyenneté.</p>
+      <div class="card-count">37 questions officielles + quiz</div>
+      <div class="card-mastery" data-mastery="droits"></div>
+    </a>
+    <a href="histoire-culture.html" class="topic-card">
+      <span class="card-emoji">&#128220;</span>
+      <h3>Histoire, géographie et culture</h3>
+      <p>Dates clés, Republiques, régions, UE, personnages historiques, patrimoine.</p>
+      <div class="card-count">83 questions officielles + quiz</div>
+      <div class="card-mastery" data-mastery="histoire"></div>
+    </a>
+    <a href="vie-societe.html" class="topic-card">
+      <span class="card-emoji">&#127968;</span>
+      <h3>Vivre dans la société française</h3>
+      <p>École, santé, emploi, logement, urgences, état civil, vie quotidienne.</p>
+      <div class="card-count">44 questions officielles + quiz</div>
+      <div class="card-mastery" data-mastery="vie"></div>
+    </a>
+    <a href="simulation.html" class="topic-card" style="border-color: var(--rouge); background: var(--rouge-bg);">
+      <span class="card-emoji">&#127942;</span>
+      <h3>Simulation d'examen</h3>
+      <p>40 questions en 45 minutes, conditions réelles. Seuil de réussite a 80%.</p>
+      <div class="card-count" style="color: var(--rouge);">Examen blanc chronometre</div>
+    </a>
+  </div>
+
+  <h2>Comment se preparer ?</h2>
+
+  <div class="fact-card">
+    <div class="label">Etape 1 — Reviser</div>
+    <p>Lis les fiches de chaque thème. Chaque page contient les notions essentielles et les <strong>questions officielles</strong> du Ministère de l'Intérieur sous forme de flashcards (clique pour voir la réponse).</p>
+  </div>
+  <div class="fact-card">
+    <div class="label">Etape 2 — S'entrainer</div>
+    <p>Fais le quiz en bas de chaque page. Les questions sont au format QCM comme le vrai examen (4 choix, 1 seule bonne réponse).</p>
+  </div>
+  <div class="fact-card">
+    <div class="label">Etape 3 — Simuler</div>
+    <p>Quand tu te sens prête, lance la <a href="simulation.html" style="color:var(--rouge);font-weight:700;">Simulation d'examen</a> : 40 questions, 45 minutes chronométrées, conditions réelles.</p>
+  </div>
+
+  <div class="tip-box">
+    <strong>Conseil :</strong> Vise au moins <strong>90%</strong> à l'entrainement pour avoir de la marge le jour J. Le seuil officiel est a 80% (32/40), mais avec le stress, mieux vaut etre à l'aise.
+  </div>
+
+  <h2>Inscription à l'examen</h2>
+
+  <div class="fact-card">
+    <div class="label">Ou s'inscrire</div>
+    <p>L'examen est organisé par <strong>France Education International</strong> dans un reseau de centres agrees (CCI). La carte des centres est disponible sur leur site officiel.</p>
+  </div>
+  <div class="fact-card">
+    <div class="label">Demarche</div>
+    <p>Contacte le centre agree de ton choix pour t'inscrire, puis complète la pre-inscription en ligne.</p>
+  </div>
+  <div class="fact-card">
+    <div class="label">Qui doit passer l'examen</div>
+    <p>Toute personne residant en France dans le cadre d'une demande de <strong>naturalisation</strong>, d'une première demande ou renouvellement de <strong>carte de séjour pluriannuelle</strong>, ou d'une première demande de <strong>carte de resident</strong>.</p>
+  </div>
+
+  <h2>Sources officielles</h2>
+
+  <div class="fact-card">
+    <div class="label">Questions officielles</div>
+    <p><a href="https://www.data.gouv.fr/datasets/examen-civique-naturalisation-questions-de-connaissances-officielles-et-propositions-de-reponses" target="_blank" style="color:var(--bleu);font-weight:600;">data.gouv.fr — 258 questions de connaissances officielles</a></p>
+    <p style="font-size:0.9em;color:var(--muted);">Jeu de donnees publie par le Ministère de l'Intérieur, licence ouverte Etalab 2.0. Mis a jour le 24 mars 2026.</p>
+  </div>
+  <div class="fact-card">
+    <div class="label">Livret du citoyen</div>
+    <p><a href="https://www.immigration.interieur.gouv.fr/Integration-et-Acces-a-la-nationalite/La-nationalite-francaise/Le-livret-du-citoyen" target="_blank" style="color:var(--bleu);font-weight:600;">immigration.interieur.gouv.fr — Livret du citoyen</a></p>
+    <p style="font-size:0.9em;color:var(--muted);">Document officiel du Ministère de l'Intérieur. Toutes les questions de l'examen civique sont basees sur son contenu.</p>
+  </div>
+  <div class="fact-card">
+    <div class="label">Informations candidats</div>
+    <p><a href="https://www.france-education-international.fr/examen-civique/examen-civique-informations-pour-les-candidats?langue=fr" target="_blank" style="color:var(--bleu);font-weight:600;">France Education International — Examen civique</a></p>
+    <p style="font-size:0.9em;color:var(--muted);">Organisme agree pour l'organisation de l'examen. Informations sur l'inscription, les centres agrees et les resultats.</p>
+  </div>
+  <div class="fact-card">
+    <div class="label">Texte reglementaire</div>
+    <p><a href="https://www.service-public.gouv.fr/particuliers/actualites/A18713" target="_blank" style="color:var(--bleu);font-weight:600;">Service-public.fr — Nouvel examen civique</a></p>
+    <p style="font-size:0.9em;color:var(--muted);">Decret 2025-1345 et arrete du 10 octobre 2025. Format, programme et modalites de l'examen.</p>
+  </div>
+  <div class="fact-card">
+    <div class="label">Demarche de naturalisation</div>
+    <p><a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F2213" target="_blank" style="color:var(--bleu);font-weight:600;">Service-public.fr — Naturalisation par decret</a></p>
+    <p style="font-size:0.9em;color:var(--muted);">Conditions, pieces justificatives, delais et procedure complète de demande de naturalisation.</p>
+  </div>
+
+  <div class="footer">
+    Guide de préparation à l'examen civique de naturalisation française &mdash; Base sur les 258 questions officielles du Ministère de l'Intérieur
+  </div>
+</div>
+
+<script src="quiz-engine.js"></script>
+</body>
+</html>

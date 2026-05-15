@@ -1,0 +1,2888 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Learning Hub - Caother</title>
+<style>
+:root {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface2: #eef1f6;
+  --border: #dde1e8;
+  --text: #1a1d27;
+  --text2: #5f6980;
+  --accent: #4a6adf;
+  --accent2: #3b58c0;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --orange: #ea580c;
+  --orange-bg: #fff7ed;
+  --purple: #7c3aed;
+  --yellow: #b45309;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex; align-items: center; gap: 8px;
+  height: 56px;
+  overflow-x: auto;
+}
+nav .logo {
+  font-weight: 700; font-size: 16px;
+  color: var(--accent);
+  white-space: nowrap;
+  margin-right: 16px;
+}
+nav button {
+  background: none; border: none; color: var(--text2);
+  padding: 8px 16px; cursor: pointer; font-size: 14px;
+  border-radius: 8px; white-space: nowrap;
+  transition: all 0.2s;
+}
+nav button:hover { background: var(--surface2); color: var(--text); }
+nav button.active { background: var(--accent); color: #fff; }
+nav { box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+
+/* MAIN */
+main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+.section { display: none; }
+.section.active { display: block; }
+
+h1 { font-size: 28px; margin-bottom: 8px; }
+h2 { font-size: 22px; margin: 32px 0 16px; color: var(--accent); }
+h3 { font-size: 18px; margin: 24px 0 12px; }
+p { margin-bottom: 12px; color: var(--text2); }
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent2); }
+.btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover { background: var(--border); }
+.btn-success { background: var(--green); color: #000; }
+.btn-danger { background: var(--red); color: #000; }
+.btn-sm { padding: 6px 14px; font-size: 13px; }
+
+/* TAGS */
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-orange { background: var(--orange-bg); color: var(--orange); }
+.tag-purple { background: rgba(167,139,250,0.15); color: var(--purple); }
+
+/* PROGRESS BAR */
+.progress-bar {
+  width: 100%; height: 8px;
+  background: var(--surface2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 0.5s;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+}
+th, td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+th { color: var(--text2); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+tr:hover { background: var(--surface2); }
+
+/* FLASHCARD */
+.flashcard-container { perspective: 1000px; margin: 24px auto; max-width: 500px; }
+.flashcard {
+  width: 100%; min-height: 220px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  cursor: pointer;
+}
+.flashcard.flipped { transform: rotateY(180deg); }
+.flashcard-face {
+  position: absolute; width: 100%; min-height: 220px;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 32px;
+  text-align: center;
+}
+.flashcard-front {
+  background: linear-gradient(135deg, #ffffff, #f0f4ff);
+  border: 2px solid var(--border);
+}
+.flashcard-back {
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+  border: 2px solid var(--accent);
+  transform: rotateY(180deg);
+}
+.flashcard-word { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.flashcard-stress { font-size: 18px; color: var(--text2); margin-bottom: 10px; letter-spacing: 1px; }
+.flashcard-stress .stressed { color: var(--accent); font-weight: 700; }
+.flashcard-type { color: var(--text2); font-size: 14px; margin-bottom: 12px; }
+.flashcard-def { font-size: 16px; color: var(--text); }
+.flashcard-example { font-size: 14px; color: var(--text2); margin-top: 12px; font-style: italic; }
+.flashcard-controls {
+  display: flex; gap: 12px; justify-content: center;
+  margin-top: 20px; flex-wrap: wrap;
+}
+.flashcard-counter { text-align: center; color: var(--text2); margin-bottom: 12px; font-size: 14px; }
+.flashcard-filter {
+  display: flex; gap: 8px; justify-content: center;
+  margin-bottom: 20px; flex-wrap: wrap;
+}
+
+/* ORAL SIMULATOR */
+.oral-question {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.oral-question h3 { color: var(--yellow); font-size: 20px; }
+.oral-timer {
+  font-size: 48px; font-weight: 700;
+  color: var(--accent);
+  margin: 16px 0;
+  font-variant-numeric: tabular-nums;
+}
+.self-eval { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+.self-eval button { min-width: 140px; }
+
+/* CHECKLIST */
+.checklist-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.checklist-item:hover { border-color: var(--accent); }
+.checklist-item.done { opacity: 0.6; text-decoration: line-through; }
+.checklist-check {
+  width: 22px; height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.checklist-item.done .checklist-check {
+  background: var(--green); border-color: var(--green);
+}
+
+/* GRAMMAR */
+.grammar-rule {
+  background: var(--surface);
+  border-left: 4px solid var(--accent);
+  padding: 20px 24px;
+  border-radius: 0 12px 12px 0;
+  margin-bottom: 16px;
+}
+.grammar-rule h4 { color: var(--accent); margin-bottom: 8px; }
+.grammar-example {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-top: 12px;
+}
+.grammar-wrong {
+  background: var(--red-bg);
+  border: 1px solid rgba(248,113,113,0.3);
+  padding: 12px; border-radius: 8px; font-size: 14px;
+}
+.grammar-right {
+  background: var(--green-bg);
+  border: 1px solid rgba(74,222,128,0.3);
+  padding: 12px; border-radius: 8px; font-size: 14px;
+}
+.grammar-quiz-option {
+  display: block; width: 100%;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  color: var(--text);
+  padding: 14px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  text-align: left;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+}
+.grammar-quiz-option:hover { border-color: var(--accent); }
+.grammar-quiz-option.correct { border-color: var(--green); background: var(--green-bg); }
+.grammar-quiz-option.wrong { border-color: var(--red); background: var(--red-bg); }
+
+/* ERROR LOG */
+.error-entry {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+.error-entry .wrong-text { color: var(--red); text-decoration: line-through; }
+.error-entry .right-text { color: var(--green); font-weight: 600; }
+.error-entry .rule { color: var(--text2); font-size: 13px; margin-top: 6px; }
+
+/* STATS */
+.stat-number { font-size: 36px; font-weight: 700; color: var(--accent); }
+.stat-label { color: var(--text2); font-size: 14px; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+
+/* TEXTAREA */
+textarea {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 14px;
+  font-family: inherit;
+  font-size: 15px;
+  resize: vertical;
+  min-height: 120px;
+}
+textarea:focus { outline: none; border-color: var(--accent); }
+input[type="text"], select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+input[type="text"]:focus, select:focus { outline: none; border-color: var(--accent); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 0 12px; }
+  main { padding: 20px 16px; }
+  .grammar-example { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ANIMATION */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.section.active { animation: fadeIn 0.3s ease; }
+
+/* TASK 1 TRAINER */
+.t1-mode-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr));
+  gap:12px; margin-bottom:28px;
+}
+.t1-mode-card {
+  background:var(--surface); border:2px solid var(--border); border-radius:14px;
+  padding:16px; cursor:pointer; text-align:center; transition:all .25s;
+}
+.t1-mode-card:hover { border-color:var(--purple); transform:translateY(-2px); box-shadow:0 4px 12px rgba(124,58,237,.1); }
+.t1-mode-card.active { border-color:var(--purple); background:rgba(124,58,237,.06); box-shadow:0 0 0 3px rgba(124,58,237,.12); }
+.t1-mode-card .mode-icon { font-size:28px; margin-bottom:6px; }
+.t1-mode-card .mode-name { font-size:14px; font-weight:700; color:var(--text); }
+.t1-mode-card .mode-desc { font-size:11px; color:var(--text2); margin-top:4px; line-height:1.4; }
+
+.t1-task-bar {
+  display:flex; gap:8px; align-items:center; margin-bottom:20px;
+  padding:12px 16px; background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; flex-wrap:wrap;
+}
+.t1-task-bar select {
+  font-size:15px; font-weight:600; padding:8px 12px;
+  border-radius:8px; border:2px solid var(--purple); background:var(--surface);
+  color:var(--purple); cursor:pointer; min-width:200px;
+}
+.t1-task-bar .task-info { font-size:13px; color:var(--text2); margin-left:8px; }
+
+.t1-q-selector { display:flex; gap:12px; margin-bottom:24px; }
+.t1-q-btn {
+  flex:1; padding:14px; border-radius:12px; border:2px solid var(--border);
+  background:var(--surface); cursor:pointer; text-align:center; transition:all .2s;
+}
+.t1-q-btn:hover { border-color:var(--purple); }
+.t1-q-btn.active { border-color:var(--purple); background:rgba(124,58,237,.08); }
+.t1-q-btn .q-num { font-size:24px; font-weight:700; color:var(--purple); }
+.t1-q-btn .q-label { font-size:12px; color:var(--text2); margin-top:4px; }
+.t1-q-btn .q-status { margin-top:6px; }
+
+.t1-chunk {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:20px; margin-bottom:12px; transition:all .2s;
+}
+.t1-chunk.active-chunk { border-color:var(--purple); box-shadow:0 0 0 3px rgba(124,58,237,.12); }
+.t1-chunk .chunk-label {
+  font-size:11px; text-transform:uppercase; letter-spacing:1px;
+  color:var(--purple); font-weight:700; margin-bottom:8px;
+}
+.t1-chunk .chunk-text { font-size:16px; line-height:1.7; }
+.t1-chunk .chunk-keywords {
+  margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;
+}
+.t1-chunk .chunk-keywords span {
+  background:rgba(124,58,237,.1); color:var(--purple);
+  padding:4px 10px; border-radius:16px; font-size:12px; font-weight:600;
+}
+
+.t1-blank {
+  display:inline-block; min-width:100px; border-bottom:2px dashed var(--purple);
+  padding:2px 8px; margin:0 2px; cursor:pointer; transition:all .2s;
+  font-size:16px; color:transparent; background:rgba(124,58,237,.06);
+  border-radius:4px; user-select:none;
+}
+.t1-blank.revealed { color:var(--purple); font-weight:600; background:rgba(124,58,237,.1); border-bottom-style:solid; }
+.t1-blank:hover { background:rgba(124,58,237,.15); }
+
+.t1-fill-input {
+  display:inline-block; min-width:120px; border:none; border-bottom:2px solid var(--border);
+  padding:4px 8px; font-size:16px; font-family:inherit; background:transparent;
+  color:var(--text); transition:border-color .2s;
+}
+.t1-fill-input:focus { outline:none; border-color:var(--purple); }
+.t1-fill-input.correct { border-color:var(--green); color:var(--green); }
+.t1-fill-input.wrong { border-color:var(--red); color:var(--red); }
+
+.t1-progress-ring {
+  display:flex; gap:24px; align-items:center; justify-content:center;
+  margin:20px 0;
+}
+.t1-ring { text-align:center; }
+.t1-ring svg { width:80px; height:80px; }
+.t1-ring circle { fill:none; stroke-width:6; stroke-linecap:round; }
+.t1-ring .ring-bg { stroke:var(--surface2); }
+.t1-ring .ring-fill { stroke:var(--purple); transition:stroke-dashoffset .5s; transform:rotate(-90deg); transform-origin:center; }
+.t1-ring .ring-label { font-size:12px; color:var(--text2); margin-top:4px; }
+
+.t1-record-btn {
+  width:64px; height:64px; border-radius:50%; border:3px solid var(--red);
+  background:transparent; cursor:pointer; display:flex; align-items:center;
+  justify-content:center; transition:all .2s; margin:0 auto;
+}
+.t1-record-btn:hover { background:rgba(220,38,38,.1); }
+.t1-record-btn.recording { background:var(--red); animation:pulse 1.5s infinite; }
+.t1-record-btn .rec-dot { width:24px; height:24px; border-radius:50%; background:var(--red); transition:all .2s; }
+.t1-record-btn.recording .rec-dot { border-radius:4px; width:20px; height:20px; background:#fff; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.4)} 50%{box-shadow:0 0 0 12px rgba(220,38,38,0)} }
+
+.t1-attempt-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:14px 18px; margin-bottom:8px; display:flex; align-items:center; gap:12px;
+}
+.t1-attempt-card audio { height:32px; flex:1; }
+
+.t1-trap-card {
+  background:var(--red-bg); border:1px solid rgba(220,38,38,.2); border-radius:10px;
+  padding:14px 18px; margin-bottom:8px;
+}
+.t1-trap-card .trap-wrong { color:var(--red); text-decoration:line-through; font-weight:600; }
+.t1-trap-card .trap-right { color:var(--green); font-weight:600; }
+.t1-trap-card .trap-tip { color:var(--text2); font-size:13px; margin-top:4px; }
+
+/* HOMEWORK */
+.hw-task {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.hw-task h4 { color: var(--yellow); margin-bottom: 12px; }
+.hw-tip {
+  background: rgba(108,140,255,0.1);
+  border: 1px solid rgba(108,140,255,0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 14px;
+}
+.hw-model {
+  background: var(--green-bg);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 14px;
+  margin: 12px 0;
+  display: none;
+}
+
+/* KEY SENTENCES */
+.sentence-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 8px;
+  display: flex; justify-content: space-between;
+  align-items: center; gap: 12px;
+}
+.sentence-card .sentence-text { flex: 1; font-size: 15px; }
+.sentence-card .sentence-lesson { color: var(--text2); font-size: 12px; white-space: nowrap; }
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 32px; }
+.timeline::before {
+  content: ''; position: absolute; left: 12px; top: 0; bottom: 0;
+  width: 2px; background: var(--border);
+}
+.timeline-item {
+  position: relative; margin-bottom: 24px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.timeline-item::before {
+  content: ''; position: absolute;
+  left: -26px; top: 20px;
+  width: 12px; height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+}
+.timeline-date { color: var(--text2); font-size: 13px; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">EN Hub</span>
+  <button class="active" onclick="showSection('dashboard')">Dashboard</button>
+  <button onclick="showSection('vocab')">Vocabulaire</button>
+  <button onclick="showSection('grammar')">Grammaire</button>
+  <button onclick="showSection('sentences')">Phrases-cles</button>
+  <button onclick="showSection('oral')">Oral Drill</button>
+  <button onclick="showSection('task1')" style="background:rgba(124,58,237,.1);color:var(--purple);font-weight:700">Entrainement</button>
+  <button onclick="showSection('homework')">Devoirs</button>
+  <button onclick="showSection('errors')">Erreurs</button>
+  <button onclick="showSection('progress')">Progression</button>
+</nav>
+
+<main>
+
+<!-- ============ DASHBOARD ============ -->
+<div id="dashboard" class="section active">
+  <h1>English Learning Hub</h1>
+  <p>Cours Preply - Preparation entretiens techniques - Niveau B2 &rarr; C1</p>
+
+  <div class="stats-grid" style="margin-top:24px">
+    <div class="card" style="text-align:center">
+      <div class="stat-number">7</div>
+      <div class="stat-label">Lessons</div>
+    </div>
+    <div class="card" style="text-align:center">
+      <div class="stat-number" id="vocab-mastered">0</div>
+      <div class="stat-label">Mots appris</div>
+    </div>
+    <div class="card" style="text-align:center">
+      <div class="stat-number" id="sentences-mastered">0</div>
+      <div class="stat-label">Phrases maitrisees</div>
+    </div>
+    <div class="card" style="text-align:center">
+      <div class="stat-number" id="error-count">0</div>
+      <div class="stat-label">Erreurs tracees</div>
+    </div>
+  </div>
+
+  <h2>A faire maintenant</h2>
+  <div id="dashboard-todo"></div>
+
+  <h2>Dernier cours : Lesson 8 (12 mai 2026)</h2>
+  <div class="card">
+    <h3>Points cles</h3>
+    <ul style="margin-left:20px; color:var(--text2)">
+      <li>Past perfect pour storytelling : "Before [past perfect] ... I [past simple] ... which meant that [result]."</li>
+      <li>Mock interview complet : 6 questions, propres mots, pas de pause</li>
+      <li>Chatter Learning : introduction en anglais devant 8 inconnus, 5 en materials science</li>
+      <li>Idiome : "to go the extra mile" - connecte au perfectionnisme</li>
+      <li>Mot a remplacer : "exigeant" &rarr; "demanding" / "high standards"</li>
+    </ul>
+  </div>
+
+  <h2>Tes points forts</h2>
+  <div class="card-grid">
+    <div class="card">
+      <span class="tag tag-green">Force</span>
+      <p style="margin-top:8px; color:var(--text)">Comprehension B2 - tu comprends les videos techniques sans sous-titres</p>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">Force</span>
+      <p style="margin-top:8px; color:var(--text)">Auto-correction naturelle (ex: "peoples" &rarr; "people" en plein milieu de phrase)</p>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">Force</span>
+      <p style="margin-top:8px; color:var(--text)">Role plays fluides - tu brises la glace, tu poses des questions, tu conclus proprement</p>
+    </div>
+  </div>
+
+  <h2>Tes axes de travail</h2>
+  <div class="card-grid">
+    <div class="card">
+      <span class="tag tag-red">Priorite</span>
+      <p style="margin-top:8px; color:var(--text)">Remplacer "exigeant" par "demanding" / "high standards" avant tout entretien</p>
+    </div>
+    <div class="card">
+      <span class="tag tag-orange">A travailler</span>
+      <p style="margin-top:8px; color:var(--text)">Prepositions : "interested in" (pas by), "tested on" (pas in), "expertise in" (pas on)</p>
+    </div>
+    <div class="card">
+      <span class="tag tag-orange">A travailler</span>
+      <p style="margin-top:8px; color:var(--text)">Past perfect en storytelling : placer le chiffre 20-100% dans la reponse d'ouverture</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ VOCABULARY ============ -->
+<div id="vocab" class="section">
+  <h1>Vocabulaire</h1>
+  <p>78+ mots couverts en 8 lecons. Clique sur la carte pour voir la traduction.</p>
+
+  <div class="flashcard-filter">
+    <button class="btn btn-sm btn-secondary flashcard-filter-btn active" data-filter="all">Tous</button>
+    <button class="btn btn-sm btn-secondary flashcard-filter-btn" data-filter="2">L2</button>
+    <button class="btn btn-sm btn-secondary flashcard-filter-btn" data-filter="3">L3</button>
+    <button class="btn btn-sm btn-secondary flashcard-filter-btn" data-filter="4">L4</button>
+    <button class="btn btn-sm btn-secondary flashcard-filter-btn" data-filter="5">L5</button>
+    <button class="btn btn-sm btn-secondary flashcard-filter-btn" data-filter="6">L6</button>
+    <button class="btn btn-sm btn-secondary flashcard-filter-btn" data-filter="7">L7</button>
+    <button class="btn btn-sm btn-secondary flashcard-filter-btn" data-filter="8">L8</button>
+    <button class="btn btn-sm btn-secondary flashcard-filter-btn" data-filter="tech">Technique</button>
+    <button class="btn btn-sm btn-secondary flashcard-filter-btn" data-filter="hard">Difficiles</button>
+  </div>
+
+  <div class="flashcard-counter" id="fc-counter">1 / 78</div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="flashcard-face flashcard-front">
+        <div class="flashcard-word" id="fc-word"></div>
+        <div class="flashcard-stress" id="fc-stress"></div>
+        <div class="flashcard-type" id="fc-type"></div>
+        <div class="flashcard-example" id="fc-hint"></div>
+      </div>
+      <div class="flashcard-face flashcard-back">
+        <div class="flashcard-def" id="fc-def"></div>
+        <div class="flashcard-example" id="fc-example"></div>
+        <div style="margin-top:12px; font-size:13px; color:var(--text2)" id="fc-lesson"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-controls">
+    <button class="btn btn-danger btn-sm" onclick="rateCard('hard')">Difficile</button>
+    <button class="btn btn-secondary btn-sm" onclick="rateCard('ok')">Moyen</button>
+    <button class="btn btn-success btn-sm" onclick="rateCard('easy')">Facile</button>
+    <button class="btn btn-primary btn-sm" onclick="nextCard()">Suivante &rarr;</button>
+  </div>
+
+  <h2>Glossaire Traitements de Surface</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>English</th><th>Francais</th><th>Maitrise</th></tr></thead>
+      <tbody id="tech-glossary"></tbody>
+    </table>
+  </div>
+
+  <h2>Idiomes</h2>
+  <div class="card-grid" id="idioms-grid"></div>
+</div>
+
+<!-- ============ GRAMMAR ============ -->
+<div id="grammar" class="section">
+  <h1>Grammaire</h1>
+  <p>7 points couverts en 8 lecons. Revise les regles et teste-toi.</p>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
+    <button class="btn btn-sm btn-primary" onclick="showGrammarTopic('all')">Tout</button>
+    <button class="btn btn-sm btn-secondary" onclick="showGrammarTopic('tenses')">Temps verbaux</button>
+    <button class="btn btn-sm btn-secondary" onclick="showGrammarTopic('modals')">Modaux</button>
+    <button class="btn btn-sm btn-secondary" onclick="showGrammarTopic('indirect')">Questions indirectes</button>
+    <button class="btn btn-sm btn-secondary" onclick="showGrammarTopic('pastperfect')">Past perfect</button>
+    <button class="btn btn-sm btn-secondary" onclick="showGrammarTopic('quiz')">Quiz</button>
+  </div>
+
+  <div id="grammar-rules"></div>
+  <div id="grammar-quiz" style="display:none"></div>
+</div>
+
+<!-- ============ KEY SENTENCES ============ -->
+<div id="sentences" class="section">
+  <h1>42 Phrases-cles</h1>
+  <p>A reciter tous les jours. Filtre par lecon ou par theme.</p>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+    <button class="btn btn-sm btn-primary sent-filter active" data-lesson="all">Toutes</button>
+    <button class="btn btn-sm btn-secondary sent-filter" data-lesson="2">L2</button>
+    <button class="btn btn-sm btn-secondary sent-filter" data-lesson="3">L3</button>
+    <button class="btn btn-sm btn-secondary sent-filter" data-lesson="4">L4</button>
+    <button class="btn btn-sm btn-secondary sent-filter" data-lesson="5">L5</button>
+    <button class="btn btn-sm btn-secondary sent-filter" data-lesson="6">L6</button>
+    <button class="btn btn-sm btn-secondary sent-filter" data-lesson="7">L7</button>
+    <button class="btn btn-sm btn-secondary sent-filter" data-lesson="8">L8</button>
+  </div>
+
+  <div id="sentences-list"></div>
+
+  <h2>Mode recitation</h2>
+  <div class="card">
+    <p>Cache la phrase, essaie de la dire, puis revele pour verifier.</p>
+    <button class="btn btn-primary" onclick="startRecitation()">Commencer la recitation</button>
+    <div id="recitation-area" style="margin-top:20px; display:none">
+      <div class="oral-question">
+        <p style="color:var(--yellow); font-size:14px" id="recit-lesson"></p>
+        <h3 id="recit-theme" style="margin-bottom:16px"></h3>
+        <div id="recit-sentence" style="font-size:20px; color:var(--text); filter:blur(8px); cursor:pointer; transition: filter 0.3s; padding: 16px" onclick="this.style.filter = this.style.filter === 'none' ? 'blur(8px)' : 'none'">
+        </div>
+        <p style="font-size:13px; color:var(--text2); margin-top:8px">Clique pour reveler / cacher</p>
+      </div>
+      <div style="display:flex; gap:12px; justify-content:center">
+        <button class="btn btn-danger btn-sm" onclick="recitRate('fail')">Pas su</button>
+        <button class="btn btn-success btn-sm" onclick="recitRate('pass')">Su !</button>
+        <button class="btn btn-primary btn-sm" onclick="nextRecit()">Suivante &rarr;</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ORAL DRILL ============ -->
+<div id="oral" class="section">
+  <h1>Oral Drill - Simulateur d'entretien</h1>
+  <p>Entraine-toi a repondre aux questions sans notes. Le timer te donne le rythme.</p>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
+    <button class="btn btn-sm btn-primary" onclick="startOralDrill('pitch')">Pitch 30s</button>
+    <button class="btn btn-sm btn-secondary" onclick="startOralDrill('mock8')">Mock L8</button>
+    <button class="btn btn-sm btn-secondary" onclick="startOralDrill('thales')">Questions Thales</button>
+    <button class="btn btn-sm btn-secondary" onclick="startOralDrill('hard')">Questions difficiles</button>
+    <button class="btn btn-sm btn-secondary" onclick="startOralDrill('random')">Aleatoire</button>
+  </div>
+
+  <div id="oral-area">
+    <div class="oral-question" id="oral-question-card" style="display:none">
+      <p style="color:var(--text2); font-size:14px" id="oral-category"></p>
+      <h3 id="oral-question-text" style="margin-bottom:20px"></h3>
+      <div class="oral-timer" id="oral-timer">0:00</div>
+      <div style="display:flex; gap:12px; justify-content:center; margin-bottom:20px">
+        <button class="btn btn-primary" id="oral-start-btn" onclick="toggleOralTimer()">Commencer</button>
+        <button class="btn btn-secondary" onclick="nextOralQuestion()">Passer &rarr;</button>
+      </div>
+    </div>
+
+    <div id="oral-eval" style="display:none">
+      <h3 style="text-align:center; margin-bottom:16px">Comment c'etait ?</h3>
+      <div class="self-eval">
+        <button class="btn btn-danger" onclick="evalOral(1)">Bloquee</button>
+        <button class="btn btn-secondary" onclick="evalOral(2)">Laborieux</button>
+        <button class="btn btn-primary" onclick="evalOral(3)">Correct</button>
+        <button class="btn btn-success" onclick="evalOral(4)">Fluide !</button>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <h4 style="color:var(--yellow)">Points de repere</h4>
+        <div id="oral-hints" style="margin-top:12px"></div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h4 style="color:var(--purple)">Checklist post-reponse</h4>
+        <div id="oral-checklist"></div>
+      </div>
+
+      <div style="text-align:center; margin-top:16px">
+        <textarea id="oral-notes" placeholder="Notes : qu'est-ce qui a bloque ? Quel mot t'a manque ?"></textarea>
+        <button class="btn btn-primary" style="margin-top:8px" onclick="saveOralSession()">Sauvegarder & Suivante</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:24px">
+      <h3>Historique des sessions</h3>
+      <div id="oral-history">
+        <p>Aucune session enregistree. Lance un drill pour commencer.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TASK 1 TRAINER ============ -->
+<div id="task1" class="section">
+  <!-- Everything rendered dynamically by t1FullRender() -->
+  <div id="t1-root"></div>
+</div>
+
+<!-- ============ HOMEWORK ============ -->
+<div id="homework" class="section">
+  <h1>Devoirs</h1>
+  <p>Aide approfondie pour chaque devoir. Tu trouveras des guides, des modeles, et des zones de redaction.</p>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
+    <button class="btn btn-sm btn-primary hw-filter active" data-hw="current">En cours (L8)</button>
+    <button class="btn btn-sm btn-secondary hw-filter" data-hw="8">Lesson 8</button>
+    <button class="btn btn-sm btn-secondary hw-filter" data-hw="7">Lesson 7</button>
+    <button class="btn btn-sm btn-secondary hw-filter" data-hw="6">Lesson 6</button>
+    <button class="btn btn-sm btn-secondary hw-filter" data-hw="archive">Archives</button>
+  </div>
+
+  <!-- LESSON 6 TASK 1 -->
+  <div class="hw-task" data-hw="6" id="hw-l6t1">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h4>Lesson 6 - Task 1 : Oral Pitch (3 questions)</h4>
+      <span class="tag tag-green">Fait - L8</span>
+    </div>
+    <p>Prepare 3 reponses, dis-les 3 fois a voix haute, enregistre la 3eme. Pas de notes le jour J.</p>
+
+    <div class="hw-tip">
+      <strong>Pourquoi c'est difficile :</strong> Tu as le contenu dans la tete, mais le passage ecrit &rarr; oral bloque.
+      La methode : 1) Comprendre la structure 2) Reduire a des mots-cles 3) Parler depuis les mots-cles 4) Repeter jusqu'a l'automatisme.
+    </div>
+
+    <!-- Q1 -->
+    <div class="card" style="margin-top:16px">
+      <h4 style="color:var(--accent)">Q1 : "Tell me about yourself and your background"</h4>
+      <p><strong>Structure :</strong> Qui + Formation &rarr; Experience cle &rarr; Ce que je cherche</p>
+      <p><strong>Mots-cles a retenir :</strong> materials engineer, background, Aptar Group, industrial R&amp;D, material development, formulation, processing, characterisation, surface treatments, led, from scratch, industrialisation, patent applications, transition into, aeronautics</p>
+
+      <div class="hw-tip">
+        <strong>Technique :</strong> Imagine que tu rencontres quelqu'un a une conference. 30 secondes max.
+        <br>Piege #1 : ne dis pas "I lead" (present) mais "I led" (passe - c'est fini).
+        <br>Piege #2 : ne dis pas "I make testings" mais "I ran tests" / "I carried out tests".
+      </div>
+
+      <p style="font-size:13px;color:var(--text2);margin:8px 0">Ta version (travaille-la ici) :</p>
+      <textarea id="hw-l6t1-q1" placeholder="Hi, I am Caother. I am a materials engineer..." oninput="saveHomework()"></textarea>
+
+      <button class="btn btn-sm btn-secondary" style="margin-top:8px" onclick="toggleModel('model-l6t1-q1')">Voir le modele</button>
+      <div class="hw-model" id="model-l6t1-q1">
+        <strong>Modele :</strong> "My name is Caother Berriache. I am a materials engineer with a background in chemistry and materials science. At Aptar Group, I worked in industrial R&amp;D on two main areas: firstly, material development, including formulation, processing and characterisation, and secondly, surface treatments, where I led a coating development from scratch through to industrialisation. This work led to two patent applications. I am now looking to transition into surface treatment roles in aeronautics."
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="card" style="margin-top:16px">
+      <h4 style="color:var(--accent)">Q2 : "What has your experience with surface treatments been so far?"</h4>
+      <p><strong>Structure :</strong> Projet concret + chiffre &rarr; Activites quotidiennes &rarr; Transferabilite</p>
+      <p><strong>Mots-cles :</strong> led, surface treatment, industrial context, resistance 20 to 100%, R&D activities, material selection, characterisation, method not material</p>
+
+      <div class="hw-tip">
+        <strong>Le chiffre qui tue :</strong> "I improved the resistance from 20 up to 100 percent." Les recruteurs retiennent les chiffres.
+        <br><strong>La phrase finale :</strong> "What changes is the material, not the method." &larr; ca montre la transferabilite.
+      </div>
+
+      <p style="font-size:13px;color:var(--text2);margin:8px 0">Ta version :</p>
+      <textarea id="hw-l6t1-q2" placeholder="At Aptar, I led a surface treatment..." oninput="saveHomework()"></textarea>
+
+      <button class="btn btn-sm btn-secondary" style="margin-top:8px" onclick="toggleModel('model-l6t1-q2')">Voir le modele</button>
+      <div class="hw-model" id="model-l6t1-q2">
+        <strong>Modele :</strong> "At Aptar, I led a surface treatment development project in an industrial context. I ran various tests and improved the resistance of the treated materials from 20 up to 100 percent. Beyond this specific project, I also supported day-to-day R&D activities: material selection, characterisation, and qualification. The skills I built transfer directly across materials - what changes is the material, not the method."
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="card" style="margin-top:16px">
+      <h4 style="color:var(--accent)">Q3 : "Why are you interested in [company] specifically?"</h4>
+      <p><strong>Structure :</strong> Fait concret sur l'entreprise &rarr; Lien avec ton expertise &rarr; Ce que TU apportes</p>
+      <p><strong>Mots-cles :</strong> I have been following, what interests me, confident, productive quickly, testing methodology, analytical approach, I would bring</p>
+
+      <div class="hw-tip">
+        <strong>Piege principal :</strong> Ne pas parler de ce que le poste T'apporte, mais de ce que TU apportes a EUX.
+        <br><strong>Test :</strong> Remplace le nom de l'entreprise par un concurrent. Si ca marche encore, c'est trop generique. Ajoute un fait precis.
+        <br><strong>Adapte a chaque entreprise :</strong> Ce template est un squelette. Pour Thales : cite le sujet de recherche vitrimer/eau de mer.
+      </div>
+
+      <p style="font-size:13px;color:var(--text2);margin:8px 0">Ta version :</p>
+      <textarea id="hw-l6t1-q3" placeholder="What interests me about [company] is..." oninput="saveHomework()"></textarea>
+
+      <button class="btn btn-sm btn-secondary" style="margin-top:8px" onclick="toggleModel('model-l6t1-q3')">Voir le modele</button>
+      <div class="hw-model" id="model-l6t1-q3">
+        <strong>Exemple Thales :</strong> "I have been following Thales's work on materials for naval defence systems. What interests me is the research topic: studying how vitrimer materials age in seawater combines polymer science, which is my background, with a real industrial challenge. I am confident I can be productive quickly because the testing methodology and analytical approach I developed at Aptar transfer directly. I would bring a strong experimental background and a genuine drive to tackle complex material challenges."
+      </div>
+    </div>
+
+    <!-- Practice method -->
+    <div class="card" style="margin-top:16px; border-color:var(--purple)">
+      <h4 style="color:var(--purple)">Methode de pratique en 5 etapes</h4>
+      <div id="practice-checklist-l6t1">
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check"></div>
+          <span><strong>Etape 1 :</strong> Lis tes 3 reponses a voix haute 2 fois (lentement)</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check"></div>
+          <span><strong>Etape 2 :</strong> Cache le texte. Regarde seulement les mots-cles. Parle.</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check"></div>
+          <span><strong>Etape 3 :</strong> Sans rien. Dis ta reponse 3 fois. Enregistre la 3eme.</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check"></div>
+          <span><strong>Etape 4 :</strong> Reecoute : tu dis "led" ou "lead" ? "tests" ou "testings" ? Le chiffre 20-100% est la ?</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-check"></div>
+          <span><strong>Etape 5 :</strong> Utilise le Oral Drill (onglet "Oral") pour simuler avec timer.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON 7 TASK 1 (same as L6 - carried over) -->
+  <div class="hw-task" data-hw="7" id="hw-l7t1">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h4>Lesson 7 - Task 1 : Oral Pitch (report de L6)</h4>
+      <span class="tag tag-green">Fait - enregistrements presentes en L8</span>
+    </div>
+    <p>Meme exercice que L6 Task 1 mais avec les corrections de la Lesson 7. "No notes on the day. Just speak."</p>
+    <div class="hw-tip">
+      <strong>Nouveaute L7 :</strong> Utilise les questions indirectes dans tes reponses.
+      <br>Ex dans Q3 : "I was wondering what the day-to-day work looks like" au lieu de "What does the role look like?"
+    </div>
+    <p>Retourne a <a href="#" onclick="document.getElementById('hw-l6t1').scrollIntoView({behavior:'smooth'}); return false" style="color:var(--accent)">L6 Task 1</a> pour travailler tes reponses.</p>
+  </div>
+
+  <!-- LESSON 7 TASK 2 -->
+  <div class="hw-task" data-hw="7" id="hw-l7t2">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h4>Lesson 7 - Task 2 : Questions indirectes</h4>
+      <span class="tag tag-green">Fait - corrige en L8</span>
+    </div>
+    <p>Reecris ces 5 questions directes en utilisant les 3 ouvertures polies.</p>
+
+    <div class="hw-tip">
+      <strong>Les 3 ouvertures a memoriser :</strong>
+      <br>1. "Could you tell me..." &rarr; + phrase en ordre NORMAL (pas interrogatif)
+      <br>2. "I was wondering..." &rarr; + phrase en ordre normal
+      <br>3. "Do you mind me asking..." &rarr; + phrase en ordre normal
+      <br><br><strong>Le piege :</strong> En francais on garde l'ordre interrogatif. En anglais indirect, on revient a l'ordre normal.
+      <br>"What does the role involve?" &rarr; "Could you tell me what the role <u>involves</u>?" (PAS "what does the role involve")
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <table>
+        <thead><tr><th>Question directe</th><th>Ta version indirecte</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>What projects would I work on?</td>
+            <td><input type="text" style="width:100%" id="hw-l7t2-1" placeholder="Could you tell me..." oninput="saveHomework()"></td>
+          </tr>
+          <tr>
+            <td>When will you contact me with a decision?</td>
+            <td><input type="text" style="width:100%" id="hw-l7t2-2" placeholder="I was wondering..." oninput="saveHomework()"></td>
+          </tr>
+          <tr>
+            <td>How big is the team?</td>
+            <td><input type="text" style="width:100%" id="hw-l7t2-3" placeholder="Do you mind me asking..." oninput="saveHomework()"></td>
+          </tr>
+          <tr>
+            <td>What does the onboarding process look like?</td>
+            <td><input type="text" style="width:100%" id="hw-l7t2-4" placeholder="Could you tell me..." oninput="saveHomework()"></td>
+          </tr>
+          <tr>
+            <td>Is there a possibility of a permanent contract?</td>
+            <td><input type="text" style="width:100%" id="hw-l7t2-5" placeholder="I was wondering..." oninput="saveHomework()"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button class="btn btn-sm btn-secondary" style="margin-top:8px" onclick="toggleModel('model-l7t2')">Voir les reponses</button>
+    <div class="hw-model" id="model-l7t2">
+      <ol style="margin-left:16px">
+        <li>"Could you tell me what projects I would work on?"</li>
+        <li>"I was wondering when you might contact me with a decision."</li>
+        <li>"Do you mind me asking how big the team is?"</li>
+        <li>"Could you tell me what the onboarding process looks like?"</li>
+        <li>"I was wondering whether there might be a possibility of a permanent contract."</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- LESSON 7 TASK 3 -->
+  <div class="hw-task" data-hw="7" id="hw-l7t3">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h4>Lesson 7 - Task 3 : Debrief Monday conversation event</h4>
+      <span class="tag tag-green">Fait - debriefe en L8</span>
+    </div>
+    <p>Ecris 5 phrases en anglais apres l'evenement. Reponds a ces questions :</p>
+
+    <div class="card" style="margin-top:12px">
+      <p><strong>1. What did you talk about?</strong></p>
+      <textarea id="hw-l7t3-1" placeholder="I talked about..." oninput="saveHomework()" style="min-height:60px"></textarea>
+
+      <p style="margin-top:12px"><strong>2. What was easy?</strong></p>
+      <textarea id="hw-l7t3-2" placeholder="The easiest part was..." oninput="saveHomework()" style="min-height:60px"></textarea>
+
+      <p style="margin-top:12px"><strong>3. What was hard?</strong></p>
+      <textarea id="hw-l7t3-3" placeholder="I found it difficult to..." oninput="saveHomework()" style="min-height:60px"></textarea>
+
+      <p style="margin-top:12px"><strong>4. What surprised you?</strong></p>
+      <textarea id="hw-l7t3-4" placeholder="I was surprised that..." oninput="saveHomework()" style="min-height:60px"></textarea>
+
+      <p style="margin-top:12px"><strong>5. Phrase libre</strong></p>
+      <textarea id="hw-l7t3-5" placeholder="One thing I learned is..." oninput="saveHomework()" style="min-height:60px"></textarea>
+    </div>
+
+    <div class="hw-tip">
+      <strong>Aide :</strong> Utilise le present perfect pour les choses qui ont un impact maintenant :
+      <br>"I have realised that..." / "This experience has shown me that..."
+      <br>Utilise le past simple pour les evenements finis : "I met...", "We talked about...", "I found it hard to..."
+    </div>
+  </div>
+
+  <!-- LESSON 6 TASK 2 -->
+  <div class="hw-task" data-hw="6" id="hw-l6t2">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h4>Lesson 6 - Task 2 : Follow-up email</h4>
+      <span class="tag tag-orange">En cours</span>
+    </div>
+    <p>Ecris un email de follow-up (5-7 phrases). Ne copie PAS le modele - utilise les corrections comme guide.</p>
+
+    <div class="hw-tip">
+      <strong>Structure email :</strong>
+      <br>1. Subject line
+      <br>2. Remercier
+      <br>3. Renforcer l'interet (mention specifique de la conversation)
+      <br>4. Question de suivi specifique
+      <br>5. Phrase de cloture tournee vers l'avenir
+    </div>
+
+    <p style="font-size:13px;color:var(--text2);margin:8px 0">Subject :</p>
+    <input type="text" style="width:100%" id="hw-l6t2-subject" placeholder="Subject: Following up on..." oninput="saveHomework()">
+    <p style="font-size:13px;color:var(--text2);margin:8px 0">Email :</p>
+    <textarea id="hw-l6t2-body" placeholder="Dear [Name],
+
+Thank you so much for..." oninput="saveHomework()"></textarea>
+
+    <button class="btn btn-sm btn-secondary" style="margin-top:8px" onclick="toggleModel('model-l6t2')">Voir le modele</button>
+    <div class="hw-model" id="model-l6t2">
+      <strong>Modele :</strong>
+      <br>Subject: Following up on our conversation - Materials Engineer role
+      <br><br>Dear [Name],
+      <br><br>Thank you so much for taking the time to speak with me today. Our conversation made me even more enthusiastic about the role and about the work your team is doing.
+      <br><br>I was particularly interested in what you mentioned about [specific detail from conversation]. I believe my experience in surface treatments and material characterisation would be a strong fit for the challenges your team is tackling.
+      <br><br>Could you advise me on how I might strengthen my application? I would be happy to provide any additional information.
+      <br><br>I look forward to hearing from you.
+      <br><br>Best regards,
+      <br>Caother
+    </div>
+  </div>
+
+  <!-- LESSON 6 TASK 3 -->
+  <div class="hw-task" data-hw="6" id="hw-l6t3">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h4>Lesson 6 - Task 3 : Modal verbs drill</h4>
+      <span class="tag tag-orange">En cours</span>
+    </div>
+    <p>Reecris ces phrases en utilisant would / could / should / might :</p>
+
+    <div class="card" style="margin-top:12px">
+      <table>
+        <thead><tr><th>Phrase directe (trop rude)</th><th>Ta version polie</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>"Send me the job description when you have it"</td>
+            <td><input type="text" style="width:100%" id="hw-l6t3-1" placeholder="Could you..." oninput="saveHomework()"></td>
+          </tr>
+          <tr>
+            <td>"I need your feedback by Thursday"</td>
+            <td><input type="text" style="width:100%" id="hw-l6t3-2" placeholder="Would it be possible..." oninput="saveHomework()"></td>
+          </tr>
+          <tr>
+            <td>"Tell me more about the role"</td>
+            <td><input type="text" style="width:100%" id="hw-l6t3-3" placeholder="I would..." oninput="saveHomework()"></td>
+          </tr>
+          <tr>
+            <td>"You apply before the deadline if you want to be considered"</td>
+            <td><input type="text" style="width:100%" id="hw-l6t3-4" placeholder="You should..." oninput="saveHomework()"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button class="btn btn-sm btn-secondary" style="margin-top:8px" onclick="toggleModel('model-l6t3')">Voir les reponses</button>
+    <div class="hw-model" id="model-l6t3">
+      <ol style="margin-left:16px">
+        <li>"Could you send me the job description when you have it?"</li>
+        <li>"Would it be possible to have your feedback by Thursday?"</li>
+        <li>"I would be very interested to hear more about the role."</li>
+        <li>"You should consider applying before the deadline if you would like to be considered."</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- LESSON 8 TASK 1 -->
+  <div class="hw-task" data-hw="8 current" id="hw-l8t1">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h4>Lesson 8 - Task 1 : CAR structure (3 reponses)</h4>
+      <span class="tag tag-red">En cours</span>
+    </div>
+    <p>Ecris 3 reponses d'entretien en structure CAR (Context, Action, Result). 5-7 phrases chacune. Utilise le past perfect au moins 1 fois dans chaque contexte.</p>
+
+    <div class="hw-tip">
+      <strong>La formule past perfect :</strong> Before [past perfect] ... I [past simple] ... which meant that [result].
+      <br><strong>L'histoire du testing panel couvre les 3 :</strong> ecris 3 versions avec des angles legerement differents.
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h4 style="color:var(--accent)">Q1 : "Tell me about a time you took initiative."</h4>
+      <p><strong>Angle :</strong> Tu as cree un outil (le panel d'immersion chimique) qui n'existait pas.</p>
+      <div class="hw-tip">
+        <strong>Past perfect :</strong> "Before I introduced this method, each material <u>had been tested</u> individually, which was time-consuming."
+        <br><strong>Idiom :</strong> "I went the extra mile to build something that did not exist yet."
+      </div>
+      <p style="font-size:13px;color:var(--text2);margin:8px 0">Ta version :</p>
+      <textarea id="hw-l8t1-q1" placeholder="I took the initiative to develop..." oninput="saveHomework()"></textarea>
+
+      <button class="btn btn-sm btn-secondary" style="margin-top:8px" onclick="toggleModel('model-l8t1-q1')">Voir le modele</button>
+      <div class="hw-model" id="model-l8t1-q1">
+        <strong>Modele :</strong> "I took the initiative to develop a chemical immersion panel that allowed my team to test multiple materials simultaneously and select the most suitable approach for improving chemical resistance. Before I introduced this method, each material had been tested individually, which was time-consuming. I went the extra mile to build something that did not exist yet, which meant that the results we achieved were both reliable and reproducible."
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h4 style="color:var(--accent)">Q2 : "Tell me about a challenge you overcame."</h4>
+      <p><strong>Angle :</strong> Le probleme de resistance chimique + la methodo que tu as developpee.</p>
+      <div class="hw-tip">
+        <strong>Past perfect :</strong> "Because no methodology <u>had existed</u> for this material, I developed one from scratch."
+      </div>
+      <p style="font-size:13px;color:var(--text2);margin:8px 0">Ta version :</p>
+      <textarea id="hw-l8t1-q2" placeholder="When I started working on..." oninput="saveHomework()"></textarea>
+
+      <button class="btn btn-sm btn-secondary" style="margin-top:8px" onclick="toggleModel('model-l8t1-q2')">Voir le modele</button>
+      <div class="hw-model" id="model-l8t1-q2">
+        <strong>Modele :</strong> "When I started the coating project at Aptar, no standardised testing method had been established for this material. I had to design my own approach from scratch. I carried out a literature review, identified CVD as the most suitable technique, and coordinated external partners for the deposition. The compliance rate improved from 20 to 100 percent, which meant the project could move towards industrialisation."
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h4 style="color:var(--accent)">Q3 : "Tell me about a project you are proud of."</h4>
+      <p><strong>Angle :</strong> Le resultat complet : du POC a l'industrialisation.</p>
+      <div class="hw-tip">
+        <strong>Past perfect :</strong> "The results I achieved <u>would not have been possible</u> had I not redesigned the testing approach first."
+      </div>
+      <p style="font-size:13px;color:var(--text2);margin:8px 0">Ta version :</p>
+      <textarea id="hw-l8t1-q3" placeholder="The project I am most proud of..." oninput="saveHomework()"></textarea>
+
+      <button class="btn btn-sm btn-secondary" style="margin-top:8px" onclick="toggleModel('model-l8t1-q3')">Voir le modele</button>
+      <div class="hw-model" id="model-l8t1-q3">
+        <strong>Modele :</strong> "The project I am most proud of is the CVD coating development I led at Aptar. Before I joined the team, no standardised testing method had been established for this material. I took the initiative to develop one, coordinated external partners, and brought the compliance rate from 20 to 100 percent. The results would not have been possible had I not redesigned the testing approach first. This work led to two patent applications and the project moved towards industrialisation."
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON 8 TASK 2 -->
+  <div class="hw-task" data-hw="8 current" id="hw-l8t2">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h4>Lesson 8 - Task 2 : Remplacer "exigeant"</h4>
+      <span class="tag tag-red">En cours - avant tout entretien</span>
+    </div>
+    <p>Choisis UNE de ces 3 phrases, memorise-la, dis-la a voix haute jusqu'a ce qu'elle sorte avant "exigeant".</p>
+
+    <div class="card" style="margin-top:12px">
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checklist-check"></div>
+        <span style="font-size:16px">"I hold myself to very high standards."</span>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checklist-check"></div>
+        <span style="font-size:16px">"I am demanding of myself."</span>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checklist-check"></div>
+        <span style="font-size:16px">"I thrive in demanding environments."</span>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:var(--text2);margin:12px 0">Celle que tu choisis :</p>
+    <textarea id="hw-l8t2" placeholder="Ecris ta phrase choisie ici et repete-la..." oninput="saveHomework()" style="min-height:60px"></textarea>
+  </div>
+
+  <!-- LESSON 8 TASK 3 -->
+  <div class="hw-task" data-hw="8 current" id="hw-l8t3">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h4>Lesson 8 - Task 3 : "Go the extra mile" sentence</h4>
+      <span class="tag tag-orange">En cours</span>
+    </div>
+    <p>Ecris 1 phrase avec l'idiome "to go the extra mile" que tu pourrais dire naturellement en entretien, connectee a ton experience de stage. Dis-la 5 fois a voix haute.</p>
+
+    <div class="hw-tip">
+      <strong>Definition :</strong> To make more effort than is expected or required. To do something beyond what was asked.
+      <br><strong>Ton lien :</strong> Perfectionnisme + initiative au stage = aller au-dela de ce qui etait demande.
+    </div>
+
+    <p style="font-size:13px;color:var(--text2);margin:8px 0">Ta phrase :</p>
+    <textarea id="hw-l8t3" placeholder="When no testing methodology existed for..." oninput="saveHomework()" style="min-height:80px"></textarea>
+
+    <button class="btn btn-sm btn-secondary" style="margin-top:8px" onclick="toggleModel('model-l8t3')">Voir un exemple</button>
+    <div class="hw-model" id="model-l8t3">
+      <strong>Exemple :</strong> "When no testing methodology existed for her material, she went the extra mile and designed her own panel from scratch rather than waiting for someone to provide one."
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h4 style="color:var(--purple)">Repetitions</h4>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="checklist-check"></div><span>Repetition 1</span></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="checklist-check"></div><span>Repetition 2</span></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="checklist-check"></div><span>Repetition 3</span></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="checklist-check"></div><span>Repetition 4</span></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="checklist-check"></div><span>Repetition 5</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ ERRORS ============ -->
+<div id="errors" class="section">
+  <h1>Journal d'erreurs</h1>
+  <p>Toutes les erreurs relevees dans tes cours. Les plus frequentes remontent en haut.</p>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+    <button class="btn btn-sm btn-primary err-filter active" data-type="all">Toutes</button>
+    <button class="btn btn-sm btn-secondary err-filter" data-type="grammar">Grammaire</button>
+    <button class="btn btn-sm btn-secondary err-filter" data-type="vocab">Vocabulaire</button>
+    <button class="btn btn-sm btn-secondary err-filter" data-type="register">Registre</button>
+    <button class="btn btn-sm btn-secondary err-filter" data-type="french">Calque francais</button>
+  </div>
+
+  <div id="error-list"></div>
+
+  <h2>Ajouter une erreur</h2>
+  <div class="card">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px">
+      <div>
+        <label style="font-size:13px;color:var(--text2)">Ce que tu as dit :</label>
+        <input type="text" id="err-wrong" style="width:100%;margin-top:4px" placeholder="I make testings">
+      </div>
+      <div>
+        <label style="font-size:13px;color:var(--text2)">La bonne version :</label>
+        <input type="text" id="err-right" style="width:100%;margin-top:4px" placeholder="I ran tests">
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px">
+      <div>
+        <label style="font-size:13px;color:var(--text2)">Pourquoi :</label>
+        <input type="text" id="err-rule" style="width:100%;margin-top:4px" placeholder="'testings' n'existe pas en anglais">
+      </div>
+      <div>
+        <label style="font-size:13px;color:var(--text2)">Type :</label>
+        <select id="err-type" style="width:100%;margin-top:4px">
+          <option value="grammar">Grammaire</option>
+          <option value="vocab">Vocabulaire</option>
+          <option value="register">Registre</option>
+          <option value="french">Calque francais</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-sm" style="margin-top:12px" onclick="addError()">Ajouter</button>
+  </div>
+</div>
+
+<!-- ============ PROGRESS ============ -->
+<div id="progress" class="section">
+  <h1>Progression</h1>
+  <p>Ton evolution depuis la Trial lesson jusqu'a aujourd'hui.</p>
+
+  <h2>Niveau global</h2>
+  <div class="card">
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:24px; text-align:center">
+      <div>
+        <div style="font-size:13px;color:var(--text2)">Comprehension</div>
+        <div style="font-size:32px;font-weight:700;color:var(--green)">B2</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+      </div>
+      <div>
+        <div style="font-size:13px;color:var(--text2)">Expression orale</div>
+        <div style="font-size:32px;font-weight:700;color:var(--orange)">B1</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:50%; background:var(--orange)"></div></div>
+      </div>
+      <div>
+        <div style="font-size:13px;color:var(--text2)">Expression ecrite</div>
+        <div style="font-size:32px;font-weight:700;color:var(--accent)">B1+</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:58%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Timeline des lecons</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">Avril 2026 - Trial Lesson</div>
+      <strong>Evaluation initiale</strong>
+      <p>Comprehension B2, vocabulaire B1-B2, expression orale A2-B1. "Excellent receptive skills, passive knowledge ahead of active production."</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">22 avril - Lesson 2</div>
+      <strong>Present simple/past simple + Interview toolkit</strong>
+      <p>12 premiers mots + 6 phrases-cles. "My background is in chemistry and materials engineering."</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">26 avril - Lesson 3</div>
+      <strong>Present perfect + Career vision</strong>
+      <p>Video technique comprise sans sous-titres - "genuinely impressive at B2 level." Auto-correction "peoples" &rarr; "people".</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">28 avril - Lesson 4</div>
+      <strong>Resilience/pression + Glossaire technique</strong>
+      <p>10 termes techniques trouves en autonomie. 4 role plays reussis. "Whisper Flow" suggere (initiative proactive).</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">1 mai - Lesson 5</div>
+      <strong>Present perfect continuous + Networking</strong>
+      <p>3 role plays networking fluides. Decision strategique sur timing email follow-up. For/since maitrises.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">5 mai - Lesson 6</div>
+      <strong>Modal verbs + Communication pro</strong>
+      <p>Consolidation vocabulaire (qualite > quantite). Emails professionnels. "Too Rude or Too Right" game.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">8 mai - Lesson 7</div>
+      <strong>Questions indirectes + Interview phone/video</strong>
+      <p>Inscription au conversation event lundi. Mock call Thales reussi. Pitch 30s fluide avec conviction.</p>
+      <span class="tag tag-green" style="margin-top:8px">Milestone : confiance pour evenement en anglais</span>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">12 mai - Lesson 8</div>
+      <strong>Past perfect + Mock interview complet</strong>
+      <p>Chatter Learning : introduction devant 8 inconnus (5 en materials science). Mock interview 6 questions sans pause. Formule CAR maitrisee. "Exigeant" a remplacer par "demanding".</p>
+      <span class="tag tag-green" style="margin-top:8px">Milestone : premier evenement de conversation en anglais reussi</span>
+    </div>
+  </div>
+
+  <h2>Statistiques de revision</h2>
+  <div class="card">
+    <div id="revision-stats">
+      <p>Les statistiques se rempliront au fil de tes sessions de revision (flashcards, oral drills, recitations).</p>
+    </div>
+  </div>
+
+  <h2>Objectifs Lesson 9</h2>
+  <div class="card">
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="checklist-check"></div>
+      <span>3 reponses CAR ecrites avec past perfect</span>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="checklist-check"></div>
+      <span>Phrase "exigeant" remplacee et memorisee (demanding / high standards)</span>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="checklist-check"></div>
+      <span>1 phrase "go the extra mile" prete pour l'entretien</span>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="checklist-check"></div>
+      <span>Utiliser les future forms (will, going to, present continuous)</span>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="checklist-check"></div>
+      <span>Preparer le vocabulaire recherche/these en anglais</span>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="checklist-check"></div>
+      <span>Retourner au Chatter Learning lundi</span>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ==================== DATA ====================
+
+const VOCABULARY = [
+  // Lesson 2
+  {word:"internship",stress:"IN-tern-ship",type:"noun",def:"Stage en entreprise",example:"During my internship, I worked on polymers.",lesson:2,category:"interview"},
+  {word:"specialism",stress:"SPE-cial-ism",type:"noun",def:"Specialite, domaine d'expertise",example:"My specialism is materials science.",lesson:2,category:"interview"},
+  {word:"achievement",stress:"a-CHIEVE-ment",type:"noun",def:"Realisation, accomplissement",example:"One of my key achievements was developing the coating process.",lesson:2,category:"interview"},
+  {word:"strength",stress:"STRENGTH",type:"noun",def:"Point fort",example:"One of my main strengths is analytical thinking.",lesson:2,category:"interview"},
+  {word:"challenge",stress:"CHAL-lenge",type:"noun",def:"Defi, difficulte",example:"One challenge I overcame was building the panel from scratch.",lesson:2,category:"interview"},
+  {word:"background",stress:"BACK-ground",type:"noun",def:"Parcours, formation",example:"My background is in chemistry and materials engineering.",lesson:2,category:"interview"},
+  {word:"specialise",stress:"SPE-cial-ise",type:"verb",def:"Se specialiser",example:"I specialise in polymers.",lesson:2,category:"interview"},
+  {word:"contribute",stress:"con-TRIB-ute",type:"verb",def:"Contribuer",example:"I am motivated to contribute to a team.",lesson:2,category:"interview"},
+  {word:"develop",stress:"de-VEL-op",type:"verb",def:"Developper",example:"I developed a new coating process.",lesson:2,category:"interview"},
+  {word:"overcome",stress:"o-ver-COME",type:"verb",def:"Surmonter",example:"One challenge I overcame was...",lesson:2,category:"interview"},
+  {word:"demonstrate",stress:"DEM-on-strate",type:"verb",def:"Demontrer, prouver",example:"I can demonstrate my analytical skills.",lesson:2,category:"interview"},
+  {word:"achieve",stress:"a-CHIEVE",type:"verb",def:"Accomplir, atteindre",example:"I achieved a 100% improvement in resistance.",lesson:2,category:"interview"},
+
+  // Lesson 3
+  {word:"ambition",stress:"am-BI-tion",type:"noun",def:"Ambition",example:"My ambition is to work in aeronautics.",lesson:3,category:"career"},
+  {word:"vision",stress:"VI-sion",type:"noun",def:"Vision (plan a long terme)",example:"My long-term vision is to build expertise.",lesson:3,category:"career"},
+  {word:"expertise",stress:"ex-per-TISE",type:"noun",def:"Expertise, savoir-faire",example:"The experience I have gained has given me expertise.",lesson:3,category:"career"},
+  {word:"trajectory",stress:"tra-JEC-to-ry",type:"noun",def:"Trajectoire (de carriere)",example:"My career trajectory is moving towards metals.",lesson:3,category:"career"},
+  {word:"opportunity",stress:"op-por-TU-ni-ty",type:"noun",def:"Opportunite",example:"I am looking for opportunities in aeronautics.",lesson:3,category:"career"},
+  {word:"contribution",stress:"con-tri-BU-tion",type:"noun",def:"Contribution, apport",example:"My contribution would be a fresh perspective.",lesson:3,category:"career"},
+  {word:"aim",stress:"AIM",type:"verb",def:"Viser, avoir pour objectif",example:"I am aiming to transition into metallic materials.",lesson:3,category:"career"},
+  {word:"pursue",stress:"pur-SUE",type:"verb",def:"Poursuivre, chercher activement",example:"I am ready to pursue this role fully.",lesson:3,category:"career"},
+  {word:"transition",stress:"tran-SI-tion",type:"verb",def:"Transitionner, passer a",example:"I want to transition into metallic materials.",lesson:3,category:"career"},
+  {word:"expand",stress:"ex-PAND",type:"verb",def:"Elargir, etendre",example:"I want to expand into new areas.",lesson:3,category:"career"},
+  {word:"lead",stress:"LEAD (past: LED)",type:"verb",def:"Mener, diriger (past: led)",example:"I led the project from scratch.",lesson:3,category:"career"},
+  {word:"apply",stress:"a-PLY",type:"verb",def:"Postuler / appliquer",example:"I have been applying to companies.",lesson:3,category:"career"},
+
+  // Lesson 4
+  {word:"weakness",stress:"WEAK-ness",type:"noun",def:"Point faible, faiblesse",example:"One area I am working to improve is...",lesson:4,category:"resilience"},
+  {word:"resilience",stress:"re-SIL-ience",type:"noun",def:"Resilience, capacite a rebondir",example:"I handle pressure with resilience.",lesson:4,category:"resilience"},
+  {word:"setback",stress:"SET-back",type:"noun",def:"Revers, contretemps",example:"When I face a setback, I reflect and move forward.",lesson:4,category:"resilience"},
+  {word:"pressure",stress:"PRES-sure",type:"noun",def:"Pression",example:"I handle pressure by focusing on what I can control.",lesson:4,category:"resilience"},
+  {word:"gap",stress:"GAP",type:"noun",def:"Lacune, ecart",example:"I am actively working to close this gap.",lesson:4,category:"resilience"},
+  {word:"expectation",stress:"ex-pec-TA-tion",type:"noun",def:"Attente, exigence",example:"I aim to exceed expectations.",lesson:4,category:"resilience"},
+  {word:"handle",stress:"HAN-dle",type:"verb",def:"Gerer, faire face a",example:"I handle pressure by breaking problems into steps.",lesson:4,category:"resilience"},
+  {word:"adapt",stress:"a-DAPT",type:"verb",def:"S'adapter",example:"I adapt quickly to new environments.",lesson:4,category:"resilience"},
+  {word:"reflect",stress:"re-FLECT",type:"verb",def:"Reflechir, prendre du recul",example:"I take time to reflect on what I can learn.",lesson:4,category:"resilience"},
+  {word:"improve",stress:"im-PROVE",type:"verb",def:"Ameliorer, progresser",example:"One area I am working to improve is...",lesson:4,category:"resilience"},
+  {word:"recover",stress:"re-COV-er",type:"verb",def:"Se remettre, recuperer",example:"I recover from setbacks by focusing forward.",lesson:4,category:"resilience"},
+  {word:"acknowledge",stress:"ac-KNOW-ledge",type:"verb",def:"Reconnaitre, admettre",example:"I acknowledge my limitations and work on them.",lesson:4,category:"resilience"},
+
+  // Lesson 5
+  {word:"connection",stress:"con-NEC-tion",type:"noun",def:"Contact, lien professionnel",example:"I made a valuable connection at the event.",lesson:5,category:"networking"},
+  {word:"impression",stress:"im-PRES-sion",type:"noun",def:"Impression",example:"I want to make a good first impression.",lesson:5,category:"networking"},
+  {word:"introduction",stress:"in-tro-DUC-tion",type:"noun",def:"Presentation, introduction",example:"Let me give you a quick introduction.",lesson:5,category:"networking"},
+  {word:"common ground",stress:"COM-mon GROUND",type:"noun",def:"Point commun, terrain d'entente",example:"We found common ground in materials science.",lesson:5,category:"networking"},
+  {word:"follow-up",stress:"FOL-low-up",type:"noun",def:"Suivi, relance",example:"I sent a follow-up email the next day.",lesson:5,category:"networking"},
+  {word:"introduce",stress:"in-tro-DUCE",type:"verb",def:"Se presenter, presenter",example:"Hi, let me introduce myself.",lesson:5,category:"networking"},
+  {word:"connect",stress:"con-NECT",type:"verb",def:"Entrer en contact, se connecter",example:"I would love to connect with you on LinkedIn.",lesson:5,category:"networking"},
+  {word:"mention",stress:"MEN-tion",type:"verb",def:"Mentionner",example:"She mentioned an opening in her team.",lesson:5,category:"networking"},
+  {word:"exchange",stress:"ex-CHANGE",type:"verb",def:"Echanger",example:"We exchanged contact details.",lesson:5,category:"networking"},
+  {word:"follow up",stress:"FOL-low UP",type:"verb",def:"Faire un suivi, relancer",example:"I followed up with a thank-you email.",lesson:5,category:"networking"},
+  {word:"stand out",stress:"STAND OUT",type:"verb",def:"Se demarquer, sortir du lot",example:"My technical background helped me stand out.",lesson:5,category:"networking"},
+
+  // Lesson 6 (review focus)
+  {word:"touch base",stress:"TOUCH BASE",type:"idiom",def:"Prendre contact brievement, faire le point",example:"I just wanted to touch base about the interview.",lesson:6,category:"professional"},
+
+  // Lesson 7
+  {word:"agenda",stress:"a-GEN-da",type:"noun",def:"Ordre du jour, programme",example:"Could you share the agenda for the meeting?",lesson:7,category:"phone"},
+  {word:"clarification",stress:"cla-ri-fi-CA-tion",type:"noun",def:"Eclaircissement, precision",example:"I would appreciate some clarification on that point.",lesson:7,category:"phone"},
+  {word:"availability",stress:"a-vai-la-BIL-i-ty",type:"noun",def:"Disponibilite",example:"Could you let me know your availability?",lesson:7,category:"phone"},
+  {word:"rapport",stress:"ra-PORT",type:"noun",def:"Relation de confiance, bonne entente",example:"Building rapport is key in interviews.",lesson:7,category:"phone"},
+  {word:"initiative",stress:"i-NI-tia-tive",type:"noun",def:"Initiative, prise d'action",example:"I took the initiative to contact them.",lesson:7,category:"phone"},
+  {word:"bandwidth",stress:"BAND-width",type:"noun",def:"Capacite, disponibilite (argot pro)",example:"Do you have the bandwidth for a quick chat?",lesson:7,category:"phone"},
+  {word:"confirm",stress:"con-FIRM",type:"verb",def:"Confirmer",example:"Just to confirm, can you hear me clearly?",lesson:7,category:"phone"},
+  {word:"clarify",stress:"CLAR-i-fy",type:"verb",def:"Clarifier, preciser",example:"Could you clarify what you mean by that?",lesson:7,category:"phone"},
+  {word:"elaborate",stress:"e-LAB-o-rate",type:"verb",def:"Developper, detailler",example:"Could you elaborate on that point?",lesson:7,category:"phone"},
+  {word:"wrap up",stress:"WRAP UP",type:"verb",def:"Conclure, terminer",example:"I think we can wrap up here.",lesson:7,category:"phone"},
+  {word:"bear with",stress:"BEAR WITH",type:"verb",def:"Patienter, supporter",example:"Bear with me for just a moment.",lesson:7,category:"phone"},
+  {word:"reach out",stress:"REACH OUT",type:"verb",def:"Contacter, prendre contact",example:"I decided to reach out to them directly.",lesson:7,category:"phone"},
+
+  // Lesson 8
+  {word:"proof of concept",stress:"PROOF of CON-cept",type:"noun",def:"Preuve de concept (expression fixe, pas d'article avant concept)",example:"I developed the proof of concept before scaling up.",lesson:8,category:"interview"},
+  {word:"foundation",stress:"foun-DA-tion",type:"noun",def:"Base solide, fondation",example:"I believe that gives me a strong foundation to contribute quickly.",lesson:8,category:"interview"},
+  {word:"demanding",stress:"de-MAND-ing",type:"adj",def:"Exigeant (le mot que 'exigeant' devient en anglais)",example:"I thrive in demanding environments where the stakes are real.",lesson:8,category:"interview"},
+  {word:"high standards",stress:"HIGH STAN-dards",type:"noun",def:"Hautes exigences, standards eleves",example:"I hold myself to very high standards.",lesson:8,category:"interview"},
+  {word:"escalate",stress:"ES-ca-late",type:"verb",def:"Faire remonter, impliquer un groupe plus large",example:"If not, we escalate to the wider materials team.",lesson:8,category:"interview"},
+  {word:"assess",stress:"a-SSESS",type:"verb",def:"Evaluer, examiner",example:"I assess whether I have explored all the available options.",lesson:8,category:"interview"},
+];
+
+const TECH_GLOSSARY = [
+  {en:"Polishing",fr:"Polissage"},{en:"Sandblasting",fr:"Sablage"},{en:"Wire drawing",fr:"Trefilage"},
+  {en:"Grinding",fr:"Meulage"},{en:"Anodic oxidation",fr:"Oxydation anodique"},
+  {en:"PVD / sputtering",fr:"PVD / pulverisation cathodique"},{en:"Electroplating",fr:"Electrodeposition"},
+  {en:"Etching",fr:"Gravure chimique"}
+];
+
+const IDIOMS = [
+  {phrase:"To put your best foot forward",def:"Se presenter sous son meilleur jour",lesson:2},
+  {phrase:"To think outside the box",def:"Penser de maniere creative et non conventionnelle",lesson:3},
+  {phrase:"To bite the bullet",def:"Se forcer a faire quelque chose de difficile",lesson:4},
+  {phrase:"To break the ice",def:"Detendre une situation formelle",lesson:5},
+  {phrase:"To touch base",def:"Prendre contact brievement, faire le point",lesson:6},
+  {phrase:"To go the extra mile",def:"Faire plus que ce qui est attendu ou demande",lesson:8},
+];
+
+const KEY_SENTENCES = [
+  // Lesson 2
+  {text:"My background is in chemistry and materials engineering.",lesson:2,theme:"Introduction"},
+  {text:"I specialise in polymers, but I am looking to move into metallic materials.",lesson:2,theme:"Introduction"},
+  {text:"During my internship, I worked on developing new polymer composites.",lesson:2,theme:"Experience"},
+  {text:"One of my main strengths is my ability to analyse complex data.",lesson:2,theme:"Forces"},
+  {text:"One challenge I overcame was developing a chemical immersion panel from scratch.",lesson:2,theme:"Experience"},
+  {text:"I am really motivated to contribute to a team working on advanced materials.",lesson:2,theme:"Motivation"},
+  // Lesson 3
+  {text:"In the next two years, I am aiming to transition into metallic materials and surface treatments.",lesson:3,theme:"Vision"},
+  {text:"My long-term vision is to build expertise in materials science and eventually work as a freelance engineer.",lesson:3,theme:"Vision"},
+  {text:"The experience I have gained in polymers has given me a strong foundation to expand into new areas.",lesson:3,theme:"Transferabilite"},
+  {text:"I believe my contribution to your team would be a fresh perspective combined with strong analytical skills.",lesson:3,theme:"Valeur"},
+  {text:"I am always looking for opportunities to learn, grow, and take on more responsibility.",lesson:3,theme:"Motivation"},
+  {text:"I am excited about where this role could take my career, and I am ready to pursue it fully.",lesson:3,theme:"Motivation"},
+  // Lesson 4
+  {text:"One area I am working to improve is my experience with metallic materials, which is exactly why I am pursuing this role.",lesson:4,theme:"Faiblesse"},
+  {text:"After my internship, I have been actively applying and continuing to develop my knowledge independently.",lesson:4,theme:"Parcours"},
+  {text:"I handle pressure by focusing on what I can control and breaking the problem into smaller steps.",lesson:4,theme:"Pression"},
+  {text:"When I face a setback, I take time to reflect on what I can learn from it and then I move forward.",lesson:4,theme:"Resilience"},
+  {text:"That is a great question. Let me think for just a moment.",lesson:4,theme:"Gagner du temps"},
+  {text:"What I mean to say is that...",lesson:4,theme:"Se reformuler"},
+  // Lesson 5
+  {text:"Hi, I am Caother. I am a materials engineer, currently looking for opportunities in aeronautics.",lesson:5,theme:"Pitch"},
+  {text:"That is interesting, I actually have experience with surface treatments as well.",lesson:5,theme:"Networking"},
+  {text:"What kind of projects are you working on at the moment?",lesson:5,theme:"Networking"},
+  {text:"I would love to hear more about that. How long have you been working in that area?",lesson:5,theme:"Networking"},
+  {text:"I am really looking to transition into metallic materials and surface treatments.",lesson:5,theme:"Objectif"},
+  {text:"It was really great talking to you. Would it be okay if I followed up with you on LinkedIn?",lesson:5,theme:"Networking"},
+  // Lesson 6
+  {text:"Hi, I am Caother. Thank you so much for taking the time to speak with me today.",lesson:6,theme:"Ouverture appel"},
+  {text:"Just to confirm, can you hear me clearly?",lesson:6,theme:"Appel video"},
+  {text:"I am sorry, could you clarify what you mean by that?",lesson:6,theme:"Demander aide"},
+  {text:"That is a great question. Could I take just a moment to think about that?",lesson:6,theme:"Gagner du temps"},
+  {text:"Could you tell me a little more about what the day-to-day role looks like?",lesson:6,theme:"Questions"},
+  {text:"Thank you so much for your time today. I really look forward to the next steps.",lesson:6,theme:"Cloture appel"},
+  // Lesson 7
+  {text:"Hi, this is Caother. Thank you so much for taking the time to speak with me today.",lesson:7,theme:"Ouverture telephone"},
+  {text:"Just to confirm, can you hear me clearly?",lesson:7,theme:"Check audio"},
+  {text:"I am sorry, could you clarify what you mean by that?",lesson:7,theme:"Clarification"},
+  {text:"That is a great question. Could I take just a moment to think about that?",lesson:7,theme:"Gagner du temps"},
+  {text:"Could you tell me a little more about what the day-to-day role looks like?",lesson:7,theme:"Question polie"},
+  {text:"Thank you so much for your time today. I really look forward to the next steps.",lesson:7,theme:"Conclusion"},
+  // Lesson 8
+  {text:"I led that project from proof of concept through to industrialisation, and the compliance rate improved from 20 to 100 percent.",lesson:8,theme:"Pitch - resultat"},
+  {text:"I am now looking to bring that experience into the aeronautics sector.",lesson:8,theme:"Pitch - transition"},
+  {text:"Before I started testing, I had already completed a thorough literature review.",lesson:8,theme:"Past perfect"},
+  {text:"I hold myself to very high standards.",lesson:8,theme:"Exigeant - remplacement"},
+  {text:"I thrive in demanding environments where the stakes are real.",lesson:8,theme:"Exigeant - remplacement"},
+  {text:"When I face a setback, I first take a step back and assess whether I have explored all the available options.",lesson:8,theme:"Resilience"},
+];
+
+const ERRORS = [
+  {wrong:"I lead the project",right:"I led the project",rule:"Past simple pour les actions finies. 'Lead' est le present, 'led' est le passe.",type:"grammar",lesson:6,count:3},
+  {wrong:"I make testings",right:"I ran tests / I carried out tests",rule:"'Testings' n'existe pas en anglais. Utilise 'tests' (nom) ou 'testing' (gerondif).",type:"vocab",lesson:6,count:2},
+  {wrong:"all what I do",right:"everything I have done",rule:"Calque francais de 'tout ce que'. En anglais : 'everything' + present perfect.",type:"french",lesson:7,count:2},
+  {wrong:"You have to know",right:"I would like to point out",rule:"Trop direct en contexte professionnel. Utilise un modal pour adoucir.",type:"register",lesson:7,count:1},
+  {wrong:"it's not a big deal",right:"I'm confident I can be productive quickly",rule:"Registre trop familier pour un entretien. Reformuler de maniere professionnelle.",type:"register",lesson:7,count:1},
+  {wrong:"They say me",right:"They told me",rule:"'Say' n'accepte pas de COI direct. Utilise 'tell' + COI (they told me).",type:"grammar",lesson:6,count:1},
+  {wrong:"interest on my profile",right:"interested in my profile",rule:"Adjectif 'interested' + preposition 'in' (pas 'on'). 'Interest' est un nom.",type:"grammar",lesson:6,count:1},
+  {wrong:"I'm a junior engineer materials",right:"I'm a junior materials engineer",rule:"Ordre des adjectifs : l'adjectif (materials) avant le nom (engineer).",type:"grammar",lesson:6,count:1},
+  {wrong:"I see that you working",right:"I can see that you are working",rule:"Verbe manquant 'are'. Present continuous = sujet + are + verb-ing.",type:"grammar",lesson:6,count:1},
+  {wrong:"since one month",right:"for the past month",rule:"'Since' = point dans le temps (since January). 'For' = duree (for a month).",type:"grammar",lesson:5,count:2},
+  {wrong:"peoples",right:"people",rule:"'People' est deja pluriel. Jamais de 's'. ('Peoples' = peuples differents).",type:"vocab",lesson:5,count:1},
+  {wrong:"advise about",right:"advise on / advise me on how to",rule:"Le verbe 'advise' prend la preposition 'on' (pas 'about').",type:"vocab",lesson:7,count:1},
+  {wrong:"expand into",right:"transition into",rule:"Plus precis pour un changement de domaine. 'Expand' = elargir ce qu'on fait deja.",type:"vocab",lesson:3,count:1},
+  {wrong:"canalising",right:"channelling",rule:"Faux ami. 'Canaliser' en francais = 'channel' en anglais.",type:"french",lesson:5,count:1},
+  {wrong:"interested by",right:"interested in",rule:"Calque francais de 'interesse par'. En anglais : always 'interested in'.",type:"french",lesson:8,count:1},
+  {wrong:"the proof of the concept",right:"the proof of concept",rule:"Expression fixe. Pas d'article avant 'concept'.",type:"vocab",lesson:8,count:1},
+  {wrong:"tested it in laboratory samples",right:"tested it on laboratory samples",rule:"On teste quelque chose ON un echantillon (on applique le test a la surface), pas IN.",type:"grammar",lesson:8,count:1},
+  {wrong:"master degrees",right:"master's degree",rule:"Possessif + singulier. C'est le diplome DU master.",type:"grammar",lesson:8,count:1},
+  {wrong:"made me a strong knowledge",right:"gives me a strong foundation",rule:"'Knowledge' n'est pas quelque chose qu'on te 'fait'. Dire 'gives me a strong foundation'.",type:"vocab",lesson:8,count:1},
+  {wrong:"I think (en entretien)",right:"I believe",rule:"'I think' est trop informel en registre d'entretien. 'I believe' est plus professionnel.",type:"register",lesson:8,count:1},
+  {wrong:"my group",right:"my team",rule:"'Group' = scolaire. 'Team' = contexte professionnel.",type:"register",lesson:8,count:1},
+  {wrong:"exigeant",right:"demanding / high standards",rule:"'Exigeant' n'existe pas en anglais. Dire 'I hold myself to high standards' ou 'I thrive in demanding environments'.",type:"french",lesson:8,count:2},
+  {wrong:"on surface treatment expertise",right:"expertise in surface treatments",rule:"Pas naturel. Dire 'having developed expertise in surface treatments'.",type:"grammar",lesson:8,count:1},
+];
+
+const ORAL_QUESTIONS = [
+  // Pitch
+  {q:"Tell me about yourself and your background.",cat:"Pitch 30s",type:"pitch",hints:"Structure: Qui + Formation > Experience cle > Ce que je cherche. 30 secondes max. Dis 'led' pas 'lead'. Dis 'tests' pas 'testings'.",checklist:["J'ai dit mon nom et mon titre","J'ai mentionne Aptar","J'ai dit 'led' (pas 'lead')","J'ai fini par ce que je cherche","< 30 secondes"]},
+  {q:"What has your experience with surface treatments been so far?",cat:"Pitch 30s",type:"pitch",hints:"Chiffre 20>100%. 'What changes is the material, not the method.' R&D quotidienne en parallele.",checklist:["J'ai cite le chiffre 20-100%","J'ai dit 'ran tests' pas 'make testings'","J'ai montre la transferabilite","J'ai couvert projet + quotidien"]},
+  {q:"Why are you interested in [this company] specifically?",cat:"Pitch 30s",type:"pitch",hints:"Fait concret sur l'entreprise > Lien avec ton expertise > Ce que TU apportes. Test de substitution : si le nom de l'entreprise est remplacable, c'est trop generique.",checklist:["J'ai cite un fait precis sur l'entreprise","J'ai parle de CE QUE J'APPORTE","Je n'ai pas parle de ce que le poste M'apporte","Le test de substitution passe"]},
+  // Thales specific
+  {q:"Tell me about the surface coating project you developed at Aptar.",cat:"Thales",type:"thales",hints:"Storytelling : probleme > action > resultat. Chiffre. Pas de liste 'j'ai fait... j'ai aussi...'",checklist:["Storytelling (pas de liste)","Chiffre concret","Pas nomme Aptar une 2eme fois","Vocabulaire ingenieur"]},
+  {q:"How would you handle working on a material you have never studied before?",cat:"Thales",type:"thales",hints:"Cle : 'What changes is the material, not the method.' Methodo transferable. Curiosite + rigueur.",checklist:["'The method transfers'","Exemple concret de transferabilite","Posture confiante, pas defensive"]},
+  {q:"Why should we choose you over a candidate with more experience in metals?",cat:"Thales",type:"thales",hints:"Pas defensive. Tu APPORTES : oeil neuf, methodo rigoureuse, motivation. 'I am confident I can be productive quickly.'",checklist:["Pas defensive","Arguments positifs (pas 'malgre')","'I can be productive quickly'","Chiffre ou exemple"]},
+  // Hard questions
+  {q:"What is your biggest weakness?",cat:"Questions difficiles",type:"hard",hints:"Perfectionnisme + strategie d'amelioration. Pas un faux defaut. Present perfect continuous possible : 'I have been working on...'",checklist:["Faiblesse reelle mais pas eliminatoire","Strategie d'amelioration","Present perfect continuous utilise","Pas de faux defaut"]},
+  {q:"What have you been doing since your graduation?",cat:"Questions difficiles",type:"hard",hints:"Present perfect continuous : 'I have been applying', 'I have been developing'. Actif, pas passif.",checklist:["Present perfect continuous","3 activites mentionnees","Ton proactif","Pas de periode vide"]},
+  {q:"How do you handle pressure and tight deadlines?",cat:"Questions difficiles",type:"hard",hints:"Methode : se concentrer sur le controlable, decouper le probleme. Exemple concret si possible.",checklist:["Methode concrete","Exemple si possible","'I handle pressure by...'","Pas de cliche"]},
+  {q:"Where do you see yourself in five years?",cat:"Questions difficiles",type:"hard",hints:"Vision : expertise materiaux, peut-etre freelance. Mais d'abord contribution a l'equipe.",checklist:["Vision claire","Lien avec le poste","Pas 'a votre place'","Ambition realiste"]},
+  {q:"Do you have any questions for us?",cat:"Questions difficiles",type:"hard",hints:"Questions indirectes ! 'Could you tell me...', 'I was wondering...' Jamais 'non'.",checklist:["Au moins 2 questions","Questions indirectes utilisees","Questions sur le quotidien/equipe","Pas de question sur le salaire en premier"]},
+  // L8 Mock interview
+  {q:"Tell me about yourself.",cat:"Mock L8",type:"mock8",hints:"Structure : materials engineer + background + experience Aptar + resultat chiffre + transition aero. Pas d'internship. Led, pas lead.",checklist:["J'ai dit 'materials engineer'","J'ai cite le chiffre 20-100%","J'ai dit 'led' pas 'lead'","J'ai fini par la transition aeronautique","Pas dit 'internship'"]},
+  {q:"How would you justify the transition from polymers to metallics?",cat:"Mock L8",type:"mock8",hints:"Master's degree = toutes les familles. Methodo transferable. 'What changes is the material, not the method.' 'I believe' pas 'I think'.",checklist:["J'ai mentionne le master's degree","J'ai dit 'transition' pas 'expand'","'What changes is the material, not the method'","J'ai dit 'I believe' pas 'I think'"]},
+  {q:"Tell me about a time you took initiative.",cat:"Mock L8",type:"mock8",hints:"Panel d'immersion chimique. Past perfect : 'had been tested individually'. Idiom : 'went the extra mile'. 'My team' pas 'my group'.",checklist:["Structure CAR","Past perfect utilise","'Went the extra mile'","J'ai dit 'my team' pas 'my group'"]},
+  {q:"Tell me about a setback you faced.",cat:"Mock L8",type:"mock8",hints:"Methode : step back, assess, team, escalate. Past perfect : 'had noticed something I had missed'. 'Escalate' = mot pro.",checklist:["Methode en etapes","Past perfect","J'ai dit 'escalate' pas 'speak with'","Intelligence emotionnelle"]},
+  {q:"Where do you see yourself in five years?",cat:"Mock L8",type:"mock8",hints:"'Having developed deep expertise in surface treatments for metallic components.' Participe passe pour decrire ou tu veux etre.",checklist:["Vision claire","'Having developed expertise'","Lien avec le poste actuel","Pas 'on surface treatment expertise'"]},
+  {q:"Why should we choose you?",cat:"Mock L8",type:"mock8",hints:"Passionnee + high standards + demanding environments + resultats mesurables + debut de carriere. PAS 'exigeant'.",checklist:["Pas dit 'exigeant'","'High standards' ou 'demanding'","Resultats mesurables cites","Posture confiante"]},
+];
+
+const GRAMMAR_RULES = [
+  {
+    topic:"tenses", title:"Present Simple vs Past Simple",lesson:"2-3",
+    rule:"Present simple = faits actuels, habitudes. Past simple = action finie avec marqueur de temps.",
+    examples:[
+      {wrong:"I worked at Aptar (si tu parles de tes competences actuelles)",right:"I work on surface treatments (fait actuel)"},
+      {wrong:"I work on polymers during my internship",right:"I worked on polymers during my internship (fini)"}
+    ]
+  },
+  {
+    topic:"tenses", title:"Present Perfect vs Past Simple",lesson:"3",
+    rule:"Present perfect = experience accumulee, lien avec le present (have + participe passe). Past simple = evenement ponctuel fini.",
+    examples:[
+      {wrong:"I worked on polymers (si tu veux dire 'j'ai de l'experience en')",right:"I have worked on polymers (experience)"},
+      {wrong:"I have worked on polymers during my internship (temps fini)",right:"I worked on polymers during my internship (marqueur de temps)"}
+    ]
+  },
+  {
+    topic:"tenses", title:"Present Perfect Continuous",lesson:"4-5",
+    rule:"have/has + been + verb-ing. Pour une action commencee dans le passe et qui continue. FOR + duree, SINCE + point dans le temps.",
+    examples:[
+      {wrong:"I apply since three weeks",right:"I have been applying for three weeks"},
+      {wrong:"I study materials since January",right:"I have been studying materials since January"}
+    ]
+  },
+  {
+    topic:"modals", title:"Modaux : would, could, should, might",lesson:"6",
+    rule:"Pour adoucir les demandes. Echelle de politesse : might (le plus doux) > could > would > should (conseil).",
+    examples:[
+      {wrong:"Send me your CV",right:"Could you send me your CV?"},
+      {wrong:"I want to meet you",right:"I would love to arrange a meeting"},
+      {wrong:"I need an answer by Friday",right:"Could you let me know by Friday if possible?"},
+      {wrong:"Call me",right:"Please do not hesitate to call me"}
+    ]
+  },
+  {
+    topic:"indirect", title:"Questions indirectes",lesson:"7",
+    rule:"Ouverture polie + phrase en ordre NORMAL (pas interrogatif). 3 ouvertures : 'Could you tell me...', 'I was wondering...', 'Do you mind me asking...'",
+    examples:[
+      {wrong:"What does the role involve? (trop direct)",right:"Could you tell me what the role involves?"},
+      {wrong:"When will you make a decision? (trop direct)",right:"I was wondering when you might make a decision."},
+      {wrong:"How many people are in the team? (trop direct)",right:"Do you mind me asking how many people are in the team?"}
+    ]
+  },
+  {
+    topic:"pastperfect", title:"Past Perfect pour storytelling",lesson:"8",
+    rule:"Le past perfect (had + participe passe) pose le decor AVANT l'action. Formule : Before [past perfect] ... I [past simple] ... which meant that [result].",
+    examples:[
+      {wrong:"I did a literature review. Then I started testing. (plat)",right:"Before I started testing, I had already completed a thorough literature review."},
+      {wrong:"I didn't know the methodology. I developed a new one. (plat)",right:"Because no methodology had existed for this material, I developed one from scratch."},
+      {wrong:"I improved the resistance by 100 percent. It was hard. (plat)",right:"The results I achieved would not have been possible had I not redesigned the testing approach first."}
+    ]
+  }
+];
+
+const GRAMMAR_QUIZ = [
+  {q:"\"I ___ on polymers during my internship.\"",options:["work","worked","have worked","have been working"],correct:1,explain:"Action finie + marqueur de temps ('during my internship') = past simple."},
+  {q:"\"I ___ to companies for three weeks.\"",options:["apply","applied","have applied","have been applying"],correct:3,explain:"Action qui continue + duree ('for three weeks') = present perfect continuous."},
+  {q:"\"___ you send me the job description?\"",options:["Can","Could","Do","Will"],correct:1,explain:"'Could' est plus poli que 'can' dans un email professionnel."},
+  {q:"\"I ___ in this field since January.\"",options:["work","worked","have been working","am working"],correct:2,explain:"Depuis un point dans le temps ('since January') + action qui continue = present perfect continuous."},
+  {q:"\"Could you tell me what the role ___?\"",options:["does involve","involves","involve","is involve"],correct:1,explain:"Question indirecte = ordre NORMAL apres l'ouverture. 'What the role involves' (pas 'does involve')."},
+  {q:"\"I ___ the project from scratch.\"",options:["lead","led","have lead","leaded"],correct:1,explain:"Action finie = past simple. 'Lead' > 'led' (irregulier). 'Leaded' n'existe pas."},
+  {q:"\"I was wondering when you ___ contact me.\"",options:["will","would","might","could"],correct:2,explain:"'Might' adoucit maximalement dans une question indirecte. 'Will' serait trop direct."},
+  {q:"\"I have been applying ___ I graduated.\"",options:["for","since","during","from"],correct:1,explain:"'Since' + point dans le temps (graduation = moment precis)."},
+  {q:"\"One of my strengths ___ my ability to analyse data.\"",options:["are","is","were","have been"],correct:1,explain:"'One of my strengths' = singulier, donc 'is'."},
+  {q:"\"I ___ pressure by breaking the problem into smaller steps.\"",options:["manage","handle","deal","face"],correct:1,explain:"'Handle pressure' est l'expression consacree dans un contexte professionnel."},
+  {q:"\"Before I started testing, I ___ a thorough literature review.\"",options:["completed","had completed","have completed","was completing"],correct:1,explain:"Past perfect ('had completed') pour l'action anterieure a 'started testing' (past simple)."},
+  {q:"\"I am very interested ___ surface treatments.\"",options:["by","in","on","for"],correct:1,explain:"'Interested in' toujours. 'Interested by' est un calque francais de 'interesse par'."},
+  {q:"\"I hold myself to very high ___.\"",options:["demands","standards","expectations","levels"],correct:1,explain:"'High standards' est l'expression naturelle pour remplacer le francais 'exigeant'."},
+];
+
+// ==================== STATE ====================
+let state = {
+  vocabRatings: {},
+  sentenceRatings: {},
+  oralSessions: [],
+  homework: {},
+  customErrors: [],
+  currentCard: 0,
+  currentFilter: 'all',
+  currentRecit: 0,
+  oralTimerInterval: null,
+  oralTimerSeconds: 0,
+  oralTimerRunning: false,
+  currentOralQ: 0,
+  currentOralType: 'pitch'
+};
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('english_hub_state');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state = {...state, ...parsed};
+    }
+  } catch(e) {}
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('english_hub_state', JSON.stringify({
+      vocabRatings: state.vocabRatings,
+      sentenceRatings: state.sentenceRatings,
+      oralSessions: state.oralSessions,
+      homework: state.homework,
+      customErrors: state.customErrors
+    }));
+  } catch(e) {}
+}
+
+// ==================== NAVIGATION ====================
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => {
+    b.classList.remove('active');
+    if (b.textContent.toLowerCase().includes(id.substring(0,4)) ||
+        (id==='dashboard' && b.textContent==='Dashboard') ||
+        (id==='vocab' && b.textContent==='Vocabulaire') ||
+        (id==='grammar' && b.textContent==='Grammaire') ||
+        (id==='sentences' && b.textContent==='Phrases-cles') ||
+        (id==='oral' && b.textContent==='Oral Drill') ||
+        (id==='task1' && b.textContent==='Entrainement') ||
+        (id==='homework' && b.textContent==='Devoirs') ||
+        (id==='errors' && b.textContent==='Erreurs') ||
+        (id==='progress' && b.textContent==='Progression'))
+      b.classList.add('active');
+  });
+}
+
+// ==================== FLASHCARDS ====================
+function getFilteredVocab() {
+  const f = state.currentFilter;
+  if (f === 'all') return VOCABULARY;
+  if (f === 'hard') return VOCABULARY.filter(v => state.vocabRatings[v.word] === 'hard');
+  if (f === 'tech') return TECH_GLOSSARY.map((t,i) => ({word:t.en,type:'technical',def:t.fr,example:'',lesson:4,category:'tech'}));
+  return VOCABULARY.filter(v => v.lesson === parseInt(f));
+}
+
+function formatStress(stress) {
+  if (!stress) return '';
+  return stress.split('-').map(syl => {
+    if (syl === syl.toUpperCase() && syl.length > 0) return `<span class="stressed">${syl}</span>`;
+    return `<span>${syl}</span>`;
+  }).join('-');
+}
+
+function showCard() {
+  const cards = getFilteredVocab();
+  if (cards.length === 0) {
+    document.getElementById('fc-word').textContent = 'Aucun mot';
+    document.getElementById('fc-stress').innerHTML = '';
+    document.getElementById('fc-type').textContent = '';
+    document.getElementById('fc-hint').textContent = '';
+    document.getElementById('fc-counter').textContent = '0 / 0';
+    return;
+  }
+  state.currentCard = Math.max(0, Math.min(state.currentCard, cards.length - 1));
+  const card = cards[state.currentCard];
+  const fc = document.getElementById('flashcard');
+  fc.classList.remove('flipped');
+  document.getElementById('fc-word').textContent = card.word;
+  document.getElementById('fc-stress').innerHTML = card.stress ? formatStress(card.stress) : '';
+  document.getElementById('fc-type').textContent = card.type;
+  document.getElementById('fc-hint').textContent = card.category ? `Theme: ${card.category}` : '';
+  document.getElementById('fc-def').textContent = card.def;
+  document.getElementById('fc-example').textContent = card.example || '';
+  document.getElementById('fc-lesson').textContent = `Lesson ${card.lesson}`;
+  document.getElementById('fc-counter').textContent = `${state.currentCard + 1} / ${cards.length}`;
+
+  const rating = state.vocabRatings[card.word];
+  if (rating) {
+    document.getElementById('fc-lesson').textContent += ` | Dernier: ${rating === 'hard' ? 'Difficile' : rating === 'ok' ? 'Moyen' : 'Facile'}`;
+  }
+}
+
+function flipCard() {
+  document.getElementById('flashcard').classList.toggle('flipped');
+}
+
+function nextCard() {
+  const cards = getFilteredVocab();
+  state.currentCard = (state.currentCard + 1) % cards.length;
+  showCard();
+}
+
+function rateCard(rating) {
+  const cards = getFilteredVocab();
+  if (cards.length === 0) return;
+  const card = cards[state.currentCard];
+  state.vocabRatings[card.word] = rating;
+  saveState();
+  updateStats();
+  nextCard();
+}
+
+// ==================== TECH GLOSSARY ====================
+function renderTechGlossary() {
+  const tbody = document.getElementById('tech-glossary');
+  tbody.innerHTML = TECH_GLOSSARY.map(t => {
+    const rating = state.vocabRatings[t.en] || 'unrated';
+    const tagClass = rating === 'easy' ? 'tag-green' : rating === 'hard' ? 'tag-red' : 'tag-orange';
+    const tagText = rating === 'easy' ? 'Maitrise' : rating === 'hard' ? 'Difficile' : 'A revoir';
+    return `<tr><td>${t.en}</td><td>${t.fr}</td><td><span class="tag ${tagClass}">${tagText}</span></td></tr>`;
+  }).join('');
+}
+
+// ==================== IDIOMS ====================
+function renderIdioms() {
+  const grid = document.getElementById('idioms-grid');
+  grid.innerHTML = IDIOMS.map(i => `
+    <div class="card">
+      <span class="tag tag-purple">Lesson ${i.lesson}</span>
+      <h3 style="margin:8px 0; font-size:16px">"${i.phrase}"</h3>
+      <p style="margin:0">${i.def}</p>
+    </div>
+  `).join('');
+}
+
+// ==================== GRAMMAR ====================
+function showGrammarTopic(topic) {
+  const rulesDiv = document.getElementById('grammar-rules');
+  const quizDiv = document.getElementById('grammar-quiz');
+
+  if (topic === 'quiz') {
+    rulesDiv.style.display = 'none';
+    quizDiv.style.display = 'block';
+    renderGrammarQuiz();
+    return;
+  }
+
+  rulesDiv.style.display = 'block';
+  quizDiv.style.display = 'none';
+
+  const rules = topic === 'all' ? GRAMMAR_RULES : GRAMMAR_RULES.filter(r => r.topic === topic);
+  rulesDiv.innerHTML = rules.map(r => `
+    <div class="grammar-rule">
+      <h4>${r.title} <span style="color:var(--text2);font-weight:400;font-size:13px">Lesson ${r.lesson}</span></h4>
+      <p style="color:var(--text);margin:8px 0">${r.rule}</p>
+      ${r.examples.map(e => `
+        <div class="grammar-example">
+          <div class="grammar-wrong"><strong>NON :</strong> ${e.wrong}</div>
+          <div class="grammar-right"><strong>OUI :</strong> ${e.right}</div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function renderGrammarQuiz() {
+  const div = document.getElementById('grammar-quiz');
+  const shuffled = [...GRAMMAR_QUIZ].sort(() => Math.random() - 0.5);
+  let score = 0;
+  let answered = 0;
+
+  div.innerHTML = `
+    <div class="card" style="text-align:center;margin-bottom:20px">
+      <h3>Quiz Grammaire</h3>
+      <p>10 questions. Choisis la bonne reponse.</p>
+      <div class="stat-number" id="quiz-score">0 / 10</div>
+    </div>
+    ${shuffled.map((q, i) => `
+      <div class="card" id="quiz-q-${i}">
+        <p style="color:var(--text);font-weight:600;margin-bottom:12px">${i+1}. ${q.q}</p>
+        ${q.options.map((opt, j) => `
+          <button class="grammar-quiz-option" data-qi="${i}" data-oi="${j}" onclick="answerQuiz(this, ${i}, ${j}, ${q.correct})">${opt}</button>
+        `).join('')}
+        <p class="quiz-explain" id="quiz-explain-${i}" style="display:none;margin-top:12px;color:var(--text2);font-size:14px"></p>
+      </div>
+    `).join('')}
+  `;
+
+  window.answerQuiz = function(btn, qi, oi, correct) {
+    const card = document.getElementById(`quiz-q-${qi}`);
+    if (card.dataset.answered) return;
+    card.dataset.answered = 'true';
+
+    const buttons = card.querySelectorAll('.grammar-quiz-option');
+    buttons.forEach((b, idx) => {
+      b.style.pointerEvents = 'none';
+      if (idx === correct) b.classList.add('correct');
+      if (idx === oi && oi !== correct) b.classList.add('wrong');
+    });
+
+    if (oi === correct) score++;
+    answered++;
+
+    const explain = document.getElementById(`quiz-explain-${qi}`);
+    explain.textContent = shuffled[qi].explain;
+    explain.style.display = 'block';
+
+    document.getElementById('quiz-score').textContent = `${score} / ${answered}`;
+  };
+}
+
+// ==================== KEY SENTENCES ====================
+function renderSentences() {
+  const container = document.getElementById('sentences-list');
+  const filter = document.querySelector('.sent-filter.active')?.dataset.lesson || 'all';
+
+  const filtered = filter === 'all' ? KEY_SENTENCES : KEY_SENTENCES.filter(s => s.lesson === parseInt(filter));
+
+  container.innerHTML = filtered.map((s, i) => {
+    const rating = state.sentenceRatings[s.text];
+    const ratingTag = rating === 'pass' ? '<span class="tag tag-green" style="margin-left:8px">OK</span>' :
+                      rating === 'fail' ? '<span class="tag tag-red" style="margin-left:8px">A revoir</span>' : '';
+    return `
+      <div class="sentence-card">
+        <div class="sentence-text">"${s.text}" ${ratingTag}</div>
+        <div class="sentence-lesson">L${s.lesson} - ${s.theme}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ==================== RECITATION ====================
+function startRecitation() {
+  const area = document.getElementById('recitation-area');
+  area.style.display = 'block';
+  state.currentRecit = 0;
+  showRecit();
+}
+
+function showRecit() {
+  const filter = document.querySelector('.sent-filter.active')?.dataset.lesson || 'all';
+  const sentences = filter === 'all' ? KEY_SENTENCES : KEY_SENTENCES.filter(s => s.lesson === parseInt(filter));
+
+  if (sentences.length === 0) return;
+  state.currentRecit = Math.max(0, Math.min(state.currentRecit, sentences.length - 1));
+  const s = sentences[state.currentRecit];
+
+  document.getElementById('recit-lesson').textContent = `Lesson ${s.lesson} - ${s.theme} (${state.currentRecit + 1}/${sentences.length})`;
+  document.getElementById('recit-sentence').textContent = `"${s.text}"`;
+  document.getElementById('recit-sentence').style.filter = 'blur(8px)';
+}
+
+function recitRate(rating) {
+  const filter = document.querySelector('.sent-filter.active')?.dataset.lesson || 'all';
+  const sentences = filter === 'all' ? KEY_SENTENCES : KEY_SENTENCES.filter(s => s.lesson === parseInt(filter));
+  if (sentences.length === 0) return;
+  const s = sentences[state.currentRecit];
+  state.sentenceRatings[s.text] = rating;
+  saveState();
+  updateStats();
+  nextRecit();
+}
+
+function nextRecit() {
+  const filter = document.querySelector('.sent-filter.active')?.dataset.lesson || 'all';
+  const sentences = filter === 'all' ? KEY_SENTENCES : KEY_SENTENCES.filter(s => s.lesson === parseInt(filter));
+  state.currentRecit = (state.currentRecit + 1) % sentences.length;
+  showRecit();
+}
+
+// ==================== ORAL DRILL ====================
+function startOralDrill(type) {
+  state.currentOralType = type;
+  const questions = type === 'random' ? [...ORAL_QUESTIONS].sort(() => Math.random() - 0.5) :
+                    ORAL_QUESTIONS.filter(q => q.type === type);
+  state.currentOralQ = 0;
+  state._oralQuestions = questions;
+
+  document.getElementById('oral-question-card').style.display = 'block';
+  document.getElementById('oral-eval').style.display = 'none';
+  showOralQuestion();
+}
+
+function showOralQuestion() {
+  const questions = state._oralQuestions;
+  if (!questions || questions.length === 0) return;
+  state.currentOralQ = Math.max(0, Math.min(state.currentOralQ, questions.length - 1));
+  const q = questions[state.currentOralQ];
+
+  document.getElementById('oral-category').textContent = `${q.cat} (${state.currentOralQ + 1}/${questions.length})`;
+  document.getElementById('oral-question-text').textContent = q.q;
+  resetOralTimer();
+
+  document.getElementById('oral-question-card').style.display = 'block';
+  document.getElementById('oral-eval').style.display = 'none';
+}
+
+function toggleOralTimer() {
+  if (state.oralTimerRunning) {
+    clearInterval(state.oralTimerInterval);
+    state.oralTimerRunning = false;
+    document.getElementById('oral-start-btn').textContent = 'Reprendre';
+
+    // Show eval
+    document.getElementById('oral-eval').style.display = 'block';
+    const q = state._oralQuestions[state.currentOralQ];
+    document.getElementById('oral-hints').innerHTML = `<p style="color:var(--text)">${q.hints}</p>`;
+    document.getElementById('oral-checklist').innerHTML = q.checklist.map(c =>
+      `<div class="checklist-item" onclick="toggleCheck(this)"><div class="checklist-check"></div><span>${c}</span></div>`
+    ).join('');
+  } else {
+    state.oralTimerRunning = true;
+    document.getElementById('oral-start-btn').textContent = 'Stop';
+    state.oralTimerInterval = setInterval(() => {
+      state.oralTimerSeconds++;
+      const m = Math.floor(state.oralTimerSeconds / 60);
+      const s = state.oralTimerSeconds % 60;
+      document.getElementById('oral-timer').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+
+      // Color feedback
+      const timer = document.getElementById('oral-timer');
+      if (state.oralTimerSeconds <= 30) timer.style.color = 'var(--green)';
+      else if (state.oralTimerSeconds <= 45) timer.style.color = 'var(--accent)';
+      else if (state.oralTimerSeconds <= 60) timer.style.color = 'var(--orange)';
+      else timer.style.color = 'var(--red)';
+    }, 1000);
+  }
+}
+
+function resetOralTimer() {
+  clearInterval(state.oralTimerInterval);
+  state.oralTimerRunning = false;
+  state.oralTimerSeconds = 0;
+  document.getElementById('oral-timer').textContent = '0:00';
+  document.getElementById('oral-timer').style.color = 'var(--accent)';
+  document.getElementById('oral-start-btn').textContent = 'Commencer';
+}
+
+function nextOralQuestion() {
+  const questions = state._oralQuestions;
+  if (!questions) return;
+  state.currentOralQ = (state.currentOralQ + 1) % questions.length;
+  showOralQuestion();
+}
+
+function evalOral(score) {
+  const q = state._oralQuestions[state.currentOralQ];
+  const session = {
+    question: q.q,
+    category: q.cat,
+    score: score,
+    duration: state.oralTimerSeconds,
+    notes: '',
+    date: new Date().toISOString().split('T')[0]
+  };
+  state._currentSession = session;
+}
+
+function saveOralSession() {
+  if (state._currentSession) {
+    state._currentSession.notes = document.getElementById('oral-notes').value;
+    state.oralSessions.push(state._currentSession);
+    saveState();
+    renderOralHistory();
+    updateStats();
+    document.getElementById('oral-notes').value = '';
+    nextOralQuestion();
+  }
+}
+
+function renderOralHistory() {
+  const div = document.getElementById('oral-history');
+  if (state.oralSessions.length === 0) {
+    div.innerHTML = '<p>Aucune session enregistree.</p>';
+    return;
+  }
+
+  const recent = state.oralSessions.slice(-10).reverse();
+  div.innerHTML = `
+    <table>
+      <thead><tr><th>Date</th><th>Question</th><th>Duree</th><th>Score</th><th>Notes</th></tr></thead>
+      <tbody>
+        ${recent.map(s => {
+          const scoreLabels = ['','Bloquee','Laborieux','Correct','Fluide'];
+          const scoreColors = ['','var(--red)','var(--orange)','var(--accent)','var(--green)'];
+          return `<tr>
+            <td>${s.date}</td>
+            <td style="max-width:250px;overflow:hidden;text-overflow:ellipsis">${s.question}</td>
+            <td>${Math.floor(s.duration/60)}:${(s.duration%60).toString().padStart(2,'0')}</td>
+            <td style="color:${scoreColors[s.score]};font-weight:600">${scoreLabels[s.score]}</td>
+            <td style="font-size:13px;color:var(--text2)">${s.notes || '-'}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+// ==================== ERRORS ====================
+function renderErrors() {
+  const container = document.getElementById('error-list');
+  const filterType = document.querySelector('.err-filter.active')?.dataset.type || 'all';
+
+  const allErrors = [...ERRORS, ...state.customErrors];
+  const filtered = filterType === 'all' ? allErrors : allErrors.filter(e => e.type === filterType);
+  const sorted = filtered.sort((a, b) => (b.count || 1) - (a.count || 1));
+
+  container.innerHTML = sorted.map(e => {
+    const typeLabels = {grammar:'Grammaire',vocab:'Vocabulaire',register:'Registre',french:'Calque francais'};
+    const typeColors = {grammar:'tag-orange',vocab:'tag-purple',register:'tag-red',french:'tag-orange'};
+    return `
+      <div class="error-entry">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:4px">
+          <span class="tag ${typeColors[e.type] || 'tag-orange'}">${typeLabels[e.type] || e.type}</span>
+          <span style="font-size:12px;color:var(--text2)">Lesson ${e.lesson} | ${e.count || 1}x</span>
+        </div>
+        <span class="wrong-text">"${e.wrong}"</span> &rarr; <span class="right-text">"${e.right}"</span>
+        <div class="rule">${e.rule}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function addError() {
+  const wrong = document.getElementById('err-wrong').value.trim();
+  const right = document.getElementById('err-right').value.trim();
+  const rule = document.getElementById('err-rule').value.trim();
+  const type = document.getElementById('err-type').value;
+
+  if (!wrong || !right) return;
+
+  state.customErrors.push({ wrong, right, rule, type, lesson:'custom', count:1 });
+  saveState();
+  renderErrors();
+  updateStats();
+
+  document.getElementById('err-wrong').value = '';
+  document.getElementById('err-right').value = '';
+  document.getElementById('err-rule').value = '';
+}
+
+// ==================== HOMEWORK ====================
+function saveHomework() {
+  const fields = [
+    'hw-l6t1-q1','hw-l6t1-q2','hw-l6t1-q3',
+    'hw-l7t2-1','hw-l7t2-2','hw-l7t2-3','hw-l7t2-4','hw-l7t2-5',
+    'hw-l7t3-1','hw-l7t3-2','hw-l7t3-3','hw-l7t3-4','hw-l7t3-5',
+    'hw-l6t2-subject','hw-l6t2-body',
+    'hw-l6t3-1','hw-l6t3-2','hw-l6t3-3','hw-l6t3-4',
+    'hw-l8t1-q1','hw-l8t1-q2','hw-l8t1-q3',
+    'hw-l8t2','hw-l8t3'
+  ];
+  fields.forEach(f => {
+    const el = document.getElementById(f);
+    if (el) state.homework[f] = el.value;
+  });
+  saveState();
+}
+
+function loadHomework() {
+  Object.entries(state.homework).forEach(([k, v]) => {
+    const el = document.getElementById(k);
+    if (el) el.value = v;
+  });
+}
+
+function toggleModel(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'none' || !el.style.display ? 'block' : 'none';
+}
+
+// ==================== UTILS ====================
+function toggleCheck(el) {
+  el.classList.toggle('done');
+}
+
+function updateStats() {
+  const vocabMastered = Object.values(state.vocabRatings).filter(r => r === 'easy').length;
+  const sentencesMastered = Object.values(state.sentenceRatings).filter(r => r === 'pass').length;
+  const errorCount = ERRORS.length + state.customErrors.length;
+
+  document.getElementById('vocab-mastered').textContent = vocabMastered;
+  document.getElementById('sentences-mastered').textContent = sentencesMastered;
+  document.getElementById('error-count').textContent = errorCount;
+}
+
+function renderDashboardTodo() {
+  const div = document.getElementById('dashboard-todo');
+  const hasCARq1 = state.homework['hw-l8t1-q1'];
+  const hasExigeant = state.homework['hw-l8t2'];
+  const hasExtraMile = state.homework['hw-l8t3'];
+
+  const todos = [
+    {text:'CAR structure : 3 reponses avec past perfect', done: !!hasCARq1, priority:'high'},
+    {text:'Remplacer "exigeant" : memoriser 1 phrase', done: !!hasExigeant, priority:'high'},
+    {text:'"Go the extra mile" : 1 phrase + 5 repetitions', done: !!hasExtraMile, priority:'medium'},
+    {text:'Reciter les 42 phrases-cles', done: Object.keys(state.sentenceRatings).length >= 36, priority:'daily'},
+  ];
+
+  div.innerHTML = todos.map(t => `
+    <div class="checklist-item ${t.done ? 'done' : ''}" onclick="toggleCheck(this)" style="border-left:3px solid ${t.priority==='high'?'var(--red)':t.priority==='medium'?'var(--orange)':'var(--text2)'}">
+      <div class="checklist-check">${t.done ? '&#10003;' : ''}</div>
+      <span>${t.text}</span>
+      ${t.priority === 'high' ? '<span class="tag tag-red" style="margin-left:auto">Priorite</span>' :
+        t.priority === 'daily' ? '<span class="tag tag-purple" style="margin-left:auto">Quotidien</span>' : ''}
+    </div>
+  `).join('');
+}
+
+// ==================== PRACTICE TRAINER ====================
+// -------- AJOUTER DES LECONS ICI --------
+// Pour ajouter une nouvelle lecon/task :
+// 1. Copier un bloc { id:"L8T1", ... } dans PRACTICE_TASKS
+// 2. Chaque question a : q (la question), chunks (morceaux), traps (pieges)
+// 3. Chaque chunk a : label (nom court), text (la reponse), keywords (mots-cles)
+// 4. Chaque trap a : wrong, right, tip
+const PRACTICE_TASKS = [
+  {
+    id: "L6T1",
+    title: "Oral Pitch (3 questions)",
+    lesson: "Lessons 6-7",
+    questions: [
+      {
+        q: "Tell me about yourself and your background.",
+        short: "Tell me about yourself",
+        chunks: [
+          { label:"Intro", text:"My name is Caother Berriache. I am a materials engineer with a background in chemistry and materials science.", keywords:["materials engineer","background","chemistry","materials science"] },
+          { label:"Experience", text:"At Aptar Group, I worked in industrial R&D on two main areas: firstly, material development, including formulation, processing and characterisation, and secondly, surface treatments, where I led a coating development from scratch through to industrialisation.", keywords:["Aptar Group","industrial R&D","formulation","processing","characterisation","surface treatments","led","from scratch","industrialisation"] },
+          { label:"Brevets", text:"This work led to two patent applications.", keywords:["patent applications"] },
+          { label:"Objectif", text:"I am now looking to transition into surface treatment roles in aeronautics.", keywords:["transition into","surface treatment","aeronautics"] }
+        ],
+        traps: [
+          {wrong:"I lead a project", right:"I led a project", tip:"Lead = present. Led = past. C'est fini, donc PAST."},
+          {wrong:"I make testings", right:"I ran tests / I carried out tests", tip:"\"Testings\" n'existe pas en anglais."},
+          {wrong:"internship at Aptar", right:"at Aptar Group / my experience at Aptar", tip:"Ne jamais dire internship. Positionnement ingenieure confirmee."},
+          {wrong:"I want to expand into aeronautics", right:"I am looking to transition into aeronautics", tip:"\"Expand into\" = s'etendre (business). \"Transition into\" = changer de domaine."}
+        ],
+        checklist: ["Je dis \"led\" pas \"lead\"","Je dis \"from scratch\" et \"industrialisation\"","Je dis \"transition into\" pas \"expand into\"","Ma reponse fait moins de 30 secondes"]
+      },
+      {
+        q: "What has your experience with surface treatments been so far?",
+        short: "Surface treatments",
+        chunks: [
+          { label:"Contexte", text:"At Aptar, I developed a coating to improve the chemical resistance of polyolefins.", keywords:["developed","coating","chemical resistance","polyolefins"] },
+          { label:"Etat de l'art", text:"I carried out a literature review of existing techniques and identified CVD as the most suitable solution.", keywords:["carried out","literature review","identified","CVD"] },
+          { label:"Partenaire + POC", text:"I selected and managed an external partner for the deposition, built the proof of concept, then carried out characterisation campaigns from the lab through to industrial parts.", keywords:["managed","external partner","proof of concept","carried out","characterisation"] },
+          { label:"Chiffre impact", text:"I brought the compliance rate from 20 up to 100 percent.", keywords:["compliance rate","20 up to 100 percent"] },
+          { label:"Pilotage", text:"I led the entire project from concept through to the industrialisation plan.", keywords:["led","industrialisation"] }
+        ],
+        traps: [
+          {wrong:"I make different testings", right:"I carried out tests", tip:"\"Testings\" n'existe pas. \"Make tests\" = calque. Dire \"ran\" ou \"carried out\"."},
+          {wrong:"all what I do", right:"everything I have done", tip:"Calque du francais \"tout ce que\". En anglais : everything + clause."},
+          {wrong:"I improved from 20 to 100", right:"I brought the compliance rate from 20 up to 100 percent", tip:"Preciser QUOI a ete ameliore et dire \"up to\" pour l'impact."},
+          {wrong:"I choose CVD", right:"I identified CVD as the most suitable solution", tip:"\"Choose\" = choix simple. \"Identified\" = demarche analytique, plus pro."}
+        ],
+        checklist: ["Je cite le chiffre 20 up to 100 percent","Je dis \"carried out\" pas \"make testings\"","Je mentionne CVD et proof of concept","Je suis l'ordre : etat de l'art > CVD > partenaire > POC > essais > resultat > indus"]
+      },
+      {
+        q: "Why are you interested in Safran Aircraft Engines specifically?",
+        short: "Why Safran?",
+        chunks: [
+          { label:"Domaine", text:"Surface treatment is the field I want to work in.", keywords:["surface treatment","field"] },
+          { label:"Pourquoi aero", text:"Aeronautics interests me because the requirements are demanding: high temperatures, corrosive environments.", keywords:["aeronautics","demanding","high temperatures","corrosive environments"] },
+          { label:"Pourquoi Safran", text:"Safran Aircraft Engines is a major player in propulsion, and the Corbeil site works directly on engines.", keywords:["Safran Aircraft Engines","propulsion","Corbeil","engines"] },
+          { label:"Lien critique", text:"Surface treatments are critical on these parts.", keywords:["critical"] },
+          { label:"Mon apport", text:"My experience in CVD coating development and testing methodology applies directly to these challenges. I am also based nearby.", keywords:["CVD","testing methodology","applies directly","based nearby"] }
+        ],
+        traps: [
+          {wrong:"You have to know", right:"I would like to point out", tip:"\"You have to know\" = trop direct/agressif en contexte pro."},
+          {wrong:"it's not a big deal", right:"I am confident I can be productive quickly", tip:"Familier. En entretien, registre professionnel."},
+          {wrong:"since one month I take English", right:"for the past month I have been taking English lessons", tip:"Since = point dans le temps. For = duree. Present perfect continuous pour action en cours."},
+          {wrong:"I want to expand into aeronautics", right:"I am looking to transition into aeronautics", tip:"\"Expand into\" = s'etendre (business). \"Transition into\" = changer de domaine."}
+        ],
+        checklist: ["Je cite Safran Aircraft Engines et Corbeil","Je parle de ce que J'APPORTE, pas de ce que le poste m'apporte","Je mentionne testing methodology","Moins de 30 secondes"]
+      }
+    ]
+  }
+  // -------- COPIER UN BLOC ICI POUR AJOUTER UNE LECON --------
+  ,{
+    id: "L8T1",
+    title: "Mock Interview (6 questions)",
+    lesson: "Lesson 8",
+    questions: [
+      {
+        q: "Tell me about yourself.",
+        short: "About yourself",
+        chunks: [
+          { label:"Intro", text:"I am a materials engineer with a background in chemistry and materials science.", keywords:["materials engineer","background","chemistry","materials science"] },
+          { label:"Experience", text:"During my experience at Aptar, I worked on developing a CVD coating solution to improve the chemical resistance of polyolefins.", keywords:["Aptar","CVD coating","chemical resistance","polyolefins"] },
+          { label:"Resultat", text:"I led that project from proof of concept through to industrialisation, and the compliance rate improved from 20 to 100 percent.", keywords:["led","proof of concept","industrialisation","20 to 100 percent"] },
+          { label:"Transition", text:"I am now looking to bring that experience into the aeronautics sector.", keywords:["bring","experience","aeronautics"] }
+        ],
+        traps: [
+          {wrong:"I'm a material engineer", right:"I am a materials engineer", tip:"'Materials' avec un s. 'I am' en registre formel, pas 'I'm'."},
+          {wrong:"a background science", right:"a background in chemistry and materials science", tip:"Il manque 'in' + domaine complet."},
+          {wrong:"the proof of the concept", right:"the proof of concept", tip:"Expression fixe : 'proof of concept'. Pas d'article avant concept."}
+        ],
+        checklist: ["'Materials engineer' avec s","'Led' pas 'lead'","Chiffre 20 to 100 percent","'Proof of concept' sans article","Pas dit 'internship'"]
+      },
+      {
+        q: "How would you justify the transition from polymers to metallics?",
+        short: "Transition metallics",
+        chunks: [
+          { label:"Formation", text:"During my master's degree, we studied all material families including metallics, so the transition is less of a leap than it might appear.", keywords:["master's degree","studied","material families","metallics","transition"] },
+          { label:"Transferabilite", text:"My experience in CVD coating and surface treatment methodology transfers directly to metallic applications.", keywords:["CVD coating","surface treatment methodology","transfers directly","metallic applications"] },
+          { label:"Synthese", text:"What changes is the material, not the method.", keywords:["What changes","material","method"] },
+          { label:"Apport", text:"I believe that gives me a strong foundation to contribute quickly.", keywords:["I believe","strong foundation","contribute quickly"] }
+        ],
+        traps: [
+          {wrong:"master degrees", right:"master's degree", tip:"Possessif + singulier."},
+          {wrong:"we learn about", right:"we studied / we covered", tip:"C'est dans le passe. 'Learn' = present. 'Studied' = past."},
+          {wrong:"made me a strong knowledge", right:"gives me a strong foundation", tip:"'Knowledge' n'est pas quelque chose qu'on te fait. Dire 'foundation'."},
+          {wrong:"I think", right:"I believe", tip:"'I believe' est plus professionnel en entretien que 'I think'."}
+        ],
+        checklist: ["'Master's degree' pas 'master degrees'","'We studied' pas 'we learn'","'I believe' pas 'I think'","'Strong foundation' pas 'strong knowledge'"]
+      },
+      {
+        q: "Tell me about a time you took initiative.",
+        short: "Initiative",
+        chunks: [
+          { label:"Action", text:"I took the initiative to develop a chemical immersion panel that allowed my team to test multiple materials simultaneously.", keywords:["took the initiative","chemical immersion panel","my team","simultaneously"] },
+          { label:"Contexte (past perfect)", text:"Before I introduced this method, each material had been tested individually, which was time-consuming.", keywords:["Before","had been tested","individually","time-consuming"] },
+          { label:"Extra mile", text:"I went the extra mile to build something that did not exist yet.", keywords:["went the extra mile","did not exist yet"] }
+        ],
+        traps: [
+          {wrong:"my group", right:"my team", tip:"'Group' = scolaire. 'Team' = contexte professionnel."},
+          {wrong:"to have chose better", right:"which allowed us to select", tip:"'To have chose' n'est pas une structure correcte."},
+          {wrong:"I took initiative", right:"I took the initiative", tip:"Article 'the' necessaire devant 'initiative'."}
+        ],
+        checklist: ["Past perfect utilise","'My team' pas 'my group'","'Went the extra mile'","Structure CAR"]
+      }
+    ]
+  }
+];
+
+const t1 = {
+  taskIdx: 0,
+  mode: 'chunks',
+  qi: 0,
+  recorder: null,
+  isRecording: false,
+  recordings: {}
+};
+
+function t1Task() { return PRACTICE_TASKS[t1.taskIdx]; }
+function t1Questions() { return t1Task().questions; }
+function t1Data() { return t1Questions()[t1.qi]; }
+function t1Key(suffix) { return `pr_${t1Task().id}_${suffix}`; }
+
+function t1LoadState(key, fallback) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch(e) { return fallback; }
+}
+function t1SaveState(key, val) {
+  localStorage.setItem(key, JSON.stringify(val));
+}
+
+function t1GetChunksDone() {
+  return t1LoadState(t1Key('chunks'), t1Questions().map(() => []));
+}
+function t1SetChunksDone(arr) { t1SaveState(t1Key('chunks'), arr); }
+
+function t1GetBuildDone() {
+  return t1LoadState(t1Key('build'), t1Questions().map(() => false));
+}
+function t1SetBuildDone(arr) { t1SaveState(t1Key('build'), arr); }
+
+function t1Init() {
+  t1FullRender();
+}
+
+function t1FullRender() {
+  const root = document.getElementById('t1-root');
+  if (!root) return;
+  const task = t1Task();
+  const questions = t1Questions();
+
+  root.innerHTML = `
+    <h1>Entrainement oral</h1>
+    <p>Choisis un exercice, une question, et un mode de travail.</p>
+
+    ${PRACTICE_TASKS.length > 1 ? `
+    <div class="t1-task-bar">
+      <span style="font-weight:600;color:var(--text2);font-size:13px">Exercice :</span>
+      <select onchange="t1.taskIdx=this.selectedIndex;t1.qi=0;t1FullRender()">
+        ${PRACTICE_TASKS.map((t,i) => `<option ${i===t1.taskIdx?'selected':''}>${t.lesson} - ${t.title}</option>`).join('')}
+      </select>
+    </div>` : `
+    <div class="t1-task-bar">
+      <span style="font-weight:600;color:var(--purple)">${task.lesson}</span>
+      <span class="task-info">${task.title} &mdash; ${questions.length} questions</span>
+    </div>`}
+
+    <div class="t1-q-selector" id="t1-q-selector">
+      ${questions.map((q,i) => `
+        <div class="t1-q-btn ${i===t1.qi?'active':''}" onclick="t1.qi=${i};t1RenderContent()">
+          <div class="q-num">Q${i+1}</div>
+          <div class="q-label">${q.short || q.q.substring(0,30)}</div>
+          <div class="q-status" id="t1-q${i}-status"></div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="t1-mode-grid">
+      ${[
+        {m:'chunks',icon:'&#128221;',name:'Chunks',desc:'Morceau par morceau'},
+        {m:'blanks',icon:'&#128371;',name:'Trous',desc:'Retrouve les mots-cles'},
+        {m:'write',icon:'&#9997;',name:'Ecrire',desc:'Tape de memoire'},
+        {m:'build',icon:'&#128256;',name:'Puzzle',desc:'Remets dans l\'ordre'},
+        {m:'record',icon:'&#127908;',name:'Enregistrer',desc:'Dis-le, enregistre'},
+        {m:'traps',icon:'&#9888;',name:'Pieges',desc:'Erreurs + quiz'}
+      ].map(x => `
+        <div class="t1-mode-card ${t1.mode===x.m?'active':''}" onclick="t1.mode='${x.m}';t1RenderContent()">
+          <div class="mode-icon">${x.icon}</div>
+          <div class="mode-name">${x.name}</div>
+          <div class="mode-desc">${x.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div id="t1-content"></div>
+    <div id="t1-progress-area" style="margin-top:24px"></div>
+  `;
+  t1RenderContent();
+}
+
+function t1RenderContent() {
+  // Update Q selector active state
+  document.querySelectorAll('.t1-q-btn').forEach((b,i) => b.classList.toggle('active', i===t1.qi));
+  document.querySelectorAll('.t1-mode-card').forEach(c => {
+    const m = c.querySelector('.mode-name').textContent.toLowerCase();
+    const map = {chunks:'chunks',trous:'blanks',ecrire:'write',puzzle:'build',enregistrer:'record',pieges:'traps'};
+    c.classList.toggle('active', map[m]===t1.mode);
+  });
+
+  const el = document.getElementById('t1-content');
+  const data = t1Data();
+  const qi = t1.qi;
+
+  switch(t1.mode) {
+    case 'chunks': t1RenderChunks(el, data, qi); break;
+    case 'blanks': t1RenderBlanks(el, data, qi); break;
+    case 'write': t1RenderWrite(el, data, qi); break;
+    case 'build': t1RenderBuild(el, data, qi); break;
+    case 'record': t1RenderRecord(el, data, qi); break;
+    case 'traps': t1RenderTraps(el, data, qi); break;
+  }
+  t1UpdateProgress();
+}
+
+function t1RenderChunks(el, data, qi) {
+  const allDone = t1GetChunksDone();
+  const done = allDone[qi] || [];
+  el.innerHTML = `
+    ${data.chunks.map((c, i) => `
+      <div class="t1-chunk ${!done.includes(i) && done.length===i ? 'active-chunk' : ''}" id="t1-chunk-${i}">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="chunk-label">${c.label}</div>
+          ${done.includes(i) ? '<span class="tag tag-green">Appris</span>' : '<span class="tag tag-orange">A travailler</span>'}
+        </div>
+        <div class="chunk-text" id="t1-chunk-text-${i}">${c.text}</div>
+        <div class="chunk-keywords">${c.keywords.map(k => `<span>${k}</span>`).join('')}</div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-sm btn-secondary" onclick="t1ChunkToggleText(${i})">Cacher/Montrer</button>
+          <button class="btn btn-sm btn-secondary" onclick="t1ChunkShowKeywords(${i})">Mots-cles seuls</button>
+          ${done.includes(i) ?
+            `<button class="btn btn-sm btn-secondary" onclick="t1ChunkUnmark(${qi},${i})">Remettre</button>` :
+            `<button class="btn btn-sm btn-success" onclick="t1ChunkMark(${qi},${i})">Je le sais !</button>`}
+        </div>
+      </div>
+    `).join('')}
+    <div style="text-align:center;margin-top:20px">
+      <button class="btn btn-primary" onclick="t1ChunkTest(${qi})">Test sans regarder</button>
+    </div>
+  `;
+}
+
+function t1ChunkToggleText(i) {
+  const el = document.getElementById(`t1-chunk-text-${i}`);
+  el.style.filter = el.style.filter === 'blur(8px)' ? 'none' : 'blur(8px)';
+  el.style.userSelect = el.style.filter === 'blur(8px)' ? 'none' : 'auto';
+}
+
+function t1ChunkShowKeywords(i) {
+  const el = document.getElementById(`t1-chunk-text-${i}`);
+  const c = t1Data().chunks[i];
+  el.style.filter = 'none'; el.style.userSelect = 'auto';
+  let result = c.text;
+  c.keywords.forEach(k => { result = result.replace(k, `|||${k}|||`); });
+  el.innerHTML = result.split('|||').map(p =>
+    c.keywords.includes(p) ? `<strong style="color:var(--purple)">${p}</strong>` :
+    `<span style="color:transparent;background:var(--surface2);border-radius:3px">${p}</span>`
+  ).join('');
+}
+
+function t1ChunkMark(qi, ci) {
+  const arr = t1GetChunksDone();
+  if (!arr[qi]) arr[qi] = [];
+  if (!arr[qi].includes(ci)) arr[qi].push(ci);
+  t1SetChunksDone(arr);
+  t1RenderContent();
+}
+
+function t1ChunkUnmark(qi, ci) {
+  const arr = t1GetChunksDone();
+  if (arr[qi]) arr[qi] = arr[qi].filter(x => x !== ci);
+  t1SetChunksDone(arr);
+  t1RenderContent();
+}
+
+function t1ChunkTest(qi) {
+  const data = t1Data();
+  const el = document.getElementById('t1-content');
+  el.innerHTML = `
+    <div class="card" style="text-align:center;border-color:var(--purple)">
+      <h3 style="color:var(--purple)">Test : Q${qi+1}</h3>
+      <p style="font-size:18px;font-weight:600;margin:20px 0">"${data.q}"</p>
+      <p>Dis ta reponse a voix haute, sans lire. Clique pour verifier.</p>
+      <div style="margin:24px 0">
+        <div class="oral-timer" id="t1-test-timer" style="font-size:40px">0:00</div>
+        <button class="btn btn-primary" id="t1-test-start" onclick="t1TestTimer()">Commencer</button>
+      </div>
+      <button class="btn btn-secondary" onclick="t1TestReveal()" style="margin-top:12px">Verifier</button>
+    </div>
+    <div id="t1-test-answer" style="display:none;margin-top:16px">
+      ${data.chunks.map(c => `<div class="t1-chunk"><div class="chunk-label">${c.label}</div><div class="chunk-text">${c.text}</div></div>`).join('')}
+      <div style="text-align:center;margin-top:16px">
+        <p style="font-weight:600;margin-bottom:12px">Comment c'etait ?</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-danger" onclick="t1.mode='chunks';t1RenderContent()">Pas encore</button>
+          <button class="btn btn-primary" onclick="t1.mode='blanks';t1RenderContent()">Presque</button>
+          <button class="btn btn-success" onclick="const a=t1GetBuildDone();a[${qi}]=true;t1SetBuildDone(a);t1.mode='record';t1RenderContent()">Fluide !</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+let t1TimerInterval = null, t1TimerSec = 0;
+function t1TestTimer() {
+  const btn = document.getElementById('t1-test-start');
+  if (t1TimerInterval) {
+    clearInterval(t1TimerInterval); t1TimerInterval = null; btn.textContent = 'Reprendre';
+  } else {
+    btn.textContent = 'Pause';
+    t1TimerInterval = setInterval(() => {
+      t1TimerSec++;
+      const m = Math.floor(t1TimerSec/60), s = t1TimerSec%60;
+      const timer = document.getElementById('t1-test-timer');
+      if(timer) {
+        timer.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+        timer.style.color = t1TimerSec<=30?'var(--green)':t1TimerSec<=45?'var(--accent)':'var(--orange)';
+      }
+    }, 1000);
+  }
+}
+function t1TestReveal() {
+  clearInterval(t1TimerInterval); t1TimerInterval=null; t1TimerSec=0;
+  const el = document.getElementById('t1-test-answer');
+  if(el) { el.style.display='block'; el.scrollIntoView({behavior:'smooth'}); }
+}
+
+function t1RenderBlanks(el, data, qi) {
+  const fullText = data.chunks.map(c => c.text).join(' ');
+  const kw = data.chunks.flatMap(c => c.keywords);
+
+  let clickHtml = fullText, typeHtml = fullText;
+  kw.forEach((k,i) => { clickHtml = clickHtml.replace(k, `__BK${i}__`); typeHtml = typeHtml.replace(k, `__BT${i}__`); });
+  kw.forEach((k,i) => {
+    clickHtml = clickHtml.replace(`__BK${i}__`, `<span class="t1-blank" onclick="this.classList.toggle('revealed')">${k}</span>`);
+    const w = Math.max(k.length*9, 80);
+    typeHtml = typeHtml.replace(`__BT${i}__`, `<span style="display:inline-block;vertical-align:baseline;position:relative"><input type="text" class="t1-fill-input" id="t1-fill-${i}" data-answer="${k.replace(/"/g,'&quot;')}" placeholder="${'·'.repeat(Math.min(k.split(' ').length,5))}" style="width:${w}px" autocomplete="off" spellcheck="false"><span id="t1-fill-fb-${i}" style="position:absolute;right:-20px;top:4px;font-size:13px"></span></span>`);
+  });
+
+  el.innerHTML = `
+    <div class="card">
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <button class="btn btn-sm btn-primary" id="t1-bl-click-btn" onclick="t1BlanksSwitch('click')">Cliquer</button>
+        <button class="btn btn-sm btn-secondary" id="t1-bl-type-btn" onclick="t1BlanksSwitch('type')">Taper</button>
+      </div>
+      <h4 style="color:var(--purple);margin-bottom:16px">Q${qi+1}: ${data.q}</h4>
+      <div id="t1-blanks-click" style="font-size:16px;line-height:2.2">${clickHtml}</div>
+      <div id="t1-blanks-type" style="font-size:16px;line-height:2.8;display:none">${typeHtml}</div>
+      <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap" id="t1-blanks-actions">
+        <button class="btn btn-sm btn-secondary" onclick="document.querySelectorAll('.t1-blank').forEach(b=>b.classList.remove('revealed'))">Tout cacher</button>
+        <button class="btn btn-sm btn-secondary" onclick="document.querySelectorAll('.t1-blank').forEach(b=>b.classList.add('revealed'))">Tout reveler</button>
+      </div>
+      <div style="margin-top:20px;gap:8px;flex-wrap:wrap;display:none" id="t1-type-actions">
+        <button class="btn btn-sm btn-primary" onclick="t1CheckAllFills()">Verifier</button>
+        <button class="btn btn-sm btn-secondary" onclick="t1ResetFills()">Recommencer</button>
+        <span style="margin-left:auto;font-size:14px;color:var(--text2);display:flex;align-items:center" id="t1-fill-score"></span>
+      </div>
+    </div>
+  `;
+}
+
+function t1BlanksSwitch(mode) {
+  const isType = mode==='type';
+  document.getElementById('t1-blanks-click').style.display = isType?'none':'block';
+  document.getElementById('t1-blanks-type').style.display = isType?'block':'none';
+  document.getElementById('t1-blanks-actions').style.display = isType?'none':'flex';
+  document.getElementById('t1-type-actions').style.display = isType?'flex':'none';
+  document.getElementById('t1-bl-click-btn').className = `btn btn-sm ${isType?'btn-secondary':'btn-primary'}`;
+  document.getElementById('t1-bl-type-btn').className = `btn btn-sm ${isType?'btn-primary':'btn-secondary'}`;
+  if (isType) {
+    const first = document.getElementById('t1-fill-0');
+    if (first) setTimeout(() => first.focus(), 100);
+    document.querySelectorAll('.t1-fill-input').forEach((inp,i) => {
+      inp.onkeydown = e => { if(e.key==='Enter'){e.preventDefault();t1CheckFill(inp);const n=document.getElementById(`t1-fill-${i+1}`);if(n)n.focus();else t1CheckAllFills();} };
+    });
+  }
+}
+
+function t1CheckFill(input) {
+  const answer = input.dataset.answer.toLowerCase().trim(), value = input.value.toLowerCase().trim();
+  const fb = input.parentElement.querySelector('[id^="t1-fill-fb"]');
+  if (!value) { input.className='t1-fill-input'; if(fb)fb.innerHTML=''; return; }
+  const words = answer.split(/\s+/);
+  const match = value===answer || (words.length>1 && words.filter(w=>value.includes(w)).length >= words.length*0.7);
+  input.className = `t1-fill-input ${match?'correct':'wrong'}`;
+  if(fb) fb.innerHTML = match ? '<span style="color:var(--green)">&#10003;</span>' : '';
+}
+
+function t1CheckAllFills() {
+  const inputs = document.querySelectorAll('.t1-fill-input');
+  let correct = 0;
+  inputs.forEach(inp => { t1CheckFill(inp); if(inp.classList.contains('correct'))correct++; });
+  const s = document.getElementById('t1-fill-score');
+  if(s){const p=Math.round(correct/inputs.length*100);s.innerHTML=`<strong style="color:${p>=80?'var(--green)':p>=50?'var(--orange)':'var(--red)'}">${correct}/${inputs.length}</strong>&nbsp;(${p}%)`;}
+  inputs.forEach(inp => { if(inp.classList.contains('wrong')){const fb=inp.parentElement.querySelector('[id^="t1-fill-fb"]');if(fb)fb.innerHTML=`<span style="color:var(--red);font-size:11px;position:absolute;left:0;top:100%;white-space:nowrap">${inp.dataset.answer}</span>`;}});
+}
+
+function t1ResetFills() {
+  document.querySelectorAll('.t1-fill-input').forEach(inp=>{inp.value='';inp.className='t1-fill-input';});
+  document.querySelectorAll('[id^="t1-fill-fb"]').forEach(fb=>fb.innerHTML='');
+  const s=document.getElementById('t1-fill-score');if(s)s.innerHTML='';
+  const f=document.getElementById('t1-fill-0');if(f)f.focus();
+}
+
+function t1RenderWrite(el, data, qi) {
+  const tid = t1Task().id;
+  const fullText = data.chunks.map(c=>c.text).join(' ');
+  const saved = localStorage.getItem(`pr_${tid}_write_${qi}`) || '';
+  const wc = saved.trim()?saved.trim().split(/\s+/).length:0;
+  const target = fullText.trim().split(/\s+/).length;
+
+  el.innerHTML = `
+    <div class="card">
+      <h4 style="color:var(--purple);margin-bottom:4px">Q${qi+1}</h4>
+      <p style="font-size:18px;font-weight:600;margin-bottom:16px">"${data.q}"</p>
+      <textarea id="t1-write-area" placeholder="Hi, I am Caother..." oninput="t1AutoSaveWrite()" style="min-height:180px;font-size:15px;line-height:1.8">${saved}</textarea>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;flex-wrap:wrap;gap:8px">
+        <span style="font-size:13px;color:var(--text2)" id="t1-write-wc">${wc} / ~${target} mots</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-sm btn-secondary" onclick="document.getElementById('t1-write-area').value='';t1AutoSaveWrite()">Effacer</button>
+          <button class="btn btn-sm btn-primary" onclick="t1ShowWriteCompare()">Comparer au modele</button>
+        </div>
+      </div>
+    </div>
+    <div id="t1-write-compare" style="display:none;margin-top:16px">
+      <div class="card" style="border-color:var(--green)"><h4 style="color:var(--green);margin-bottom:12px">Modele</h4><div style="font-size:15px;line-height:1.8" id="t1-write-model"></div></div>
+      <div class="card" style="margin-top:12px;border-color:var(--orange)"><h4 style="color:var(--orange);margin-bottom:12px">Analyse</h4><div id="t1-write-analysis"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h4 style="color:var(--purple);margin-bottom:12px">Indices</h4>
+      <div id="t1-write-hints" style="display:none">
+        ${data.chunks.map(c=>`<div style="margin-bottom:8px"><span style="font-size:11px;text-transform:uppercase;color:var(--purple);font-weight:700;letter-spacing:1px">${c.label} :</span> <span style="color:var(--text)">${c.keywords.join(' / ')}</span></div>`).join('')}
+      </div>
+      <button class="btn btn-sm btn-secondary" onclick="const h=document.getElementById('t1-write-hints');h.style.display=h.style.display==='none'?'block':'none';this.textContent=h.style.display==='none'?'Montrer':'Cacher'">Montrer</button>
+    </div>
+  `;
+}
+
+function t1AutoSaveWrite() {
+  const area = document.getElementById('t1-write-area'); if(!area) return;
+  localStorage.setItem(`pr_${t1Task().id}_write_${t1.qi}`, area.value);
+  const wc = area.value.trim()?area.value.trim().split(/\s+/).length:0;
+  const target = t1Data().chunks.map(c=>c.text).join(' ').trim().split(/\s+/).length;
+  const el = document.getElementById('t1-write-wc'); if(el) el.textContent=`${wc} / ~${target} mots`;
+}
+
+function t1ShowWriteCompare() {
+  const area = document.getElementById('t1-write-area'); if(!area) return;
+  const userText = area.value.trim().toLowerCase();
+  const data = t1Data();
+  const fullText = data.chunks.map(c=>c.text).join(' ');
+  const kw = data.chunks.flatMap(c=>c.keywords);
+  const div = document.getElementById('t1-write-compare'); div.style.display='block';
+
+  let hl = fullText;
+  kw.forEach(k => {
+    const found = userText.includes(k.toLowerCase());
+    hl = hl.replace(k, `<span style="color:${found?'var(--green)':'var(--red)'};background:${found?'rgba(22,163,74,.1)':'rgba(220,38,38,.1)'};padding:2px 4px;border-radius:3px;font-weight:600">${k}</span>`);
+  });
+  document.getElementById('t1-write-model').innerHTML = hl;
+
+  const found=kw.filter(k=>userText.includes(k.toLowerCase())), missing=kw.filter(k=>!userText.includes(k.toLowerCase()));
+  const pct=Math.round(found.length/kw.length*100);
+  const trapsFound = (data.traps||[]).filter(t=>userText.includes(t.wrong.toLowerCase()));
+
+  document.getElementById('t1-write-analysis').innerHTML = `
+    <div style="display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap">
+      <div style="text-align:center"><div style="font-size:32px;font-weight:700;color:${pct>=80?'var(--green)':pct>=50?'var(--orange)':'var(--red)'}">${pct}%</div><div style="font-size:12px;color:var(--text2)">mots-cles</div></div>
+      <div style="text-align:center"><div style="font-size:32px;font-weight:700;color:var(--green)">${found.length}</div><div style="font-size:12px;color:var(--text2)">trouves</div></div>
+      <div style="text-align:center"><div style="font-size:32px;font-weight:700;color:var(--red)">${missing.length}</div><div style="font-size:12px;color:var(--text2)">manquants</div></div>
+    </div>
+    ${missing.length?`<div style="margin-bottom:12px"><strong style="color:var(--red)">Manquants :</strong><div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">${missing.map(m=>`<span style="background:var(--red-bg);color:var(--red);padding:4px 10px;border-radius:16px;font-size:13px;font-weight:600">${m}</span>`).join('')}</div></div>`:'<div style="color:var(--green);font-weight:600;margin-bottom:12px">Tous les mots-cles sont la !</div>'}
+    ${trapsFound.length?`<div><strong style="color:var(--red)">Pieges detectes :</strong>${trapsFound.map(t=>`<div class="t1-trap-card" style="margin-top:8px"><span class="trap-wrong">${t.wrong}</span> &rarr; <span class="trap-right">${t.right}</span><div class="trap-tip">${t.tip}</div></div>`).join('')}</div>`:''}
+  `;
+  div.scrollIntoView({behavior:'smooth'});
+}
+
+function t1RenderBuild(el, data, qi) {
+  const chunks = data.chunks.map(c=>c.text);
+  const shuffled = [...chunks].sort(()=>Math.random()-.5);
+  el.innerHTML = `
+    <div class="card">
+      <h4 style="color:var(--purple);margin-bottom:16px">Q${qi+1}: ${data.q}</h4>
+      <div id="t1-build-items">
+        ${shuffled.map(text=>`
+          <div class="t1-chunk" draggable="true" data-text="${text.replace(/"/g,'&quot;')}" style="cursor:grab" ondragstart="t1DragStart(event)" ondragover="t1DragOver(event)" ondrop="t1Drop(event)">
+            <div style="display:flex;align-items:center;gap:12px"><span style="font-size:20px;color:var(--text2);cursor:grab">&#9776;</span><div class="chunk-text" style="flex:1">${text}</div></div>
+          </div>
+        `).join('')}
+      </div>
+      <div style="margin-top:16px;display:flex;gap:8px">
+        <button class="btn btn-primary" onclick="t1CheckBuild()">Verifier</button>
+        <button class="btn btn-secondary" onclick="t1RenderContent()">Remixer</button>
+      </div>
+      <div id="t1-build-result" style="margin-top:16px"></div>
+    </div>
+  `;
+}
+let t1DragEl=null;
+function t1DragStart(e){t1DragEl=e.target.closest('.t1-chunk');e.dataTransfer.effectAllowed='move';}
+function t1DragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';}
+function t1Drop(e){e.preventDefault();const target=e.target.closest('.t1-chunk');if(target&&t1DragEl&&target!==t1DragEl){const c=document.getElementById('t1-build-items'),items=[...c.children],f=items.indexOf(t1DragEl),t2=items.indexOf(target);if(f<t2)target.after(t1DragEl);else target.before(t1DragEl);}}
+
+function t1CheckBuild() {
+  const items=document.querySelectorAll('#t1-build-items .t1-chunk');
+  const correct=t1Data().chunks.map(c=>c.text);
+  let ok=true;
+  items.forEach((item,i)=>{
+    if(item.dataset.text===correct[i]){item.style.borderColor='var(--green)';item.style.background='var(--green-bg)';}
+    else{item.style.borderColor='var(--red)';item.style.background='var(--red-bg)';ok=false;}
+  });
+  const r=document.getElementById('t1-build-result');
+  if(ok){r.innerHTML='<div style="text-align:center;color:var(--green);font-weight:700;font-size:18px">Parfait !</div>';const a=t1GetBuildDone();a[t1.qi]=true;t1SetBuildDone(a);t1UpdateProgress();}
+  else r.innerHTML='<div style="text-align:center;color:var(--red)">Pas encore... les blocs rouges sont mal places.</div>';
+}
+
+function t1RenderRecord(el, data, qi) {
+  const tid = t1Task().id;
+  if(!t1.recordings[tid]) t1.recordings[tid] = {};
+  if(!t1.recordings[tid][qi]) t1.recordings[tid][qi] = [];
+  const recs = t1.recordings[tid][qi];
+  const checklist = data.checklist || ["Moins de 45 secondes","Je ne lis pas, je parle"];
+
+  el.innerHTML = `
+    <div class="card" style="text-align:center">
+      <h4 style="color:var(--purple);margin-bottom:8px">Q${qi+1}</h4>
+      <p style="font-size:18px;font-weight:600;margin:16px 0">"${data.q}"</p>
+      <div style="display:flex;gap:24px;justify-content:center;margin:24px 0">
+        <div style="text-align:center"><div style="font-size:32px;font-weight:700;color:var(--text2)" id="t1-rep-count">0</div><div style="font-size:12px;color:var(--text2)">Repetitions</div></div>
+        <div style="text-align:center"><div class="oral-timer" id="t1-rec-timer" style="font-size:32px">0:00</div><div style="font-size:12px;color:var(--text2)">Duree</div></div>
+      </div>
+      <button class="t1-record-btn" id="t1-rec-btn" onclick="t1ToggleRecord()"><div class="rec-dot"></div></button>
+      <p style="margin-top:12px;font-size:13px;color:var(--text2)" id="t1-rec-label">Clique pour enregistrer</p>
+      <div style="margin-top:16px"><button class="btn btn-sm btn-secondary" onclick="t1CountRep()">+1 repetition (sans micro)</button></div>
+    </div>
+    <div id="t1-recordings-list" style="margin-top:16px">
+      ${recs.map((r,i)=>`<div class="t1-attempt-card"><span style="font-weight:600;color:var(--purple)">#${i+1}</span><audio controls src="${r}"></audio></div>`).join('')}
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h4 style="color:var(--yellow)">Checklist</h4>
+      <div style="margin-top:12px">
+        ${checklist.map(c=>`<div class="checklist-item" onclick="toggleCheck(this)"><div class="checklist-check"></div><span>${c}</span></div>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+let t1RecTimer=null, t1RecSec=0, t1RepCount=0;
+function t1CountRep(){t1RepCount++;const el=document.getElementById('t1-rep-count');if(el)el.textContent=t1RepCount;}
+
+async function t1ToggleRecord() {
+  const btn=document.getElementById('t1-rec-btn'), label=document.getElementById('t1-rec-label');
+  const tid=t1Task().id, qi=t1.qi;
+  if(t1.isRecording){
+    t1.isRecording=false;btn.classList.remove('recording');label.textContent='Termine';
+    clearInterval(t1RecTimer);t1RecSec=0;
+    if(t1.recorder&&t1.recorder.state==='recording')t1.recorder.stop();
+  } else {
+    try{
+      const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+      t1.recorder=new MediaRecorder(stream);
+      const chunks=[];
+      t1.recorder.ondataavailable=e=>chunks.push(e.data);
+      t1.recorder.onstop=()=>{
+        const url=URL.createObjectURL(new Blob(chunks,{type:'audio/webm'}));
+        if(!t1.recordings[tid])t1.recordings[tid]={};
+        if(!t1.recordings[tid][qi])t1.recordings[tid][qi]=[];
+        t1.recordings[tid][qi].push(url);
+        t1RepCount++;stream.getTracks().forEach(t=>t.stop());
+        t1RenderContent();
+      };
+      t1.recorder.start();t1.isRecording=true;btn.classList.add('recording');
+      label.textContent='Enregistrement... Clique pour arreter.';
+      t1RecTimer=setInterval(()=>{t1RecSec++;const m=Math.floor(t1RecSec/60),s=t1RecSec%60;const el=document.getElementById('t1-rec-timer');if(el)el.textContent=`${m}:${s.toString().padStart(2,'0')}`;},1000);
+    }catch(e){label.textContent='Micro non accessible.';}
+  }
+}
+
+function t1RenderTraps(el, data, qi) {
+  const traps = data.traps || [];
+  if(!traps.length){el.innerHTML='<div class="card"><p>Pas de pieges pour cette question.</p></div>';return;}
+  const shuffled=[...traps].sort(()=>Math.random()-.5);
+  el.innerHTML = `
+    ${traps.map((t,i)=>`
+      <div class="t1-trap-card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:18px">&#9888;</span><span style="font-weight:600">Piege #${i+1}</span></div>
+        <div style="margin:8px 0"><span class="trap-wrong">${t.wrong}</span> <span style="margin:0 8px">&rarr;</span> <span class="trap-right">${t.right}</span></div>
+        <div class="trap-tip">${t.tip}</div>
+      </div>
+    `).join('')}
+    <div class="card" style="margin-top:20px">
+      <h4 style="color:var(--purple);margin-bottom:12px">Quiz</h4>
+      <div id="t1-trap-quiz">
+        ${shuffled.map((t,i)=>{
+          const opts=[t.wrong,t.right].sort(()=>Math.random()-.5);
+          return `<div class="card" style="margin-bottom:12px" id="t1-tq-${i}"><p style="font-weight:600;margin-bottom:12px">Quelle formulation est correcte ?</p>${opts.map(o=>`<button class="grammar-quiz-option" onclick="t1TrapAnswer(this,${i})">${o}</button>`).join('')}<p id="t1-tq-tip-${i}" style="display:none;margin-top:8px;font-size:13px;color:var(--text2)"></p></div>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+  window._t1TrapShuffled = shuffled;
+}
+
+function t1TrapAnswer(btn, idx) {
+  const card=document.getElementById(`t1-tq-${idx}`);
+  if(card.dataset.answered)return;
+  card.dataset.answered='true';
+  const trap=window._t1TrapShuffled[idx];
+  card.querySelectorAll('.grammar-quiz-option').forEach(b=>{
+    b.style.pointerEvents='none';
+    if(b.textContent===trap.right)b.classList.add('correct');
+    else if(b===btn)b.classList.add('wrong');
+  });
+  const tip=document.getElementById(`t1-tq-tip-${idx}`);
+  if(tip){tip.textContent=trap.tip;tip.style.display='block';}
+}
+
+function t1UpdateProgress() {
+  const questions = t1Questions();
+  const chunksDone = t1GetChunksDone();
+  const buildDone = t1GetBuildDone();
+  const tid = t1Task().id;
+
+  questions.forEach((q,i) => {
+    const statusEl = document.getElementById(`t1-q${i}-status`);
+    if(!statusEl)return;
+    const done = (chunksDone[i]||[]).length;
+    const total = q.chunks.length;
+    const pct = Math.round(done/total*100);
+    const hasRec = t1.recordings[tid]?.[i]?.length > 0;
+    if(hasRec) statusEl.innerHTML='<span class="tag tag-green">Enregistre</span>';
+    else if(pct===100) statusEl.innerHTML='<span class="tag tag-purple">Chunks OK</span>';
+    else if(pct>0) statusEl.innerHTML=`<span class="tag tag-orange">${pct}%</span>`;
+    else statusEl.innerHTML='<span class="tag tag-red">A faire</span>';
+  });
+}
+
+// ==================== FILTERS (event listeners) ====================
+document.addEventListener('DOMContentLoaded', () => {
+  loadState();
+
+  // Flashcard filters
+  document.querySelectorAll('.flashcard-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.flashcard-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.currentFilter = btn.dataset.filter;
+      state.currentCard = 0;
+      showCard();
+    });
+  });
+
+  // Sentence filters
+  document.querySelectorAll('.sent-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.sent-filter').forEach(b => {
+        b.classList.remove('active');
+        b.classList.remove('btn-primary');
+        b.classList.add('btn-secondary');
+      });
+      btn.classList.add('active');
+      btn.classList.add('btn-primary');
+      btn.classList.remove('btn-secondary');
+      renderSentences();
+    });
+  });
+
+  // Error filters
+  document.querySelectorAll('.err-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.err-filter').forEach(b => {
+        b.classList.remove('active');
+        b.classList.remove('btn-primary');
+        b.classList.add('btn-secondary');
+      });
+      btn.classList.add('active');
+      btn.classList.add('btn-primary');
+      btn.classList.remove('btn-secondary');
+      renderErrors();
+    });
+  });
+
+  // Homework filters
+  document.querySelectorAll('.hw-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.hw-filter').forEach(b => {
+        b.classList.remove('active');
+        b.classList.remove('btn-primary');
+        b.classList.add('btn-secondary');
+      });
+      btn.classList.add('active');
+      btn.classList.add('btn-primary');
+      btn.classList.remove('btn-secondary');
+      const filter = btn.dataset.hw;
+      document.querySelectorAll('.hw-task').forEach(t => {
+        const tags = t.dataset.hw;
+        t.style.display = (filter === 'current' && tags.includes('current')) ||
+                          tags.includes(filter) ||
+                          filter === 'archive' ? '' : 'none';
+        if (filter === 'archive') t.style.display = 'none'; // no archived yet
+      });
+    });
+  });
+
+  // Init Task 1
+  t1Init();
+
+  // Init renders
+  showCard();
+  renderTechGlossary();
+  renderIdioms();
+  showGrammarTopic('all');
+  renderSentences();
+  renderErrors();
+  renderOralHistory();
+  renderDashboardTodo();
+  loadHomework();
+  updateStats();
+});
+</script>
+
+</body>
+</html>

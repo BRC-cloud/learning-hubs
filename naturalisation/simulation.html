@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulation d'examen - Examen Civique</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">Examen Civique</a>
+  <a href="index.html">Accueil</a>
+  <a href="principes-valeurs.html">Principes &amp; Valeurs</a>
+  <a href="institutions.html">Institutions</a>
+  <a href="droits-devoirs.html">Droits &amp; Devoirs</a>
+  <a href="histoire-culture.html">Histoire &amp; Culture</a>
+  <a href="vie-societe.html">Vie en société</a>
+  <a href="simulation.html" class="active">Simulation</a>
+</nav>
+
+<div class="page-hero" style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);">
+  <h1><span class="emoji">&#127942;</span> Simulation d'examen</h1>
+  <p>40 questions en 45 minutes. Seuil de réussite : 80% (32/40).</p>
+</div>
+
+<div class="timer-bar">
+  <div><span class="timer-label">Temps restant :</span> <span class="timer-display" id="quiz-timer">45:00</span></div>
+  <div class="timer-progress">0 / 40 répondu(es)</div>
+</div>
+
+<div class="container">
+
+  <div class="info-box">
+    <strong>Conditions réelles :</strong> 40 questions, 45 minutes chronométrées. Tu dois obtenir au moins 32/40 (80%) pour réussir. Les questions sont mélangées a chaque tentative. Quand le temps est écoulé, les questions sans réponse sont comptées comme fausses.
+  </div>
+
+  <div class="tip-box">
+    <strong>CSP ou CR ?</strong> L'examen existe en 2 niveaux : <strong>CSP</strong> (Carte de Sejour Pluriannuelle, 207 questions) et <strong>CR</strong> (Carte de Resident, 209 questions). Les deux tirent dans le meme programme de 258 questions, avec un large recouvrement. Prépare les 5 thèmes et tu seras prête pour les deux niveaux. Chaque simulation pioche 40 questions différentes.
+  </div>
+
+  <div class="quiz-section">
+    <h2>Examen Civique &mdash; Simulation</h2>
+    <div id="quiz-simulation"></div>
+  </div>
+
+  <div class="btn-group" style="justify-content: center; margin: 24px 0;">
+    <a href="index.html" class="btn btn-outline">Retour à l'accueil</a>
+    <button class="btn btn-rouge" onclick="location.reload()">Nouvelle simulation</button>
+  </div>
+
+  <div class="footer">
+    Guide de préparation à l'examen civique de naturalisation française &mdash; Base sur les 258 questions officielles du Ministère de l'Intérieur
+  
+    <div style="margin-top:8px;font-size:0.82em;">Sources : <a href="https://www.data.gouv.fr/datasets/examen-civique-naturalisation-questions-de-connaissances-officielles-et-propositions-de-reponses" target="_blank" style="color:var(--bleu);">data.gouv.fr</a> &middot; <a href="https://www.immigration.interieur.gouv.fr/Integration-et-Acces-a-la-nationalite/La-nationalite-francaise/Le-livret-du-citoyen" target="_blank" style="color:var(--bleu);">Livret du citoyen</a> &middot; <a href="https://www.france-education-international.fr/examen-civique/examen-civique-informations-pour-les-candidats?langue=fr" target="_blank" style="color:var(--bleu);">France Education International</a> &middot; <a href="https://www.service-public.gouv.fr/particuliers/actualites/A18713" target="_blank" style="color:var(--bleu);">Service-public.fr</a></div>
+  </div>
+</div>
+
+<script src="question-bank.js"></script>
+<script src="quiz-engine.js"></script>
+<script>
+// Pick 40 random questions from the bank, balanced across thèmes
+function pickSimulation(bank, count) {
+  const thèmes = {};
+  bank.forEach(q => {
+    const t = q.tag || 'Autre';
+    if (!thèmes[t]) thèmes[t] = [];
+    thèmes[t].push(q);
+  });
+
+  const themeKeys = Object.keys(thèmes);
+  themeKeys.forEach(k => {
+    for (let i = thèmes[k].length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [thèmes[k][i], thèmes[k][j]] = [thèmes[k][j], thèmes[k][i]];
+    }
+  });
+
+  const perTheme = Math.floor(count / themeKeys.length);
+  const remainder = count % themeKeys.length;
+  const picked = [];
+
+  themeKeys.forEach((k, idx) => {
+    const n = perTheme + (idx < remainder ? 1 : 0);
+    picked.push(...themes[k].slice(0, n));
+  });
+
+  for (let i = picked.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [picked[i], picked[j]] = [picked[j], picked[i]];
+  }
+  return picked;
+}
+
+const questions = pickSimulation(QUESTION_BANK, 40);
+initQuiz('quiz-simulation', questions, 'simulation', { shuffle: false, timer: 45, passRate: 80 });
+
+const observer = new MutationObserver(() => {
+  const answeredCount = document.querySelectorAll('.quiz-options.answered').length;
+  const progressEl = document.querySelector('.timer-progress');
+  if (progressEl) {
+    progressEl.textContent = answeredCount + ' / 40 répondu(es)';
+  }
+});
+const target = document.getElementById('quiz-simulation');
+if (target) observer.observe(target, { subtree: true, attributes: true, attributeFilter: ['class'] });
+</script>
+</body>
+</html>

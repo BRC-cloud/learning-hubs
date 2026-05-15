@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Programme reprise course - par semaine</title>
+<style>
+  @page { size: A4 portrait; margin: 10mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11pt; color: #1a1a1a; }
+  .page { padding: 10mm; page-break-after: always; }
+  .page:last-child { page-break-after: avoid; }
+
+  h1 { font-size: 22pt; text-align: center; margin-bottom: 2px; color: #2c3e50; }
+  .week-title { font-size: 16pt; text-align: center; color: #2c3e50; margin-bottom: 4px; font-weight: 700; }
+  .phase-badge { display: inline-block; color: white; font-size: 10pt; padding: 3px 14px; border-radius: 12px; margin-bottom: 4px; font-weight: 600; }
+  .badge-1 { background: #3498db; }
+  .badge-2 { background: #e67e22; }
+  .badge-3 { background: #27ae60; }
+  .week-sub { text-align: center; font-size: 10pt; color: #7f8c8d; margin-bottom: 14px; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+  th { background: #2c3e50; color: white; padding: 7px 10px; text-align: left; font-weight: 600; font-size: 10pt; }
+  td { padding: 8px 10px; border-bottom: 1px solid #ddd; vertical-align: top; font-size: 10.5pt; line-height: 1.4; }
+  tr:nth-child(even) { background: #f7f9fc; }
+  .day { font-weight: 700; white-space: nowrap; width: 80px; font-size: 10pt; }
+  .check { width: 30px; text-align: center; font-size: 14pt; color: #bdc3c7; }
+
+  .tag { display: inline-block; font-size: 8pt; padding: 2px 6px; border-radius: 3px; font-weight: 700; margin-right: 2px; vertical-align: middle; }
+  .t-assia { background: #e8daef; color: #6c3483; }
+  .t-renfo { background: #d5f5e3; color: #1e8449; }
+  .t-cf { background: #fdebd0; color: #ca6f1e; }
+  .t-dos { background: #d6eaf8; color: #2471a3; }
+  .t-repos { background: #f2f3f4; color: #95a5a6; }
+  .t-run { background: #fadbd8; color: #c0392b; }
+  .t-course { background: #d4efdf; color: #1e8449; }
+  .t-event { background: #fce4ec; color: #c0392b; }
+
+  .info-box { border-radius: 6px; padding: 8px 12px; font-size: 9.5pt; margin-bottom: 8px; }
+  .info-blue { background: #eaf2f8; border-left: 4px solid #3498db; }
+  .info-orange { background: #fef5e7; border-left: 4px solid #e67e22; }
+  .info-green { background: #eafaf1; border-left: 4px solid #27ae60; }
+  .info-red { background: #fdedec; border-left: 4px solid #e74c3c; }
+
+  .alert { border: 2px solid #e74c3c; border-radius: 6px; padding: 8px 12px; font-size: 9pt; margin-top: 8px; }
+  .alert strong { color: #e74c3c; }
+
+  .exo-table th { font-size: 9pt; }
+  .exo-table td { font-size: 9.5pt; padding: 5px 8px; }
+  .star { color: #f39c12; font-weight: bold; }
+
+  .fiche { border: 2px solid #ccc; border-radius: 8px; padding: 12px; margin-bottom: 14px; page-break-inside: avoid; }
+  .fiche h3 { font-size: 13pt; margin-bottom: 6px; }
+  .fiche-green { border-color: #27ae60; }
+  .fiche-green h3 { color: #27ae60; }
+  .fiche-blue { border-color: #2980b9; }
+  .fiche-blue h3 { color: #2980b9; }
+  .fiche-purple { border-color: #8e44ad; }
+  .fiche-purple h3 { color: #8e44ad; }
+  .fiche-label { font-size: 9pt; color: #7f8c8d; margin-bottom: 6px; }
+  .massage p { margin: 3px 0; font-size: 10pt; }
+
+  .journal-table td { height: 28px; }
+  .journal-table .empty { border-bottom: 1px dotted #ccc; }
+
+  @media print { body { margin: 0; } .page { padding: 8mm; } }
+</style>
+</head>
+<body>
+
+<!-- ============ SEMAINE 1 ============ -->
+<div class="page">
+  <div style="text-align:center"><span class="phase-badge badge-1">PHASE 1 - RENFO TENDON</span></div>
+  <div class="week-title">Semaine 1</div>
+  <div class="week-sub">10/05 - 16/05 | Pas de course</div>
+
+  <table>
+    <tr><th class="day">Jour</th><th>Seance</th><th class="check"></th></tr>
+    <tr><td class="day">Dim 10</td><td><span class="tag t-repos">REPOS</span> + <span class="tag t-renfo">RENFO COMPLET</span> 15min - demarrage du protocole</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Lun 11</td><td><span class="tag t-assia">ASSIA A</span> matin + <span class="tag t-renfo">RENFO COURT</span> 5min</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mar 12</td><td><span class="tag t-renfo">RENFO</span> 10min + <span class="tag t-cf">CROSSFIT</span> 20h - skip box jumps / DU</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mer 13</td><td><span class="tag t-dos">RENFO DOS #1</span> + <span class="tag t-renfo">RENFO COMPLET</span> 15min</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Jeu 14</td><td><span class="tag t-assia">ASSIA B</span> + <span class="tag t-renfo">RENFO COURT</span> 5min</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Ven 15</td><td><span class="tag t-dos">RENFO DOS #2</span> + <span class="tag t-renfo">RENFO COMPLET</span> 15min</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Sam 16</td><td><span class="tag t-repos">REPOS ACTIF</span> Marche 30min + auto-massage peronier</td><td class="check">&#9744;</td></tr>
+  </table>
+
+  <div class="info-blue info-box">
+    <strong>Objectif :</strong> Renforcer le tendon avant toute course. Le renfo tendon EST le traitement.
+  </div>
+
+  <div class="alert">
+    <strong>Douleur :</strong> 0-2/10 = on continue | 3+ = on arrete | Douleur a la marche/repos = STOP
+  </div>
+
+  <table class="journal-table" style="margin-top: 14px;">
+    <tr><th class="day">Jour</th><th style="width:60px">Douleur pdt</th><th style="width:60px">Douleur apres</th><th style="width:50px">Diff.</th><th>Notes</th></tr>
+    <tr><td class="day">Dim 10</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Lun 11</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mar 12</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mer 13</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Jeu 14</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Ven 15</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Sam 16</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+  </table>
+</div>
+
+<!-- ============ SEMAINE 2 ============ -->
+<div class="page">
+  <div style="text-align:center"><span class="phase-badge badge-1">PHASE 1 - RENFO TENDON</span></div>
+  <div class="week-title">Semaine 2</div>
+  <div class="week-sub">17/05 - 23/05 | Pas de course + semelles + chaussures</div>
+
+  <table>
+    <tr><th class="day">Jour</th><th>Seance</th><th class="check"></th></tr>
+    <tr><td class="day">Dim 17</td><td><span class="tag t-repos">REPOS</span> + auto-massage peronier</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Lun 18</td><td><span class="tag t-event">DISNEY</span> Repos - marche libre toute la journee</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mar 19</td><td><span class="tag t-renfo">RENFO</span> 10min + <span class="tag t-cf">CROSSFIT</span> 20h</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mer 20</td><td><span class="tag t-dos">RENFO DOS #1</span> + <span class="tag t-renfo">RENFO COMPLET</span> 15min</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Jeu 21</td><td><span class="tag t-assia">ASSIA C</span> + <span class="tag t-renfo">RENFO COURT</span> 5min</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Ven 22</td><td><span class="tag t-dos">RENFO DOS #2</span> + <span class="tag t-renfo">RENFO</span> 15min + <span class="tag t-event">PODOLOGUE</span> semelles<br><em style="font-size:9pt;color:#7f8c8d">Soir : porter semelles 1-2h a la maison</em></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Sam 23</td><td><span class="tag t-assia">ASSIA D</span> matin + <span class="tag t-event">CHAUSSURES</span> achat neutres aprem<br><em style="font-size:9pt;color:#7f8c8d">Semelles dans les chaussures des l'achat</em></td><td class="check">&#9744;</td></tr>
+  </table>
+
+  <div class="info-blue info-box">
+    <strong>Note :</strong> Assia C decalee au jeu 21 (lun 18 = Disney). La marche Disney compense le volume.
+  </div>
+
+  <table class="journal-table" style="margin-top: 10px;">
+    <tr><th class="day">Jour</th><th style="width:60px">Douleur pdt</th><th style="width:60px">Douleur apres</th><th style="width:50px">Diff.</th><th>Notes</th></tr>
+    <tr><td class="day">Dim 17</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Lun 18</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mar 19</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mer 20</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Jeu 21</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Ven 22</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Sam 23</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+  </table>
+</div>
+
+<!-- ============ SEMAINE 3 ============ -->
+<div class="page">
+  <div style="text-align:center"><span class="phase-badge badge-2">PHASE 2 - WALK-RUN</span></div>
+  <div class="week-title">Semaine 3 - Reprise S1</div>
+  <div class="week-sub">24/05 - 30/05 | Walk-run : 3x (3min marche / 2min course) = ~15min</div>
+
+  <div class="info-orange info-box">
+    <strong>Rodage semelles :</strong> Dim 24 = 2-3h | Lun 25 = demi-journee | Mar 26 = journee complete | Mer 27 = 1er walk-run OK
+  </div>
+
+  <table>
+    <tr><th class="day">Jour</th><th>Seance</th><th class="check"></th></tr>
+    <tr><td class="day">Dim 24</td><td><span class="tag t-repos">REPOS</span> + auto-massage</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Lun 25</td><td><span class="tag t-assia">ASSIA A</span> + <span class="tag t-renfo">RENFO COURT</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mar 26</td><td><span class="tag t-renfo">RENFO</span> 10min + <span class="tag t-cf">CROSSFIT</span> 20h</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mer 27</td><td><span class="tag t-run">WALK-RUN #1</span> ~15min + <span class="tag t-dos">RENFO DOS #1</span><br><em style="font-size:9pt;color:#e67e22">3x (3min marche / 2min course easy)</em></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Jeu 28</td><td><span class="tag t-repos">REPOS</span> / marche libre</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Ven 29</td><td><span class="tag t-assia">ASSIA B</span> + <span class="tag t-renfo">RENFO COURT</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Sam 30</td><td><span class="tag t-run">WALK-RUN #2</span> ~15min + <span class="tag t-dos">RENFO DOS #2</span><br><em style="font-size:9pt;color:#e67e22">3x (3min marche / 2min course easy)</em></td><td class="check">&#9744;</td></tr>
+  </table>
+
+  <div class="info-red info-box">
+    <strong>Surface :</strong> Plat uniquement (piste, route lisse). Pas de trail / hill.
+  </div>
+
+  <table class="journal-table" style="margin-top: 10px;">
+    <tr><th class="day">Jour</th><th style="width:60px">Douleur pdt</th><th style="width:60px">Douleur apres</th><th style="width:50px">Diff.</th><th>Notes</th></tr>
+    <tr><td class="day">Dim 24</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Lun 25</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mar 26</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mer 27</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Jeu 28</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Ven 29</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Sam 30</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+  </table>
+</div>
+
+<!-- ============ SEMAINE 4 ============ -->
+<div class="page">
+  <div style="text-align:center"><span class="phase-badge badge-2">PHASE 2 - WALK-RUN</span></div>
+  <div class="week-title">Semaine 4 - Reprise S2</div>
+  <div class="week-sub">31/05 - 06/06 | Walk-run : 4x (2min marche / 4min course) = ~24min</div>
+
+  <table>
+    <tr><th class="day">Jour</th><th>Seance</th><th class="check"></th></tr>
+    <tr><td class="day">Dim 31</td><td><span class="tag t-repos">REPOS</span> + auto-massage</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Lun 01/06</td><td><span class="tag t-assia">ASSIA C</span> + <span class="tag t-renfo">RENFO COURT</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mar 02</td><td><span class="tag t-renfo">RENFO</span> + <span class="tag t-cf">CROSSFIT</span> 20h</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mer 03</td><td><span class="tag t-run">WALK-RUN #1</span> ~24min + <span class="tag t-dos">RENFO DOS #1</span><br><em style="font-size:9pt;color:#e67e22">4x (2min marche / 4min course easy)</em></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Jeu 04</td><td><span class="tag t-repos">REPOS</span> / marche libre</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Ven 05</td><td><span class="tag t-assia">ASSIA D</span> + <span class="tag t-renfo">RENFO COURT</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Sam 06</td><td><span class="tag t-run">WALK-RUN #2</span> ~24min + <span class="tag t-dos">RENFO DOS #2</span><br><em style="font-size:9pt;color:#e67e22">4x (2min marche / 4min course easy)</em></td><td class="check">&#9744;</td></tr>
+  </table>
+
+  <table class="journal-table" style="margin-top: 14px;">
+    <tr><th class="day">Jour</th><th style="width:60px">Douleur pdt</th><th style="width:60px">Douleur apres</th><th style="width:50px">Diff.</th><th>Notes</th></tr>
+    <tr><td class="day">Dim 31</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Lun 01</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mar 02</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mer 03</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Jeu 04</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Ven 05</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Sam 06</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+  </table>
+</div>
+
+<!-- ============ SEMAINE 5 ============ -->
+<div class="page">
+  <div style="text-align:center"><span class="phase-badge badge-3">PHASE 3 - COURSE CONTINUE</span></div>
+  <div class="week-title">Semaine 5</div>
+  <div class="week-sub">07/06 - 13/06 | Course easy 20-25min</div>
+
+  <div class="info-green info-box">
+    <strong>Regle d'or :</strong> +10% volume max / semaine. Si douleur revient = recule d'une semaine.
+  </div>
+
+  <table>
+    <tr><th class="day">Jour</th><th>Seance</th><th class="check"></th></tr>
+    <tr><td class="day">Dim 07</td><td><span class="tag t-repos">REPOS</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Lun 08</td><td><span class="tag t-assia">ASSIA A</span> + <span class="tag t-renfo">RENFO COURT</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mar 09</td><td><span class="tag t-renfo">RENFO</span> + <span class="tag t-cf">CROSSFIT</span> 20h</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mer 10</td><td><span class="tag t-course">COURSE EASY</span> 20min + <span class="tag t-dos">RENFO DOS #1</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Jeu 11</td><td><span class="tag t-repos">REPOS</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Ven 12</td><td><span class="tag t-assia">ASSIA B</span> + <span class="tag t-renfo">RENFO COURT</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Sam 13</td><td><span class="tag t-course">COURSE EASY</span> 25min + <span class="tag t-dos">RENFO DOS #2</span></td><td class="check">&#9744;</td></tr>
+  </table>
+
+  <table class="journal-table" style="margin-top: 14px;">
+    <tr><th class="day">Jour</th><th style="width:60px">Douleur pdt</th><th style="width:60px">Douleur apres</th><th style="width:50px">Diff.</th><th>Notes</th></tr>
+    <tr><td class="day">Dim 07</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Lun 08</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mar 09</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mer 10</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Jeu 11</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Ven 12</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Sam 13</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+  </table>
+</div>
+
+<!-- ============ SEMAINE 6 ============ -->
+<div class="page">
+  <div style="text-align:center"><span class="phase-badge badge-3">PHASE 3 - COURSE CONTINUE</span></div>
+  <div class="week-title">Semaine 6</div>
+  <div class="week-sub">14/06 - 20/06 | Course easy 25-30min</div>
+
+  <table>
+    <tr><th class="day">Jour</th><th>Seance</th><th class="check"></th></tr>
+    <tr><td class="day">Dim 14</td><td><span class="tag t-repos">REPOS</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Lun 15</td><td><span class="tag t-assia">ASSIA C</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mar 16</td><td><span class="tag t-cf">CROSSFIT</span> 20h</td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Mer 17</td><td><span class="tag t-course">COURSE EASY</span> 25min + <span class="tag t-dos">RENFO DOS #1</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Jeu 18</td><td><span class="tag t-repos">REPOS</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Ven 19</td><td><span class="tag t-assia">ASSIA D</span></td><td class="check">&#9744;</td></tr>
+    <tr><td class="day">Sam 20</td><td><span class="tag t-course">SORTIE LONGUE EASY</span> 30min + <span class="tag t-dos">RENFO DOS #2</span></td><td class="check">&#9744;</td></tr>
+  </table>
+
+  <div class="info-green info-box" style="margin-top: 14px;">
+    <strong>A partir de la semaine 7 :</strong><br>
+    - 1 sortie courte allure moderee + 1 sortie longue easy / semaine<br>
+    - Volume hebdo : +10% max<br>
+    - Renfo tendon : 2x/sem maintenance (mer + sam, version complete)<br>
+    - Pas de hill / trail tant que pas 4 semaines consecutives sans douleur
+  </div>
+
+  <table class="journal-table" style="margin-top: 14px;">
+    <tr><th class="day">Jour</th><th style="width:60px">Douleur pdt</th><th style="width:60px">Douleur apres</th><th style="width:50px">Diff.</th><th>Notes</th></tr>
+    <tr><td class="day">Dim 14</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Lun 15</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mar 16</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Mer 17</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Jeu 18</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Ven 19</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+    <tr><td class="day">Sam 20</td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+  </table>
+</div>
+
+<!-- ============ FICHES EXOS ============ -->
+<div class="page">
+  <h1>Fiches Exercices</h1>
+
+  <div class="fiche fiche-green">
+    <h3>FICHE 1 - Renfo tendon court (5min)</h3>
+    <p class="fiche-label">Echauffement avant chaque seance</p>
+    <table class="exo-table">
+      <tr><th style="width:25px">#</th><th>Exercice</th><th style="width:120px">Series x Reps</th></tr>
+      <tr><td>1</td><td>Calf raises debout</td><td>2 x 15</td></tr>
+      <tr><td>2</td><td>Eversion elastique</td><td>2 x 15 / pied</td></tr>
+      <tr><td>3</td><td>Cercles cheville</td><td>10 chaque sens</td></tr>
+    </table>
+  </div>
+
+  <div class="fiche fiche-blue">
+    <h3>FICHE 2 - Renfo tendon complet (15min)</h3>
+    <p class="fiche-label">3x/semaine (mer + ven + dim ou selon dispo)</p>
+    <table class="exo-table">
+      <tr><th style="width:25px">#</th><th>Exercice</th><th style="width:140px">Series x Reps</th><th>Notes</th></tr>
+      <tr><td>1</td><td>Mobilite cheville</td><td>Alphabet + 20 cercles</td><td>Chaque sens</td></tr>
+      <tr><td>2</td><td>Calf raises debout</td><td>3 x 15</td><td>Monter sur pointes</td></tr>
+      <tr><td>3</td><td class="star">Calf raises eccentriques sur marche</td><td>3 x 10</td><td>Descente lente 3s - LE + IMPORTANT</td></tr>
+      <tr><td>4</td><td>Eversion resistee elastique</td><td>3 x 15 / pied</td><td>Pied vers l'exterieur</td></tr>
+      <tr><td>5</td><td>Equilibre unipodal</td><td>3 x 30s / pied</td><td>Yeux fermes si facile</td></tr>
+      <tr><td>6</td><td>Clamshells</td><td>3 x 12</td><td>Sur le cote, on ouvre</td></tr>
+      <tr><td>7</td><td>Side plank + montee jambe</td><td>3 x 12</td><td>Cle pour la pronation</td></tr>
+    </table>
+  </div>
+
+  <div class="fiche fiche-purple">
+    <h3>FICHE 3 - Auto-massage + Glacage</h3>
+    <div class="massage">
+      <p><strong>Auto-massage peronier (2-3min/jour)</strong></p>
+      <p>Rouleau ou balle de tennis, cote externe du tibia (pas sur l'os). Points sensibles = rester 20-30s.</p>
+      <p style="margin-top:8px"><strong>Glacage (10min apres seance cheville)</strong></p>
+      <p>Apres Assia / CrossFit / course. Poche de glace 10min max sur zone douloureuse externe.</p>
+    </div>
+  </div>
+
+  <div class="alert" style="margin-top: 10px;">
+    <strong>Signaux d'alerte :</strong><br>
+    Douleur a la marche/repos = STOP course, retour Phase 1 |
+    Douleur >3/10 pendant course = arret immediat |
+    Douleur >24h le lendemain = recule d'1 semaine |
+    Douleur croissante = consulte podologue/kine
+  </div>
+</div>
+
+</body>
+</html>

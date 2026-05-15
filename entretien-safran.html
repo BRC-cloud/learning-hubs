@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preparation Entretien Safran</title>
+<style>
+:root{--blue:#003366;--light:#0055a4;--accent:#e8722a;--bg:#f7f8fa;--card:#fff;--text:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--green:#059669;--red:#dc2626;--yellow:#d97706;--purple:#7c3aed}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+nav{background:var(--blue);padding:.5rem .8rem;display:flex;align-items:center;gap:.6rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);overflow-x:auto}
+nav .logo{color:white;font-weight:700;font-size:.9rem;white-space:nowrap}
+nav .steps{display:flex;gap:.2rem;flex-wrap:nowrap}
+.step-btn{background:rgba(255,255,255,.1);color:rgba(255,255,255,.55);border:none;padding:.25rem .55rem;border-radius:14px;font-size:.7rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.step-btn:hover{background:rgba(255,255,255,.2)}
+.step-btn.active{background:var(--accent);color:white;font-weight:600}
+.step-btn.completed{background:var(--green);color:white}
+main{max-width:700px;margin:0 auto;padding:1.2rem 1rem}
+.page{display:none;animation:fadeIn .25s}.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1{font-size:1.3rem;color:var(--blue);margin-bottom:.2rem}
+h2{font-size:1rem;color:var(--blue);margin:1rem 0 .5rem}
+.intro{color:var(--muted);font-size:.83rem;margin-bottom:1rem;line-height:1.5}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem;margin-bottom:.7rem}
+.btn{padding:.5rem 1.1rem;border-radius:8px;border:none;font-size:.83rem;font-weight:600;cursor:pointer;transition:all .15s}
+.btn-p{background:var(--blue);color:white}.btn-p:hover{background:var(--light)}
+.btn-a{background:var(--accent);color:white}.btn-a:hover{filter:brightness(1.1)}
+.btn-o{background:white;border:1px solid var(--border);color:var(--text)}.btn-o:hover{border-color:var(--light)}
+.btn-g{background:var(--green);color:white}
+.btn-sm{padding:.35rem .7rem;font-size:.76rem}
+.bottom-nav{display:flex;justify-content:space-between;margin-top:1.2rem;padding-top:.7rem;border-top:1px solid var(--border)}
+.tag{display:inline-block;padding:.12rem .45rem;border-radius:10px;font-size:.68rem;font-weight:600;margin:.1rem}
+.tag-b{background:#dbeafe;color:var(--light)}.tag-g{background:#d1fae5;color:var(--green)}.tag-r{background:#fee2e2;color:var(--red)}.tag-y{background:#fef3c7;color:var(--yellow)}
+.alert{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:.7rem .9rem;font-size:.83rem;margin-bottom:.7rem}
+.alert b{color:var(--red)}.good{color:var(--green);font-weight:600}
+.prog-bar{background:var(--border);height:7px;border-radius:4px;overflow:hidden;margin:.3rem 0}
+.prog-fill{height:100%;border-radius:4px;transition:width .4s}
+.diag-opt{display:block;width:100%;text-align:left;background:var(--card);border:2px solid var(--border);border-radius:8px;padding:.6rem .9rem;margin-bottom:.35rem;cursor:pointer;font-size:.83rem;transition:all .15s}
+.diag-opt:hover{border-color:var(--light)}
+/* Learn */
+.lc{background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:.5rem;overflow:hidden}
+.lc-h{padding:.7rem .9rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:.85rem;color:var(--blue)}
+.lc-h:hover{background:#f8fafc}
+.lc-b{display:none;padding:0 .9rem .9rem;font-size:.82rem;line-height:1.6;color:var(--muted)}
+.lc.open .lc-b{display:block}
+.lc.open .lc-a{transform:rotate(180deg)}
+.lc-a{transition:transform .2s;color:var(--muted);font-size:.8rem}
+.key{font-weight:700;color:var(--text)}
+.remember{background:#fefce8;border-left:3px solid var(--yellow);padding:.5rem .7rem;margin-top:.5rem;font-size:.8rem;border-radius:0 6px 6px 0}
+.remember b{color:var(--yellow)}
+/* Quiz */
+.quiz-q{font-size:.92rem;font-weight:600;color:var(--blue);margin-bottom:.7rem;line-height:1.4}
+.quiz-opts{display:flex;flex-direction:column;gap:.35rem}
+.qopt{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:.65rem .9rem;cursor:pointer;font-size:.83rem;transition:all .15s}
+.qopt:hover{border-color:var(--light)}
+.qopt.ok{border-color:var(--green);background:#f0fdf4}.qopt.ko{border-color:var(--red);background:#fef2f2}.qopt.off{pointer-events:none;opacity:.45}
+.qexp{display:none;background:#eff6ff;border-radius:6px;padding:.6rem;font-size:.78rem;line-height:1.5;margin-top:.5rem}
+.qexp.show{display:block}
+.qdots{display:flex;gap:3px;justify-content:center;margin-bottom:.7rem;flex-wrap:wrap}
+.qdot{width:9px;height:9px;border-radius:50%;background:var(--border)}
+.qdot.right{background:var(--green)}.qdot.wrong{background:var(--red)}.qdot.cur{border:2px solid var(--blue);background:white}
+.q-next{text-align:center;margin-top:.6rem}
+/* Timer */
+.timer-wrap{display:flex;align-items:center;gap:.8rem;background:var(--card);padding:.5rem .9rem;border-radius:8px;border:1px solid var(--border);margin-bottom:.8rem}
+.timer-d{font-size:1.5rem;font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums}
+.timer-d.warn{color:var(--yellow)}.timer-d.over{color:var(--red)}
+.pitch{font-size:.9rem;line-height:1.8}
+.pitch mark{background:#fef3c7;padding:1px 3px;border-radius:3px;font-weight:600;cursor:help;position:relative}
+.pitch mark .tip{display:none;position:absolute;bottom:110%;left:50%;transform:translateX(-50%);background:var(--blue);color:white;padding:.25rem .5rem;border-radius:5px;font-size:.7rem;font-weight:400;white-space:nowrap;z-index:10}
+.pitch mark:hover .tip{display:block}
+.pause{display:flex;align-items:center;gap:.4rem;color:var(--accent);font-size:.66rem;font-weight:700;margin:.4rem 0;text-transform:uppercase;letter-spacing:1.5px}
+.pause::before,.pause::after{content:'';flex:1;height:1px;background:#f0d6c0}
+/* STAR */
+.star-card{background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:.5rem;overflow:hidden}
+.star-q{padding:.7rem .9rem;font-weight:600;font-size:.85rem;color:var(--blue);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.star-q:hover{background:#f8fafc}
+.star-body{display:none;padding:0 .9rem .9rem}
+.star-card.open .star-body{display:block}
+.star-card.open .sa{transform:rotate(180deg)}
+.sa{transition:transform .2s;color:var(--muted)}
+.ss{display:flex;gap:.5rem;padding:.35rem 0;border-bottom:1px dashed var(--border);font-size:.82rem}
+.ss:last-child{border:none}
+.sl{font-weight:800;min-width:1.2rem;font-size:.83rem}
+.sl-s{color:var(--blue)}.sl-t{color:var(--accent)}.sl-a{color:var(--light)}.sl-r{color:var(--green)}
+.sc{color:var(--muted);line-height:1.5;cursor:pointer}
+.sc.blur{filter:blur(5px);user-select:none}.sc.blur:hover{filter:blur(3px)}
+/* Simul */
+.sim-card{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:.7rem}
+.sim-icon{width:40px;height:40px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:.6rem}
+.sim-q{font-size:1rem;font-weight:600;color:var(--blue);margin-bottom:.8rem;line-height:1.4}
+.sim-dots{display:flex;gap:.3rem;margin-bottom:.3rem}
+.sim-dots span{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 1.2s infinite}
+.sim-dots span:nth-child(2){animation-delay:.2s}.sim-dots span:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.sim-ans{display:none;text-align:left;font-size:.83rem;line-height:1.6;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:.9rem;margin-top:.7rem;width:100%}
+.sim-ans.show{display:block}
+/* Check */
+.chk{display:flex;align-items:flex-start;gap:.5rem;padding:.45rem 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.chk:last-child{border:none}
+.chk input{width:17px;height:17px;accent-color:var(--green);margin-top:2px;flex-shrink:0;cursor:pointer}
+.chk.done label{text-decoration:line-through;color:var(--muted)}
+.sec-label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin:.8rem 0 .3rem}
+/* Dash */
+.mod-row{display:flex;align-items:center;gap:.6rem;padding:.45rem 0;border-bottom:1px solid var(--border);font-size:.83rem}
+.mod-row:last-child{border:none}
+.mod-name{flex:1;font-weight:500}.mod-score{font-weight:700;min-width:2.5rem;text-align:right}.mod-bar{flex:1.5}
+.history-row{font-size:.76rem;color:var(--muted);padding:.2rem 0;display:flex;justify-content:space-between}
+.daily-badge{display:inline-block;background:var(--accent);color:white;font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:10px;margin-left:.5rem}
+@media(max-width:600px){nav{flex-direction:column;align-items:flex-start;padding:.4rem .6rem}main{padding:.8rem .6rem}}
+</style>
+</head>
+<body>
+<nav>
+<div class="logo">Safran C092</div>
+<div class="steps" id="stepNav"></div>
+</nav>
+<main>
+
+<!-- PAGE 0: ACCUEIL -->
+<div class="page active" data-p="0">
+<h1>Preparation entretien Safran</h1>
+<p class="intro">Specialiste Traitements de Surface - CDI - Corbeil-Essonnes (91)</p>
+<div class="card" style="background:linear-gradient(135deg,var(--blue),var(--light));color:white;border:none">
+<div style="font-size:.75rem;opacity:.7;margin-bottom:.3rem">L'ANNONCE</div>
+<div style="font-weight:700;font-size:1rem;margin-bottom:.6rem">Specialiste Traitements de Surface - IM CEI Support et Moyens Industriels F/H</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:.2rem .6rem;font-size:.78rem;opacity:.9">
+<span><b>Ref :</b> 199918-175469</span><span><b>Lieu :</b> Corbeil-Essonnes (91)</span>
+<span><b>Contrat :</b> CDI</span><span><b>XP :</b> Jeune diplomee / 1ere XP</span>
+</div>
+<div style="margin-top:.6rem;font-size:.78rem;opacity:.85;border-top:1px solid rgba(255,255,255,.2);padding-top:.5rem">
+<b>6 missions :</b> Industrialisation TdS voie humide · Resolution problemes · Audits qualite · Amelioration continue · Support fournisseurs · Support production
+</div>
+</div>
+<div id="diagSection"><h2>Comment tu apprends ?</h2><p class="intro">6 questions rapides pour adapter l'outil.</p><div id="diagContainer"></div></div>
+<div id="dashSection" style="display:none"><h2>Ta progression <span class="daily-badge" id="dayBadge"></span></h2><div class="card" id="dashboard"></div>
+<div style="text-align:center;margin-top:.6rem"><button class="btn btn-o btn-sm" onclick="resetAll()">Reset</button> <button class="btn btn-o btn-sm" onclick="document.getElementById('diagSection').style.display='block';document.getElementById('dashSection').style.display='none';diagIdx=0;renderDiag()">Refaire diagnostic</button></div></div>
+</div>
+
+<!-- PAGE 1: AERONAUTIQUE -->
+<div class="page" data-p="1">
+<h1>Module : Aeronautique</h1>
+<p class="intro">Culture aero complete : mecanique du vol, aerodynamique, meteo, navigation, reglementation, histoire, materiaux et corrosion. Cours BIA + ecole + liens avec le poste Safran.</p>
+<div id="mod1learn"></div>
+<div style="text-align:center;margin:.8rem 0"><button class="btn btn-a" onclick="startModQuiz(1)">Quiz</button></div>
+<div id="mod1quiz" style="display:none"></div>
+</div>
+
+<!-- PAGE 2: SAFRAN -->
+<div class="page" data-p="2">
+<h1>Module : Safran & Industrie Aero</h1>
+<p class="intro">Safran, ses filiales, ses moteurs + les grands acteurs : GE, Rolls-Royce, Pratt & Whitney, Airbus, Boeing, Thales, Dassault, MTU. Supply chain et marche.</p>
+<div id="mod2learn"></div>
+<div style="text-align:center;margin:.8rem 0"><button class="btn btn-a" onclick="startModQuiz(2)">Quiz</button></div>
+<div id="mod2quiz" style="display:none"></div>
+</div>
+
+<!-- PAGE 3: TDS -->
+<div class="page" data-p="3">
+<h1>Module : Traitements de Surface</h1>
+<p class="intro">Electrochimie, procedes voie humide et seche, chimie des bains, controle qualite, normes, substitution REACH. Cours complet pour TdS aero et general.</p>
+<div id="mod3learn"></div>
+<div style="text-align:center;margin:.8rem 0"><button class="btn btn-a" onclick="startModQuiz(3)">Quiz</button></div>
+<div id="mod3quiz" style="display:none"></div>
+</div>
+
+<!-- PAGE 4: MATERIAUX + NORMES -->
+<div class="page" data-p="4">
+<h1>Module : Materiaux & Normes</h1>
+<p class="intro">Quel metal ou dans le moteur + les normes aero a connaitre.</p>
+<div id="mod4learn"></div>
+<div style="text-align:center;margin:.8rem 0"><button class="btn btn-a" onclick="startModQuiz(4)">Quiz</button></div>
+<div id="mod4quiz" style="display:none"></div>
+</div>
+
+<!-- PAGE 5: PARCOURS -->
+<div class="page" data-p="5">
+<h1>Module : Mon Parcours</h1>
+<p class="intro">Tes chiffres, tes exemples, ce qu'il ne faut JAMAIS dire.</p>
+<div class="alert"><b>Mots interdits :</b> Parylene C · TPU · PU · alternance · Evry-Courcouronnes<br><span class="good">Dire :</span> R&D industrielle · depot CVD sur polyolefines · elastomere TPE · Ile-de-France</div>
+<div id="starCards"></div>
+<div style="text-align:center;margin:.8rem 0"><button class="btn btn-a" onclick="startModQuiz(5)">Quiz</button></div>
+<div id="mod5quiz" style="display:none"></div>
+</div>
+
+<!-- PAGE 6: SIMULATION -->
+<div class="page" data-p="6">
+<h1>Simulation Entretien</h1>
+<p class="intro">Reflechis a ta reponse, puis clique pour voir les elements.</p>
+<div id="simContainer"></div>
+<div id="simBtns" style="display:flex;gap:.4rem;justify-content:center"></div>
+</div>
+
+<!-- PAGE 7: PITCH + JOUR J -->
+<div class="page" data-p="7">
+<h1>Pitch & Jour J</h1>
+<h2>Ton pitch (1:30 - 2:00)</h2>
+<div class="timer-wrap">
+<button class="btn btn-a btn-sm" id="timerBtn" onclick="toggleTimer()">Lancer</button>
+<div class="timer-d" id="timer">0:00</div>
+<div style="font-size:.72rem;color:var(--muted);margin-left:auto" id="timerHint">1:30 - 2:00</div>
+</div>
+<div class="card">
+<div class="pitch">
+Bonjour, je suis Caother Berriache, ingenieure en chimie et sciences des materiaux, diplomee de Paris-Saclay.
+<div class="pause">pause</div>
+Chez <mark>Aptar Group<span class="tip">Pas "Aptar Beauty"</span></mark>, j'ai travaille en <mark>R&D industrielle<span class="tip">JAMAIS "alternance"</span></mark> sur des problematiques de <mark>traitements de surface<span class="tip">Lien direct avec le poste</span></mark>.
+<br><br>Mon projet principal : ameliorer la resistance chimique de pieces par <mark>depot CVD<span class="tip">JAMAIS "Parylene C"</span></mark>. J'ai pilote le projet de l'etat de l'art jusqu'a l'industrialisation — taux de conformite passe de <mark>20% a 100%<span class="tip">Ton chiffre le plus fort</span></mark>.
+<br><br>En parallele, j'assurais le <mark>support production<span class="tip">Montre que t'es pas que labo</span></mark> : qualification matiere, resolution de non-conformites, coordination fournisseurs.
+<div class="pause">pause</div>
+Ce qui m'attire chez <mark>Safran<span class="tip">Exigences securite moteur</span></mark>, c'est de retrouver cette double dimension — industrialisation et support technique — dans un environnement ou la fiabilite est critique.
+<br><br>Ma formation en <mark>electrochimie et corrosion<span class="tip">Lien direct avec voie humide</span></mark> me donne les bases pour monter rapidement sur vos procedes par voie humide.
+</div>
+</div>
+<h2>Checklist</h2>
+<div class="prog-bar"><div class="prog-fill" id="checkProg" style="width:0%;background:var(--green)"></div></div>
+<div class="card">
+<div class="sec-label">La veille</div>
+<div class="chk jourj"><input type="checkbox" onchange="updChk()"><label>Relire le pitch a voix haute (x3)</label></div>
+<div class="chk jourj"><input type="checkbox" onchange="updChk()"><label>Relire CV et LM</label></div>
+<div class="chk jourj"><input type="checkbox" onchange="updChk()"><label>Itineraire (Ris-Orangis → Corbeil ~15 min)</label></div>
+<div class="chk jourj"><input type="checkbox" onchange="updChk()"><label>3 exemplaires CV+LM imprimes</label></div>
+<div class="chk jourj"><input type="checkbox" onchange="updChk()"><label>Tenue prete</label></div>
+<div class="sec-label">Le matin</div>
+<div class="chk jourj"><input type="checkbox" onchange="updChk()"><label>Relire 3 exemples STAR</label></div>
+<div class="chk jourj"><input type="checkbox" onchange="updChk()"><label>Relire mes questions a poser</label></div>
+<div class="chk jourj"><input type="checkbox" onchange="updChk()"><label>Arriver 10 min en avance</label></div>
+<div class="sec-label">Pendant</div>
+<div class="chk jourj"><input type="checkbox" onchange="updChk()"><label>Noter le nom de chaque interlocuteur</label></div>
+<div class="chk jourj"><input type="checkbox" onchange="updChk()"><label>Poser mes questions + demander les prochaines etapes</label></div>
+</div>
+<h2>Questions a poser</h2>
+<div class="card">
+<div class="chk"><input type="checkbox"><label>Quels procedes de TdS utilisez-vous dans l'atelier ?</label></div>
+<div class="chk"><input type="checkbox"><label>Quels types de pieces / alliages traitez-vous ?</label></div>
+<div class="chk"><input type="checkbox"><label>Quel est le defi technique principal en ce moment ?</label></div>
+<div class="chk"><input type="checkbox"><label>Comment le service methode travaille avec la production ?</label></div>
+<div class="chk"><input type="checkbox"><label>Taille de l'equipe methode ?</label></div>
+<div class="chk"><input type="checkbox"><label>Programme de formation pour les nouveaux ?</label></div>
+<div class="chk"><input type="checkbox"><label>Perspectives d'evolution ?</label></div>
+</div>
+</div>
+
+<!-- PAGE 8: EXAM -->
+<div class="page" data-p="8">
+<h1>Examen Final</h1>
+<p class="intro">20 questions melangees. Objectif : 16/20.</p>
+<div class="qdots" id="examDots"></div>
+<div id="examContainer"></div>
+</div>
+
+<div class="bottom-nav">
+<button class="btn btn-o" id="prevBtn" onclick="navP(-1)">Precedent</button>
+<button class="btn btn-p" id="nextBtn" onclick="navP(1)">Suivant</button>
+</div>
+</main>
+
+<script>
+// ===== NAV =====
+const pageNames=['Accueil','Aero/BIA','Industrie','TdS/Chimie','Mat/Normes','Parcours','Simulation','Pitch/JourJ','Examen'];
+let cur=0;
+function initNav(){const n=document.getElementById('stepNav');pageNames.forEach((nm,i)=>{const b=document.createElement('button');b.className='step-btn'+(i===0?' active':'');b.textContent=nm;b.onclick=()=>goP(i);n.appendChild(b)})}
+function goP(i){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelector(`[data-p="${i}"]`).classList.add('active');cur=i;updNav();window.scrollTo({top:0,behavior:'smooth'})}
+function navP(d){goP(Math.max(0,Math.min(pageNames.length-1,cur+d)))}
+function updNav(){document.querySelectorAll('.step-btn').forEach((b,i)=>{b.classList.toggle('active',i===cur);const s=scores[i];if(s!==undefined&&s>=70)b.classList.add('completed');else b.classList.remove('completed')});document.getElementById('prevBtn').style.visibility=cur===0?'hidden':'visible';const nb=document.getElementById('nextBtn');nb.textContent=cur===pageNames.length-1?'Fini !':'Suivant';nb.onclick=cur===pageNames.length-1?()=>alert('Bravo ! Revise les modules ou tu as moins de 80%.'):()=>navP(1)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')navP(1);if(e.key==='ArrowLeft')navP(-1)});
+
+// ===== STORAGE =====
+let scores={};let history=[];let learnStyle=null;
+function saveAll(){try{localStorage.setItem('safran_v4',JSON.stringify({scores,history,learnStyle,checks:[...document.querySelectorAll('.jourj input')].map(c=>c.checked)}))}catch(e){}}
+function loadAll(){try{const d=JSON.parse(localStorage.getItem('safran_v4'));if(!d)return;scores=d.scores||{};history=d.history||[];learnStyle=d.learnStyle||null;if(d.checks){const b=document.querySelectorAll('.jourj input');d.checks.forEach((v,i)=>{if(b[i])b[i].checked=v});updChk()}if(learnStyle){document.getElementById('diagSection').style.display='none';document.getElementById('dashSection').style.display='block';renderDash()}}catch(e){}}
+function resetAll(){localStorage.removeItem('safran_v4');location.reload()}
+setInterval(saveAll,5000);
+
+// ===== DAILY SEED =====
+function dayKey(){return new Date().toISOString().slice(0,10)}
+function seededShuffle(arr,seed){const a=[...arr];let h=0;for(let i=0;i<seed.length;i++){h=((h<<5)-h)+seed.charCodeAt(i);h|=0}for(let i=a.length-1;i>0;i--){h=((h<<5)-h)+i;h|=0;const j=Math.abs(h)%(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
+
+// ===== DIAGNOSTIC =====
+const diagQs=[
+{q:"Quand tu revises, tu preferes :",opts:["Relire mes notes","Faire des quiz","Me faire interroger","Faire des schemas"],types:['read','quiz','oral','visual']},
+{q:"Tu retiens mieux quand :",opts:["Je lis un texte structure","Je me teste","J'explique a quelqu'un","Je vois un schema"],types:['read','quiz','oral','visual']},
+{q:"Avant un exam :",opts:["Fiches de revision","Annales / exercices","Reviser a voix haute","Resume colore sur 1 page"],types:['read','quiz','oral','visual']},
+{q:"Quand tu comprends pas :",opts:["Je relis plus lentement","Je cherche un exercice","Je demande qu'on m'explique","Je cherche une video"],types:['read','quiz','oral','visual']},
+{q:"Ce qui te frustre en cours :",opts:["Poly mal organise","Pas assez d'exercices","Prof qui lit ses slides","Pas de schema"],types:['read','quiz','oral','visual']},
+{q:"Tu prepares une presentation :",opts:["Ecrire le plan","Brouillon et tester","Repeter a voix haute","Faire les slides visuels"],types:['read','quiz','oral','visual']},
+];
+let diagIdx=0,diagScores={read:0,quiz:0,oral:0,visual:0};
+function renderDiag(){
+const c=document.getElementById('diagContainer');
+if(diagIdx>=diagQs.length){
+const best=Object.entries(diagScores).sort((a,b)=>b[1]-a[1]);
+learnStyle=best[0][0];
+const labels={read:'Lectrice',quiz:'Pratique (quiz)',oral:'Orale',visual:'Visuelle'};
+const tips={read:"Lis bien chaque fiche avant le quiz.",quiz:"Fonce sur les quiz. Reviens aux fiches seulement quand tu rates.",oral:"Apres chaque fiche, re-explique le concept a voix haute.",visual:"Concentre-toi sur les mots en gras et les structures."};
+c.innerHTML=`<div class="card" style="text-align:center"><div style="font-size:2rem;margin-bottom:.3rem">${{read:'📖',quiz:'🎯',oral:'🗣️',visual:'🎨'}[learnStyle]}</div><h2 style="margin:0 0 .2rem">Style : ${labels[learnStyle]}</h2><p style="color:var(--muted);font-size:.82rem;margin-bottom:.8rem">${tips[learnStyle]}</p><button class="btn btn-p" onclick="document.getElementById('diagSection').style.display='none';document.getElementById('dashSection').style.display='block';renderDash()">C'est parti !</button></div>`;
+saveAll();return;
+}
+const q=diagQs[diagIdx];
+c.innerHTML=`<div class="card"><div style="font-size:.72rem;color:var(--muted);margin-bottom:.3rem">${diagIdx+1}/${diagQs.length}</div><div style="font-weight:600;margin-bottom:.6rem">${q.q}</div>${q.opts.map((o,i)=>`<button class="diag-opt" onclick="diagScores[diagQs[diagIdx].types[${i}]]++;diagIdx++;renderDiag()">${o}</button>`).join('')}</div>`;
+}
+
+// ===== LEARN DATA (stripped to essentials, key = bold) =====
+const learnData={
+1:[ // AERO
+{t:"Comment vole un avion ?",b:"4 forces agissent sur un avion :<br>- <span class='key'>Portance</span> (vers le haut, generee par les ailes)<br>- <span class='key'>Poids</span> (vers le bas, gravite)<br>- <span class='key'>Poussee</span> (vers l'avant, generee par le moteur)<br>- <span class='key'>Trainee</span> (vers l'arriere, resistance de l'air)<br><div class='remember'><b>Retenir :</b> En vol stabilise, portance = poids et poussee = trainee.</div>"},
+{t:"Structure d'un avion",b:"<span class='key'>Fuselage</span> : le corps de l'avion (structure semi-monocoque : cadres + lisses + revetement).<br><span class='key'>Voilure</span> : les ailes (longerons + nervures). Generent la portance.<br><span class='key'>Empennage</span> : la queue (horizontal = tangage, vertical = lacet).<br><span class='key'>Train d'atterrissage</span> : roues, fixe ou rentrant.<br><span class='key'>GMP</span> : Groupe MotoPropulseur = moteur + helice ou reacteur."},
+{t:"Materiaux dans un avion (BIA)",b:"<span class='key'>Duralumin</span> : alliage aluminium-cuivre, materiau de base de l'aviation metallique.<br><span class='key'>Titane</span> : leger et tres resistant, utilise pour les parties soumises a la chaleur.<br><span class='key'>Composites</span> : fibres carbone/verre + resine. Legers, formes complexes. De plus en plus utilises.<br><span class='key'>Aciers</span> : pour les pieces tres sollicitees mecaniquement (trains, boulonnerie).<br><div class='remember'><b>Retenir :</b> On choisit le materiau selon les contraintes : temperature, masse, resistance mecanique.</div>"},
+{t:"Le turboreacteur (coeur du metier Safran)",b:"Principe : <span class='key'>aspirer l'air → le comprimer → bruler du kerosene → ejecter les gaz a grande vitesse</span>.<br><br>Les 4 parties :<br>1. <span class='key'>Entree d'air</span> : capte l'air<br>2. <span class='key'>Compresseur</span> : comprime l'air (plusieurs etages d'aubes)<br>3. <span class='key'>Chambre de combustion</span> : melange air + kerosene → combustion<br>4. <span class='key'>Turbine</span> : les gaz chauds font tourner la turbine, qui entraine le compresseur<br><br>La <span class='key'>poussee</span> vient de l'ejection des gaz a grande vitesse vers l'arriere (principe action/reaction)."},
+{t:"Simple flux vs double flux",b:"<span class='key'>Simple flux</span> : tout l'air traverse le compresseur + chambre + turbine. Utilise surtout en militaire (rapide, bruyant).<br><br><span class='key'>Double flux</span> (= ce que fait Safran/CFM) : un gros ventilateur (fan) devant. L'air se divise en 2 :<br>- <span class='key'>Flux chaud</span> (interne) : passe par compresseur + chambre + turbine<br>- <span class='key'>Flux froid</span> (externe) : contourne le moteur, fournit ~80% de la poussee<br><br><span class='key'>Taux de dilution</span> = flux froid / flux chaud. Plus il est eleve → <b>moins bruyant, moins gourmand</b>. Le LEAP a un taux de ~11.<br><div class='remember'><b>Retenir :</b> Le LEAP est un turboreacteur double flux a haut taux de dilution. C'est pour ca qu'il consomme 15% de moins que le CFM56.</div>"},
+{t:"Autres turbomachines",b:"<span class='key'>Turbopropulseur</span> : turbine entraine une helice via un reducteur. Utilise pour les avions a 300-800 km/h (ATR, C-130). Safran fait le TP400 (A400M).<br><br><span class='key'>Turbomoteur</span> : comme un turbopropulseur mais entraine un rotor. Utilise sur les helicopteres. Safran Helicopter Engines est leader mondial.<br><br><span class='key'>Statoreacteur</span> : pas de partie tournante, l'air est comprime par la vitesse de l'avion. Pour les tres grandes vitesses (Mach 3+). Surtout missiles."},
+{t:"Les 3 axes d'un avion",b:"<span class='key'>Tangage</span> (pitch) : nez monte/descend → commande par la gouverne de profondeur (empennage horizontal) → manche avant/arriere<br><span class='key'>Roulis</span> (roll) : ailes inclinees → commande par les ailerons (bout des ailes) → manche gauche/droite<br><span class='key'>Lacet</span> (yaw) : nez gauche/droite → commande par la gouverne de direction (empennage vertical) → palonniers"},
+{t:"Aerodynamique : le profil d'aile",b:"Un profil d'aile a une forme asymetrique : <span class='key'>extrados</span> (dessus, bombe) et <span class='key'>intrados</span> (dessous, plus plat).<br><br>L'air va plus vite sur l'extrados → pression plus faible (theoreme de <span class='key'>Bernoulli</span>) → aspiration vers le haut = <span class='key'>portance</span>.<br><br>Parametres cles :<br>- <span class='key'>Incidence</span> : angle entre la corde du profil et le vent relatif. Plus d'incidence → plus de portance (jusqu'au decrochage).<br>- <span class='key'>Decrochage</span> : incidence trop grande, l'air 'decolle' de l'extrados → perte brutale de portance.<br><div class='remember'><b>Retenir :</b> Portance = difference de pression extrados/intrados. Trop d'incidence = decrochage.</div>"},
+{t:"Couche limite et trainee",b:"<span class='key'>Couche limite</span> : fine couche d'air au contact de la surface ou la vitesse passe de 0 (paroi) a la vitesse de l'ecoulement libre.<br><br>2 types :<br>- <span class='key'>Laminaire</span> : ecoulement ordonne, peu de trainee<br>- <span class='key'>Turbulente</span> : ecoulement chaotique, plus de trainee mais colle mieux (resiste au decollement)<br><br><span class='key'>Trainee</span> = resistance a l'avancement. 3 composantes :<br>- Trainee de <span class='key'>frottement</span> (viscosite de l'air sur la surface)<br>- Trainee de <span class='key'>pression</span> (forme du profil)<br>- Trainee <span class='key'>induite</span> (tourbillons en bout d'aile, lies a la portance)<br><div class='remember'><b>Retenir :</b> Winglets en bout d'aile = reduisent la trainee induite = economies de carburant.</div>"},
+{t:"Nombre de Mach et regimes de vol",b:"<span class='key'>Mach</span> = vitesse de l'avion / vitesse du son (environ 340 m/s au niveau de la mer, diminue avec l'altitude).<br><br>Regimes :<br>- <span class='key'>Subsonique</span> : Mach < 0.8 (avions de ligne classiques)<br>- <span class='key'>Transsonique</span> : 0.8 < Mach < 1.2 (zone critique, ondes de choc locales)<br>- <span class='key'>Supersonique</span> : 1.2 < Mach < 5 (Rafale, Concorde)<br>- <span class='key'>Hypersonique</span> : Mach > 5 (missiles, rentree atmospherique)<br><br>En transsonique, des <span class='key'>ondes de choc</span> apparaissent sur l'aile → augmentation brutale de trainee = <span class='key'>mur du son</span>."},
+{t:"Vitesses en aviation",b:"<span class='key'>IAS</span> (Indicated Airspeed) : vitesse lue sur l'anemometre. Ce que le pilote utilise pour les manoeuvres.<br><span class='key'>TAS</span> (True Airspeed) : vitesse reelle par rapport a l'air. IAS corrigee de l'altitude et la temperature.<br><span class='key'>GS</span> (Ground Speed) : vitesse par rapport au sol. TAS +/- vent.<br><span class='key'>Mach</span> : utilise en croisiere haute altitude.<br><br>En montant en altitude : la densite de l'air diminue → pour une meme IAS, la TAS augmente.<br><div class='remember'><b>Retenir :</b> IAS = securite du vol (decrochage, limites structurales). TAS = navigation. Mach = haute altitude.</div>"},
+{t:"L'atmosphere standard (ISA)",b:"Modele de reference international :<br>- Au niveau de la mer : <span class='key'>15°C</span>, <span class='key'>1013.25 hPa</span>, densite 1.225 kg/m3<br>- Gradient thermique : <span class='key'>-6.5°C par 1000 m</span> jusqu'a la tropopause (~11 000 m)<br>- Tropopause : environ <span class='key'>-56.5°C</span>, temperature stable au-dessus<br><br>Un avion de ligne croise vers <span class='key'>FL350-FL410</span> (35 000 - 41 000 pieds) ou l'air est froid et peu dense → moins de trainee → meilleur rendement moteur."},
+{t:"Meteo : les nuages et dangers",b:"Classification par altitude :<br>- <span class='key'>Bas</span> (0-2 km) : stratus, stratocumulus → visibilite reduite, givrage<br>- <span class='key'>Moyens</span> (2-6 km) : altostratus, altocumulus<br>- <span class='key'>Hauts</span> (6-12 km) : cirrus, cirrostratus (cristaux de glace)<br>- <span class='key'>Developpement vertical</span> : <span class='key'>cumulonimbus</span> (Cb) = LE danger<br><br>Dangers meteo pour l'aviation :<br>- <span class='key'>Givrage</span> : glace sur les ailes → perte de portance, blocage gouvernes<br>- <span class='key'>Turbulences</span> : thermiques, orographiques, de sillage, en ciel clair (CAT)<br>- <span class='key'>Cisaillement de vent</span> (windshear) : variation brutale de vent → danger a l'atterrissage<br>- <span class='key'>Foudre</span> : un avion est frappe ~1 fois/an. Protection = cage de Faraday (structure alu)"},
+{t:"Meteo : fronts et masses d'air",b:"<span class='key'>Front chaud</span> : air chaud glisse AU-DESSUS de l'air froid. Pluie continue, nuages stratiformes.<br><span class='key'>Front froid</span> : air froid pousse SOUS l'air chaud. Orages, averses intenses, cumulonimbus.<br><span class='key'>Anticyclone</span> (H) : haute pression → beau temps, stable, brumes possibles.<br><span class='key'>Depression</span> (L) : basse pression → mauvais temps, vent, pluie.<br><br><span class='key'>METAR</span> : observation meteo d'un aerodrome (mise a jour toutes les 30 min).<br><span class='key'>TAF</span> : prevision meteo d'un aerodrome (valable 9-30h).<br><div class='remember'><b>Retenir :</b> Front froid = danger rapide (Cb, orages). Front chaud = degradation progressive.</div>"},
+{t:"Navigation : instruments de bord",b:"Les <span class='key'>6 instruments de base</span> (T basique) :<br>1. <span class='key'>Anemometre</span> : vitesse (IAS en noeuds)<br>2. <span class='key'>Horizon artificiel</span> : attitude (tangage + roulis)<br>3. <span class='key'>Altimetre</span> : altitude (en pieds, base sur la pression)<br>4. <span class='key'>Variometre</span> : vitesse verticale (montee/descente en ft/min)<br>5. <span class='key'>Conservateur de cap</span> (gyroscope directionnel) : cap magnetique<br>6. <span class='key'>Bille-aiguille</span> : coordination du virage<br><br>Aujourd'hui remplaces par des ecrans <span class='key'>glass cockpit</span> (PFD, ND) mais les principes sont les memes."},
+{t:"Navigation : VFR et IFR",b:"<span class='key'>VFR</span> (Visual Flight Rules) : le pilote vole a vue. Conditions meteo minimales requises (VMC). Pas besoin de plan de vol sous certaines conditions.<br><br><span class='key'>IFR</span> (Instrument Flight Rules) : le pilote vole aux instruments. Obligatoire pour les avions de ligne. Plan de vol obligatoire.<br><br><span class='key'>Espaces aeriens</span> :<br>- Classe <span class='key'>A</span> : IFR uniquement (routes aeriennes en altitude, au-dessus FL195)<br>- Classes <span class='key'>B-E</span> : IFR et VFR avec niveaux de service ATC differents<br>- Classes <span class='key'>F-G</span> : espaces non controles"},
+{t:"Reglementation : organismes",b:"<span class='key'>OACI</span> (ICAO) : Organisation de l'Aviation Civile Internationale. Fixe les normes mondiales (annexes, SARPS).<br><span class='key'>EASA</span> : Agence europeenne de la securite aerienne. Certification des avions et moteurs en Europe.<br><span class='key'>FAA</span> : Federal Aviation Administration (USA). Equivalent americain de l'EASA.<br><span class='key'>DGAC</span> : Direction Generale de l'Aviation Civile (France). Autorite nationale.<br><br>Un moteur Safran doit etre certifie par l'<span class='key'>EASA</span> ET souvent la <span class='key'>FAA</span> (double certification pour vendre aux USA).<br><div class='remember'><b>Retenir :</b> OACI = normes mondiales. EASA = certification europeenne. C'est l'EASA qui certifie les moteurs Safran.</div>"},
+{t:"Certification et navigabilite",b:"Pour qu'un avion puisse voler :<br>1. <span class='key'>Certificat de type</span> (TC) : l'EASA/FAA certifie que le modele est conforme (conception)<br>2. <span class='key'>Certificat de navigabilite</span> (CofA) : chaque avion individuel est apte au vol<br>3. <span class='key'>Consignes de navigabilite</span> (AD) : corrections obligatoires si un defaut est decouvert en service<br><br>Un mauvais traitement de surface sur piece critique → <span class='key'>AD</span> possible → rappel de la flotte = cout enorme.<br><br><span class='key'>DOA</span> (Design Organisation Approval) : autorisation de concevoir.<br><span class='key'>POA</span> (Production Organisation Approval) : autorisation de produire."},
+{t:"Histoire : dates cles de l'aviation",b:"<span class='key'>1783</span> : Freres Montgolfier, premier vol humain (ballon a air chaud)<br><span class='key'>1890</span> : Clement Ader, premier decollage motorise (Eole, 50m)<br><span class='key'>1903</span> : Freres Wright, premier vol controle et soutenu (12s, 37m)<br><span class='key'>1909</span> : Bleriot traverse la Manche<br><span class='key'>1927</span> : Lindbergh, premiere traversee de l'Atlantique sans escale<br><span class='key'>1930</span> : Turbocompresseur jet brevete par Frank Whittle (GB)<br><span class='key'>1939</span> : Premier vol d'un avion a reaction (Heinkel He 178)<br><span class='key'>1947</span> : Chuck Yeager franchit le mur du son (Bell X-1)<br><span class='key'>1949</span> : De Havilland Comet, premier avion de ligne a reaction<br><span class='key'>1969</span> : Concorde, premier vol (Mach 2.02, 1974 en service)<br><span class='key'>1970</span> : Boeing 747 entre en service (democratisation du vol long-courrier)<br><span class='key'>2007</span> : Airbus A380, plus gros avion de ligne (retiré 2021)"},
+{t:"Histoire : Safran et la propulsion francaise",b:"<span class='key'>1905</span> : Societe des moteurs Gnome (moteurs rotatifs, pionniers)<br><span class='key'>1945</span> : SNECMA creee (nationalisation, heritage Gnome et Rhone)<br><span class='key'>1971</span> : Accord SNECMA + GE → futur CFM International<br><span class='key'>1974</span> : Premier CFM56, moteur qui dominera l'aviation civile<br><span class='key'>2005</span> : Fusion SNECMA + SAGEM = <span class='key'>Safran</span><br><span class='key'>2009</span> : Lancement du programme LEAP<br><span class='key'>2016</span> : Premier vol LEAP-1A (A320neo)<br><span class='key'>2024</span> : LEAP = le plus produit au monde. Safran = 27.3 Mds € de CA<br><div class='remember'><b>Retenir :</b> Safran vient de la SNECMA (moteurs). Le nom Safran date de 2005. Le CFM56 puis le LEAP = 50 ans de partenariat avec GE.</div>"},
+{t:"Types d'aeronefs",b:"<span class='key'>Avions de ligne</span> :<br>- Court/moyen-courrier : A320, B737 (LEAP, CFM56) — 150-220 pax, 3000-6000 km<br>- Long-courrier : A350, B787, A330 — 250-400 pax, 12000+ km<br><br><span class='key'>Avions militaires</span> :<br>- Chasse : Rafale (M88), Eurofighter, F-35<br>- Transport : A400M (TP400 = Safran), C-130<br><br><span class='key'>Helicopteres</span> : H160, H225 (Safran Helicopter Engines = turbomoteurs)<br><br><span class='key'>Aviation generale</span> : Cessna, Cirrus (monomoteurs a pistons ou turboprop)<br><span class='key'>Drones</span> (RPAS) : en forte croissance, civils et militaires"},
+{t:"Facteur de charge et limites structurales",b:"<span class='key'>Facteur de charge</span> (n) = portance / poids. En vol droit stabilise : n = 1.<br><br>En virage incline a 60° : n = 2 (le pilote 'pese' 2 fois son poids).<br>En ressource (sortie de pique) : n peut atteindre 3-6 selon l'avion.<br><br>Limites structurales (avion de ligne) :<br>- <span class='key'>+2.5g / -1g</span> : limites normales<br>- Au-dela : deformation permanente ou rupture<br><br>Chasse : limites a <span class='key'>+9g / -3g</span><br><div class='remember'><b>Retenir :</b> Le facteur de charge dimensionne la structure (et donc les materiaux + traitements de surface qui protegent cette structure).</div>"},
+{t:"Corrosion en aeronautique",b:"La corrosion est l'<span class='key'>ennemi n°1</span> de la structure et du moteur.<br><br>Types en aero :<br>- <span class='key'>Corrosion uniforme</span> : attaque reguliere de la surface<br>- <span class='key'>Corrosion galvanique</span> : 2 metaux differents en contact + electrolyte → le moins noble se corrode (ex : alu + acier)<br>- <span class='key'>Corrosion par piqures</span> (pitting) : trous localises, vicieux car invisibles en surface<br>- <span class='key'>Corrosion sous contrainte</span> (CSC) : fissuration sous effort mecanique + milieu corrosif<br>- <span class='key'>Corrosion intergranulaire</span> : attaque aux joints de grains<br><br>→ C'est EXACTEMENT pour ca qu'on fait des <span class='key'>traitements de surface</span> : anodisation, conversion chimique, peintures = barrieres contre la corrosion.<br><div class='remember'><b>Retenir :</b> TdS en aero = proteger contre la corrosion. C'est la raison d'etre du poste Safran.</div>"},
+{t:"Fatigue des materiaux en aero",b:"<span class='key'>Fatigue</span> : rupture d'une piece soumise a des cycles repetitifs de contrainte, meme si chaque cycle est SOUS la limite de rupture.<br><br>En aero :<br>- Un moteur subit des milliers de cycles thermiques (demarrage/arret)<br>- Les ailes flechissent a chaque vol (pressurisation fuselage = gonflement/degonflement)<br>- Les aubes de turbine vibrent a haute frequence<br><br>3 phases : <span class='key'>amorcage</span> (micro-fissure, souvent en surface) → <span class='key'>propagation</span> → <span class='key'>rupture</span><br><br>Le TdS intervient : une surface bien traitee (sans piqures, sans rayures) = <span class='key'>retarde l'amorcage</span> de fissure.<br><div class='remember'><b>Retenir :</b> En aero, les pieces ne cassent pas d'un coup : elles fatiguent. Le TdS protege la surface = retarde la fatigue.</div>"},
+{t:"Environnement et aviation verte",b:"L'aviation = <span class='key'>2-3%</span> des emissions mondiales de CO2. En croissance.<br><br>Solutions en cours :<br>- <span class='key'>SAF</span> (Sustainable Aviation Fuel) : biocarburants et e-fuels. Compatibles moteurs actuels. Objectif 50% en 2050.<br>- <span class='key'>Moteurs plus efficaces</span> : LEAP -15% vs CFM56, RISE vise -20% de plus<br>- <span class='key'>Open fan</span> (programme RISE) : pas de nacelle → moins de masse, meilleur rendement propulsif<br>- <span class='key'>Hydrogene</span> : ZEROe (Airbus), horizon 2035+. Moteur H2 = pas de CO2<br>- <span class='key'>Electrique/hybride</span> : petits avions regionaux (<100 pax), horizon 2030+<br><br>Impact sur les TdS : nouveaux materiaux, nouvelles contraintes (H2 = fragilisation), nouvelles certifications."},
+],
+2:[ // SAFRAN + ENTREPRISES AERO
+{t:"Safran Group",b:"<span class='key'>100 000 collaborateurs</span>, CA <span class='key'>27,3 milliards €</span> (2024).<br>Domaines : propulsion aero, equipements, interieurs cabine, espace, defense.<br>2e entreprise aero/defense au classement TIME 2024."},
+{t:"Safran Aircraft Engines",b:"La filiale <span class='key'>moteurs</span> de Safran. Concoit et produit des moteurs civils et militaires.<br>⚠️ C'est une filiale 100% Safran, PAS une coentreprise.<br>Sites : Villaroche (essais), <span class='key'>Corbeil</span> (pieces critiques), Gennevilliers (aubes fan)."},
+{t:"Les filiales Safran",b:"<span class='key'>Safran Aircraft Engines</span> : moteurs avions (LEAP, M88)<br><span class='key'>Safran Helicopter Engines</span> : turbomoteurs helicopteres (leader mondial)<br><span class='key'>Safran Landing Systems</span> : trains d'atterrissage + freins carbone<br><span class='key'>Safran Nacelles</span> : nacelles moteurs (A320neo, A330neo)<br><span class='key'>Safran Aerosystems</span> : systemes oxygene, carburant, evacuation<br><span class='key'>Safran Electronics & Defense</span> : navigation inertielle, optronique<br><span class='key'>Safran Seats</span> : sieges avion<br><span class='key'>Safran Electrical & Power</span> : cablage, distribution electrique"},
+{t:"CFM International",b:"<span class='key'>Coentreprise 50/50 entre Safran Aircraft Engines et GE Aerospace.</span><br>Produit les moteurs LEAP et CFM56. Leader mondial des courts/moyen-courriers.<br>Creee en 1974. Siege a Cincinnati (USA).<br><div class='remember'><b>Piege classique :</b> CFM = coentreprise, pas filiale Safran. Chacun fabrique sa partie : Safran = compresseur BP + turbine BP. GE = coeur HP.</div>"},
+{t:"Les moteurs a connaitre",b:"<span class='key'>LEAP</span> : le moteur du moment. Equipe <b>A320neo</b> (LEAP-1A) + <b>B737 MAX</b> (LEAP-1B) + <b>C919</b> (LEAP-1C). -15% conso vs CFM56.<br><span class='key'>CFM56</span> : generation precedente, 33 000+ produits. Best-seller de l'histoire.<br><span class='key'>M88</span> : moteur militaire du <b>Rafale</b>. Postcombustion, poussee 7.5 tonnes.<br><span class='key'>TP400</span> : turbopropulseur de l'<b>A400M</b> (consortium Europrop avec MTU, Rolls-Royce, ITP).<br><span class='key'>RISE</span> : demonstrateur futur open-fan (-20% vs LEAP). Vol prevu ~2025."},
+{t:"CEI Corbeil-Essonnes",b:"<span class='key'>Centre d'Excellence Industrielle</span>, site historique Safran.<br>Specialise dans les <span class='key'>pieces critiques moteur</span> (aubes, disques turbine).<br>Atelier TdS par <span class='key'>voie humide</span> : anodisation, conversion chimique, decapage, passivation.<br>C'est la que tu travaillerais. A ~15 min de chez toi.<br>Autres sites cles : <span class='key'>Gennevilliers</span> (aubes fan LEAP, composites), <span class='key'>Villaroche</span> (assemblage + bancs d'essai)."},
+{t:"GE Aerospace",b:"<span class='key'>Ex-GE Aviation</span>, devenu entite independante en 2024 (spin-off de General Electric).<br>CA : ~38 Mds $ (2024). 52 000 employes.<br><br>Moteurs :<br>- <span class='key'>GE90</span> : B777 (le plus puissant jamais construit)<br>- <span class='key'>GEnx</span> : B787 + B747-8<br>- <span class='key'>GE9X</span> : B777X (nouveau)<br>- <span class='key'>CF6</span> : A300, DC-10 (generation precedente)<br>- Partenaire 50% de CFM (LEAP, CFM56)<br><br>Siege : Cincinnati, Ohio.<br><div class='remember'><b>Retenir :</b> GE = gros moteurs long-courriers. Safran = partie basse pression des LEAP + moteurs militaires francais. Ensemble via CFM = moyen-courriers.</div>"},
+{t:"Rolls-Royce (aero)",b:"<span class='key'>3e motoriste mondial</span> (derriere GE et Safran/CFM). Siege : Derby, UK.<br>CA aero : ~18 Mds £ (2024). 42 000 employes.<br><br>Moteurs :<br>- <span class='key'>Trent XWB</span> : A350 (exclusif)<br>- <span class='key'>Trent 7000</span> : A330neo<br>- <span class='key'>Trent 1000</span> : B787<br>- <span class='key'>UltraFan</span> : demonstrateur futur (comme RISE pour Safran/GE)<br><br>Aussi : moteurs militaires (EJ200 pour Eurofighter), petits reacteurs nucleaires (SMR).<br><div class='remember'><b>Retenir :</b> Rolls-Royce = exclusivement les gros moteurs long-courriers. Pas de moyen-courrier (c'est le marche CFM/PW).</div>"},
+{t:"Pratt & Whitney (RTX)",b:"Filiale de <span class='key'>RTX</span> (ex-Raytheon Technologies). Siege : East Hartford, Connecticut.<br><br>Moteurs :<br>- <span class='key'>PW1000G (GTF)</span> : moteur a reducteur. Equipe A320neo, A220, Embraer E2. Concurrent DIRECT du LEAP.<br>- <span class='key'>F135</span> : moteur du F-35 (monopole militaire USA)<br>- <span class='key'>PW4000</span> : B777 (ancienne generation)<br><br>Le GTF a un <span class='key'>reducteur</span> entre la turbine BP et le fan → le fan tourne plus lentement = plus grand diametre possible = meilleur taux de dilution.<br><div class='remember'><b>Retenir :</b> PW GTF = concurrent du LEAP sur A320neo. Le LEAP n'a PAS de reducteur (conception directe). Debat GTF vs LEAP = le sujet de l'industrie.</div>"},
+{t:"Airbus",b:"<span class='key'>Avionneur europeen #1</span>. Siege : Toulouse + Hambourg.<br>CA : ~65 Mds € (2024). 150 000 employes.<br><br>Gamme :<br>- <span class='key'>A220</span> : 100-150 pax (ex-Bombardier CSeries)<br>- <span class='key'>A320neo</span> : 150-240 pax (best-seller, LEAP ou GTF)<br>- <span class='key'>A330neo</span> : 250-440 pax (Trent 7000)<br>- <span class='key'>A350</span> : 300-410 pax (Trent XWB, 53% composite)<br>- <span class='key'>A400M</span> : transport militaire (TP400)<br><br>Airbus n'est PAS motoriste : il achete les moteurs a Safran/GE, RR ou PW.<br><div class='remember'><b>Retenir :</b> Airbus = cellule (fuselage, ailes). Safran = moteurs. Ce sont des partenaires, pas des concurrents.</div>"},
+{t:"Boeing",b:"<span class='key'>Avionneur americain #1</span>. Siege : Arlington, Virginia.<br>CA : ~78 Mds $ (2024). 170 000 employes.<br><br>Gamme :<br>- <span class='key'>B737 MAX</span> : moyen-courrier (LEAP-1B uniquement, pas de choix moteur)<br>- <span class='key'>B787 Dreamliner</span> : long-courrier (GEnx ou Trent 1000)<br>- <span class='key'>B777/777X</span> : gros-porteur (GE90/GE9X)<br>- <span class='key'>B767</span> : cargo (vieillissant)<br><br>Crise qualite depuis 2018 (737 MAX, porte Alaska Airlines). En difficulte vs Airbus.<br>Defense : F/A-18, KC-46, AH-64 Apache."},
+{t:"Dassault Aviation",b:"<span class='key'>Avionneur francais</span>. Siege : Saint-Cloud (92).<br>CA : ~7 Mds € (2024). 13 000 employes.<br><br>Produits :<br>- <span class='key'>Rafale</span> : avion de combat omnirole (moteur M88 = Safran)<br>- <span class='key'>Falcon</span> : jets d'affaires (7X, 8X, 6X → moteurs PW ou RR)<br>- <span class='key'>nEUROn</span> : drone de combat furtif (demonstrateur)<br><br>Acteur du programme <span class='key'>SCAF</span> (Systeme de Combat Aerien du Futur) avec Airbus et Indra.<br><div class='remember'><b>Retenir :</b> Dassault = Rafale + Falcon. Le Rafale utilise le moteur M88 de Safran.</div>"},
+{t:"Thales",b:"<span class='key'>Electronique de defense et aeronautique</span>. Siege : Paris La Defense.<br>CA : ~18 Mds € (2024). 81 000 employes.<br><br>Domaines aero :<br>- <span class='key'>Avionique</span> : ecrans cockpit, systemes de vol (Flight Management System)<br>- <span class='key'>IFE</span> : divertissement en vol (ecrans passagers)<br>- <span class='key'>Radar</span> : RBE2 AESA du Rafale<br>- <span class='key'>Optronique</span> : capteurs IR, pods de designation<br>- <span class='key'>ATM</span> : gestion du trafic aerien (controle aerien)<br><br>Thales ne fait PAS de moteurs ni de cellules. C'est l'electronique et les systemes.<br><div class='remember'><b>Retenir :</b> Thales = les yeux et le cerveau de l'avion. Safran = le coeur (moteur). Airbus/Dassault = le corps (cellule).</div>"},
+{t:"MTU Aero Engines",b:"<span class='key'>Motoriste allemand</span>. Siege : Munich.<br>CA : ~6.3 Mds € (2024). 12 000 employes.<br><br>Pas de moteurs complets seuls, mais des <span class='key'>participations</span> dans quasi tous les programmes :<br>- Turbine BP du <span class='key'>PW1000G (GTF)</span> : MTU fait ~18% du moteur<br>- <span class='key'>TP400</span> (A400M) : partenaire du consortium Europrop<br>- <span class='key'>EJ200</span> (Eurofighter) : partenaire<br>- MRO : un des plus gros centres de maintenance moteurs au monde<br><br>Partenaire frequent de Pratt & Whitney."},
+{t:"ITP Aero (Indra)",b:"<span class='key'>Motoriste espagnol</span> (ex-filiale Rolls-Royce, rachetee par Bain Capital 2022).<br>Siege : Bilbao. ~5000 employes.<br><br>Specialites : <span class='key'>turbines basse pression</span>, aubes, TdS.<br>Partenaire sur TP400, Trent, EJ200.<br>Participe au programme SCAF (moteur du NGF)."},
+{t:"Leonardo (ex-Finmeccanica)",b:"<span class='key'>Groupe italien defense/aero</span>. Siege : Rome.<br>CA : ~15 Mds € (2024). 53 000 employes.<br><br>Domaines :<br>- <span class='key'>Helicopteres</span> : AW139, AW169, AW101 (ex-AgustaWestland)<br>- <span class='key'>Avions</span> : M-346 (entrainement), C-27J (transport)<br>- <span class='key'>Electronique</span> : radar, guerre electronique<br>- Participation dans <span class='key'>Eurofighter</span> (36%) et <span class='key'>ATR</span> (50% avec Airbus)"},
+{t:"Honeywell Aerospace",b:"<span class='key'>Equipementier americain</span>. Pas un motoriste principal, mais omnipresent.<br><br>Produits aero :<br>- <span class='key'>APU</span> (Auxiliary Power Unit) : le petit moteur qui alimente l'avion au sol<br>- <span class='key'>Avionique</span> : systemes de navigation, meteo embarquee<br>- <span class='key'>Moteurs</span> : petits turbofans pour jets d'affaires (HTF7000, TFE731)<br>- Systemes de commandes de vol, freins, roues<br><br>Concurrent de Thales en avionique, de Safran en equipements."},
+{t:"La supply chain aero",b:"L'industrie aero fonctionne en <span class='key'>tiers</span> (niveaux de sous-traitance) :<br><br><span class='key'>OEM</span> (Tier 0) : Airbus, Boeing → assemblent l'avion<br><span class='key'>Tier 1</span> : Safran, Thales, RR → systemes complets (moteurs, avionique, trains)<br><span class='key'>Tier 2</span> : sous-traitants de Tier 1 → sous-ensembles (aubes, disques, cartes electroniques)<br><span class='key'>Tier 3</span> : pieces elementaires, traitements de surface, matieres premieres<br><br>Un atelier TdS comme Corbeil = entre <span class='key'>Tier 1 et Tier 2</span> (internalise chez Safran).<br><div class='remember'><b>Retenir :</b> Le TdS est un procede special critique → Safran l'internalise (pas de sous-traitance pour les pieces les plus critiques).</div>"},
+{t:"Marche aero : chiffres cles",b:"<span class='key'>Carnet de commandes</span> mondial : >17 000 avions (backlog Airbus + Boeing) = ~10 ans de production.<br><span class='key'>Production A320neo</span> : objectif 75/mois en 2026 (record historique).<br><span class='key'>LEAP</span> : >3000 moteurs livres/an. Objectif >2000 neufs + MRO en montee.<br><br>Le defi : <span class='key'>ramp-up</span> = monter les cadences. Toute la supply chain est sous pression (y compris TdS).<br><div class='remember'><b>Retenir :</b> Le marche aero est en surchauffe post-COVID. Le defi n'est pas de vendre mais de PRODUIRE assez vite. Un specialiste TdS qui tient la cadence = tres recherche.</div>"},
+],
+3:[ // TDS
+{t:"Voie humide = bains liquides",b:"Tous les procedes ou la piece est <span class='key'>plongee dans un bain chimique</span>.<br>C'est ce que fait l'atelier de Corbeil.<br>Exemples : anodisation, conversion chimique, decapage, passivation, electrodeposition.<br><br>≠ <span class='key'>Voie seche</span> : PVD, CVD, projection thermique, plasma (pas de bain liquide)."},
+{t:"Electrochimie : les bases",b:"<span class='key'>Oxydation</span> = perte d'electrons (le metal se dissout ou forme un oxyde). Mnemo : OX = perte.<br><span class='key'>Reduction</span> = gain d'electrons (les ions se deposent en metal). Mnemo : RED = gain.<br><br>A l'<span class='key'>anode</span> : oxydation (la piece se corrode ou s'anodise).<br>A la <span class='key'>cathode</span> : reduction (depot metallique).<br><br><span class='key'>Electrolyte</span> : solution conductrice (acide, base ou sel dissous dans l'eau).<br><div class='remember'><b>Retenir :</b> Anode = Oxydation. Cathode = Reduction. 'AN-OX' pour s'en souvenir.</div>"},
+{t:"Loi de Faraday",b:"Relie la <span class='key'>quantite de matiere deposee/dissoute</span> au courant et au temps :<br><br>m = (M × I × t) / (n × F)<br><br>- m = masse deposee (g)<br>- M = masse molaire du metal (g/mol)<br>- I = courant (A)<br>- t = temps (s)<br>- n = nombre d'electrons echanges<br>- F = constante de Faraday = <span class='key'>96 485 C/mol</span><br><br>En pratique : plus de courant ou plus de temps = couche plus epaisse.<br><div class='remember'><b>Retenir :</b> Faraday = la loi fondamentale de l'electrodeposition. Elle permet de CALCULER l'epaisseur attendue.</div>"},
+{t:"Potentiel electrochimique et serie galvanique",b:"Chaque metal a un <span class='key'>potentiel standard</span> (E°) mesure vs l'electrode d'hydrogene :<br><br>Nobles (cathodiques) : Or (+1.5V), Platine (+1.2V), Argent (+0.8V), Cuivre (+0.34V), Titane (passif)<br>Actifs (anodiques) : Fer (-0.44V), Chrome (-0.74V), Zinc (-0.76V), Aluminium (-1.66V), Magnesium (-2.37V)<br><br>Si 2 metaux sont en contact + electrolyte → le <span class='key'>plus actif</span> (E° plus negatif) se corrode = <span class='key'>corrosion galvanique</span>.<br><div class='remember'><b>Retenir :</b> Plus E° est negatif → plus le metal est reactif → plus il se corrode facilement. L'alu est tres reactif mais sa couche d'oxyde le protege (passivation naturelle).</div>"},
+{t:"Le pH et son role en TdS",b:"pH = -log[H+]. Echelle 0-14. <span class='key'>pH 7 = neutre</span>.<br><br>En TdS :<br>- <span class='key'>Bains acides</span> (pH 0-6) : decapage, anodisation sulfurique (pH ~0.5), bains de nickel acide<br>- <span class='key'>Bains alcalins</span> (pH 8-14) : degraissage alcalin (pH 10-13), zincage alcalin, anodisation dure<br>- <span class='key'>Rincages</span> : eau desionisee, pH ~7<br><br>Le pH influence : vitesse de reaction, qualite du depot, dissolution du substrat, duree de vie du bain.<br>Un pH mal controle = <span class='key'>defaut de traitement</span> (piqures, decollement, sous-epaisseur)."},
+{t:"Anodisation en detail",b:"<span class='key'>Oxydation electrochimique</span> de la surface. La piece = <span class='key'>anode</span>. On cree une couche d'oxyde protectrice.<br><br><span class='key'>ASA</span> (sulfurique, H2SO4 15-20%) : couche epaisse (5-25 µm), dure, poreuse. Usage : resistance usure, base peinture.<br><span class='key'>OAC</span> (chromique, CrO3 30-50 g/L) : couche fine (2-5 µm), compacte, excellente corrosion. ⚠️ Chrome VI = CMR.<br><span class='key'>TSA</span> (tartrique-sulfurique) : remplace l'OAC, sans chrome VI. Performances equivalentes validees.<br><span class='key'>OAS dure</span> (hard anodizing) : couche tres epaisse (25-150 µm), tres dure (400-500 HV). Bain sulfurique froid (0-5°C), haute densite de courant.<br><div class='remember'><b>Retenir :</b> ASA = usure/peinture. OAC = corrosion (toxique). TSA = futur. OAS dure = extreme.</div>"},
+{t:"Structure de la couche anodique",b:"La couche d'oxyde d'aluminium (Al2O3) formee par anodisation a une structure <span class='key'>hexagonale poreuse</span> :<br><br>- <span class='key'>Couche barriere</span> : fine couche compacte au contact du metal (~1% de l'epaisseur totale)<br>- <span class='key'>Couche poreuse</span> : structure en nid d'abeille avec des pores cylindriques verticaux<br><br>Les pores permettent :<br>- L'<span class='key'>absorption de colorants</span> (anodisation coloree)<br>- L'<span class='key'>accrochage de peinture/primaire</span><br><br>Le <span class='key'>colmatage</span> (sealing) ferme les pores : eau bouillante (100°C, 20-30 min) ou sels de nickel. Transforme Al2O3 poreux en Al2O3.H2O (boehmite) = gonflement → pores fermes → meilleure corrosion."},
+{t:"Conversion chimique en detail",b:"Reaction chimique sans courant entre le metal et une solution → couche fine (0.5-4 µm).<br><br><span class='key'>Sur aluminium</span> :<br>- <span class='key'>Alodine 1200</span> (Henkel) : solution CrVI. Couche jaune/irisee. Excellente corrosion + base peinture. TOXIQUE.<br>- <span class='key'>TCP</span> (Trivalent Chrome Process) : solution CrIII. Couche incolore/irisee. Alternative REACH. Performances quasi equivalentes.<br>- <span class='key'>SurTec 650</span>, <span class='key'>Bonderite</span> : noms commerciaux de TCP.<br><br><span class='key'>Sur acier</span> :<br>- <span class='key'>Phosphatation</span> (Zn, Mn, Fe) : couche cristalline, accrochage peinture<br>- <span class='key'>Brunissage</span> : oxyde noir Fe3O4, aspect esthetique + legere protection<br><br><span class='key'>Sur titane</span> : tres peu de conversion chimique (le titane se passive seul tres bien)."},
+{t:"Decapage : chimie et types",b:"Objectif : <span class='key'>enlever oxydes, calamine, couches de corrosion</span> pour exposer le metal nu.<br><br><span class='key'>Decapage acide</span> :<br>- Alu : HNO3 + HF (deoxidizer) → dissout Al2O3 rapidement<br>- Acier : HCl ou H2SO4 dilue → dissout la rouille (Fe2O3 + FeO)<br>- Titane : HNO3 + HF (le titane ne reagit quasiment qu'au HF)<br>- Superalliages Ni : FeCl3 ou solutions proprietaires<br><br><span class='key'>Decapage alcalin</span> :<br>- Alu : NaOH (soude) → dissout l'aluminium lui-meme. Attention a la surdissolution.<br><br><span class='key'>Decapage electrolytique</span> : courant + bain acide = decapage accelere et uniforme.<br><div class='remember'><b>Retenir :</b> Le choix du decapant depend du substrat (metal) ET de ce qu'on veut enlever. HF = seul acide qui attaque le titane.</div>"},
+{t:"Degraissage",b:"<span class='key'>Premiere etape</span> de toute gamme. Enleve graisses, huiles, empreintes digitales.<br><br>Types :<br>- <span class='key'>Solvant</span> : acetone, trichloroethylene (phase vapeur). Tres efficace mais solvants CMR en voie de substitution.<br>- <span class='key'>Alcalin</span> : solution NaOH/Na2CO3 + tensioactifs, 50-80°C. Le plus courant en industrie. Saponifie les graisses.<br>- <span class='key'>Emulsion</span> : melange eau + solvant organique. Compromis.<br>- <span class='key'>Ultrasons</span> : cavitation dans le bain → decolle les contaminants (souvent associe a un bain alcalin).<br><br>Test de proprete : <span class='key'>test de mouillabilite</span> (waterbreak test) → l'eau doit former un film continu sans 'casser'. Si gouttes = gras residuel."},
+{t:"Rincage : pourquoi c'est critique",b:"Le rincage est souvent neglige mais c'est <span class='key'>essentiel</span> :<br>- Evite la <span class='key'>contamination croisee</span> entre bains<br>- Empeche les <span class='key'>taches</span> de sechage (residus de sel)<br>- Conditionne la <span class='key'>qualite de l'etape suivante</span><br><br>Types :<br>- <span class='key'>Statique</span> : un seul bac d'eau (economies mais risque de concentration)<br>- <span class='key'>Cascade</span> : 2-3 bacs en serie, eau propre arrive dans le dernier. Le plus efficace.<br>- <span class='key'>Eau DI</span> (desionisee) : pour les rincages finaux avant traitement de precision<br><br>Critere : <span class='key'>conductivite</span> de l'eau de rincage. Si trop haute = rincer plus."},
+{t:"Passivation en detail",b:"<span class='key'>Renforcer la couche d'oxyde naturelle</span> protectrice.<br><br><span class='key'>Inox</span> (le principal) :<br>- Bain : HNO3 (20-50%, 30-60 min, 20-50°C) ou acide citrique (alternative verte)<br>- Mecanisme : dissout le fer libre en surface → enrichit en chrome → couche passive Cr2O3 renforcee<br>- Norme : <span class='key'>ASTM A967</span>, <span class='key'>AMS 2700</span><br><br><span class='key'>Aluminium</span> : la couche Al2O3 naturelle (2-5 nm) est deja une passivation. L'anodisation = passivation 'forcee'.<br><br><span class='key'>Titane</span> : passivation naturelle ultra-stable (TiO2). Se reforme instantanement si rayee.<br><div class='remember'><b>Retenir :</b> La passivation ne depose rien : elle RENFORCE ce qui existe deja naturellement.</div>"},
+{t:"Electrodeposition en detail",b:"<span class='key'>Depot metallique par electrolyse</span>. La piece = cathode.<br><br>Procedes courants en aero :<br>- <span class='key'>Nickelage</span> : anticorrosion, base pour d'autres depots. Bain de Watts (NiSO4 + NiCl2 + H3BO3).<br>- <span class='key'>Chromage dur</span> : resistance usure extreme (jusqu'a 1000 HV). ⚠️ CrVI → substitution par HVOF ou nickel-phosphore.<br>- <span class='key'>Cadmiage</span> : excellente corrosion + lubrification. ⚠️ Toxique → remplacement par Zn-Ni.<br>- <span class='key'>Zn-Ni</span> : l'alternative au cadmium. Alliage 12-16% Ni, excellente corrosion, conforme REACH.<br>- <span class='key'>Argent, Or</span> : contacts electriques, connecteurs.<br><br>Parametres critiques : <span class='key'>densite de courant</span> (A/dm2), temperature, agitation, composition du bain."},
+{t:"Depot chimique (autocatalytique)",b:"Depot metallique <span class='key'>SANS courant electrique</span>. La reaction est catalysee par la surface elle-meme.<br><br><span class='key'>Nickel chimique</span> (electroless nickel) : le plus courant.<br>- Bain : sel de nickel + <span class='key'>hypophosphite de sodium</span> (reducteur)<br>- Produit un alliage Ni-P (3-12% P)<br>- Avantages : epaisseur <span class='key'>parfaitement uniforme</span> (meme dans les trous, angles), durete elevee<br>- Usages : pieces complexes, hydraulique, connecteurs<br><br>≠ electrodeposition : pas besoin de courant, mais le bain est plus cher et plus sensible.<br><div class='remember'><b>Retenir :</b> Nickel chimique = uniformite parfaite partout. Nickel electrolytique = epaisseur varie avec la geometrie (plus aux aretes).</div>"},
+{t:"Fragilisation par hydrogene (FPH)",b:"Danger MAJEUR en TdS aero. Pendant l'electrodeposition ou le decapage acide, de l'<span class='key'>hydrogene atomique</span> penetre dans le metal.<br><br>Consequences : <span class='key'>fissuration retardee</span> sous contrainte. La piece semble OK puis casse sans prevenir.<br><br>Metaux sensibles : aciers haute resistance (>1000 MPa), certains alliages titane.<br><br>Parade : <span class='key'>degazage</span> (baking) = traitement thermique post-depot :<br>- Acier : 190-230°C pendant <span class='key'>4-24h</span> (selon spec)<br>- Dans les <span class='key'>4h</span> apres le depot (avant que H diffuse aux joints de grains)<br><br>Norme : <span class='key'>ASTM F519</span> (test de FPH).<br><div class='remember'><b>Retenir :</b> FPH = le risque invisible. Toujours degazer apres electrodeposition sur acier HR. Delai max 4h entre depot et four.</div>"},
+{t:"Colmatage (sealing)",b:"Etape FINALE de l'anodisation. Ferme les pores de la couche d'oxyde.<br><br>Methodes :<br>- <span class='key'>Eau bouillante</span> (100°C, 20-30 min) : hydrate Al2O3 → boehmite (gonflement → pores fermes). Simple mais lent.<br>- <span class='key'>Sels de nickel</span> (acetate de Ni, 85-95°C, 15-20 min) : plus rapide, meilleure corrosion.<br>- <span class='key'>Bichromate</span> (K2Cr2O7, 95°C) : excellente corrosion mais CrVI = toxique → en substitution.<br>- <span class='key'>Froid</span> (sels de nickel-fluorure, 25-30°C) : rapide mais moins durable.<br><br>Test de qualite : <span class='key'>test a la goutte de colorant</span> (dye spot test). Si le colorant ne penetre pas = bien colmate."},
+{t:"Peintures et systemes de protection",b:"En aero, la peinture n'est PAS que cosmetique. C'est un <span class='key'>systeme multicouche</span> de protection :<br><br>1. <span class='key'>Preparation de surface</span> : degraissage + decapage + conversion chimique (ou anodisation)<br>2. <span class='key'>Primaire</span> (primer) : couche anticorrosion active. Contient souvent des pigments inhibiteurs (chromate de strontium, mais REACH → remplacement).<br>3. <span class='key'>Finition</span> (topcoat) : resistance UV, erosion pluie/sable, couleur/esthetique. Polyurethane = le standard aero.<br><br>Types de primaire :<br>- <span class='key'>Epoxy-chromate</span> : reference historique (mais CrVI)<br>- <span class='key'>Epoxy sans chrome</span> : alternatives en qualification<br>- <span class='key'>Sol-gel</span> : couche hybride organique-inorganique, remplace conversion + primaire. Technologie d'avenir."},
+{t:"Projection thermique et HVOF",b:"Procedes <span class='key'>voie seche</span> (pas de bain) ou on projette un materiau fondu/semi-fondu sur la piece :<br><br><span class='key'>HVOF</span> (High Velocity Oxy-Fuel) :<br>- Poudre de carbure de tungstene (WC-Co) projetee a >700 m/s<br>- Remplace le <span class='key'>chromage dur</span> (alternative REACH au CrVI)<br>- Resistance usure exceptionnelle<br><br><span class='key'>Plasma</span> :<br>- Jet de plasma a 10 000-15 000°C<br>- Barrieres thermiques (YSZ : zircone yttriee) sur aubes de turbine HP<br>- Le revetement isole l'aube du gaz a 1500°C+<br><br><span class='key'>Cold spray</span> : projection a froid (pas de fusion). Reparation de pieces, depot alu/cuivre.<br><div class='remember'><b>Retenir :</b> HVOF remplace le chromage dur. Plasma = barrieres thermiques sur turbine. Ce sont les alternatives voie seche au TdS voie humide.</div>"},
+{t:"PVD et CVD",b:"<span class='key'>PVD</span> (Physical Vapor Deposition) : depot sous vide par evaporation ou pulverisation du materiau cible.<br>- Couches minces (0.1-5 µm), tres dures (TiN, CrN, DLC)<br>- Usages : outils de coupe, pieces de frottement<br>- Basse temperature (200-500°C) = compatible avec plus de substrats<br><br><span class='key'>CVD</span> (Chemical Vapor Deposition) : reaction chimique en phase gazeuse qui depose un materiau solide.<br>- Couches plus epaisses possibles, excellente adherence<br>- Haute temperature (800-1100°C) → limite les substrats<br>- Usages : revetements carbure, nitrure, oxyde sur outils, barrieres<br><br>En aero : surtout pour aubes turbine (barrieres thermiques par EB-PVD) et revetements anti-erosion."},
+{t:"CND associes au TdS",b:"<span class='key'>CND</span> (Controles Non Destructifs) = verifier la piece sans la casser. Souvent fait AVANT ou APRES le TdS.<br><br>Techniques courantes :<br>- <span class='key'>Ressuage</span> (PT) : liquide penetrant fluorescent dans les fissures → revele sous UV. Rapide, peu couteux.<br>- <span class='key'>Magnetoscopie</span> (MT) : particules magnetiques revelent les defauts sur materiaux ferromagnetiques.<br>- <span class='key'>Ultrasons</span> (UT) : ondes sonores → detectent defauts internes. Pour pieces epaisses.<br>- <span class='key'>Courants de Foucault</span> (ET) : detecte fissures de surface et mesure epaisseur de revetement.<br>- <span class='key'>Radiographie</span> (RT) : rayons X → defauts internes (porosites, inclusions).<br><br>Le ressuage se fait souvent APRES decapage (pour reveler les fissures que la corrosion cachait)."},
+{t:"Controle qualite en TdS",b:"Verifications post-traitement :<br><br><span class='key'>Epaisseur</span> :<br>- Courants de Foucault (non destructif)<br>- Coupe micrographique (destructif, sur echantillon temoin)<br><br><span class='key'>Adherence</span> :<br>- <span class='key'>Quadrillage</span> (cross-cut test, ISO 2409) : grille decoupee au cutter + ruban adhesif. Note 0 (parfait) a 5 (>65% decolle).<br>- <span class='key'>Pliage</span> : plier l'eprouvette, le revetement ne doit pas s'ecailler.<br><br><span class='key'>Corrosion</span> :<br>- <span class='key'>Brouillard salin</span> (salt spray, ISO 9227) : 5% NaCl, 35°C. On compte les heures avant apparition de corrosion (168h, 500h, 1000h+).<br><br><span class='key'>Durete</span> : micro-durete Vickers (HV) sur coupe.<br><span class='key'>Porosite</span> : test au ferricyanure (revele les pores sur depot nickel/zinc)."},
+{t:"Gamme de traitement complete",b:"Sequence <span class='key'>precise et qualifiee</span> d'etapes. Exemple gamme anodisation alu en aero :<br><br>1. <span class='key'>Accrochage</span> : montage piece sur cadre (contact electrique)<br>2. <span class='key'>Degraissage alcalin</span> : 50-70°C, 5-15 min<br>3. <span class='key'>Rincage</span> eau courante<br>4. <span class='key'>Decapage acide</span> (deoxidizer) : HNO3+HF, 2-5 min, ambiante<br>5. <span class='key'>Rincage</span> cascade<br>6. <span class='key'>Anodisation</span> : H2SO4 180-200 g/L, 18-22°C, 1.5-2 A/dm2, 20-40 min<br>7. <span class='key'>Rincage</span><br>8. <span class='key'>Colmatage</span> : eau bouillante 30 min ou sels Ni<br>9. <span class='key'>Sechage</span><br>10. <span class='key'>Controle</span> : epaisseur + colmatage<br><br>Chaque parametre est dans la <span class='key'>fiche d'instruction</span> (FI). Tout ecart = <span class='key'>non-conformite</span> → piece rebutee ou retraitee."},
+{t:"Traitement du titane",b:"Le titane est <span class='key'>naturellement tres resistant</span> a la corrosion (couche TiO2 auto-cicatrisante).<br><br>TdS specifiques :<br>- <span class='key'>Decapage</span> : HNO3 + HF (le HF est OBLIGATOIRE pour attaquer TiO2)<br>- <span class='key'>Anodisation</span> : couches minces colorees (interference optique) ou epaisses (protection usure)<br>- <span class='key'>Conversion</span> : peu utilisee (deja passif naturellement)<br>- <span class='key'>Preparation collage</span> : anodisation + primaire pour collage structural (NaOH anodisation = procede TURCO)<br><br>Attention : le titane absorbe l'hydrogene → risque FPH si mal maitrise (surtout en decapage HF).<br><div class='remember'><b>Retenir :</b> Titane = quasi inattaquable sauf par HF. Peu de TdS necessaires mais ceux qu'on fait sont critiques (collage, preparation soudure).</div>"},
+{t:"Traitement des superalliages (Ni)",b:"Les superalliages a base nickel (Inconel, Waspaloy, Rene) sont utilises dans les <span class='key'>parties chaudes</span> du moteur.<br><br>TdS specifiques :<br>- <span class='key'>Decapage</span> : FeCl3 (chlorure ferrique) ou solutions proprietaires. Pas d'HCl (risque CSC).<br>- <span class='key'>Grenaillage</span> (shot peening) : projection de billes → contraintes residuelles de compression → ameliore la tenue en fatigue.<br>- <span class='key'>Barrieres thermiques</span> : depot plasma ou EB-PVD de zircone yttriee (YSZ) → isole l'aube de 1500°C.<br>- <span class='key'>Aluminisation</span> : diffusion d'aluminium en surface → couche d'aluminiure protectrice contre l'oxydation haute temperature.<br><br>Enjeu : ces pieces tournent a 1000-1100°C pendant des milliers d'heures. Le revetement doit tenir."},
+{t:"Shot peening (grenaillage de precontrainte)",b:"Projection de <span class='key'>microbilles</span> (acier, verre, ceramique) a haute vitesse sur la surface.<br><br>Effet : chaque impact cree une <span class='key'>micro-deformation plastique</span> → contrainte residuelle de <span class='key'>compression</span> en surface.<br><br>Pourquoi : les fissures de fatigue se propagent sous <span class='key'>tension</span>. Si la surface est en compression → la fissure ne peut pas s'ouvrir → <span class='key'>duree de vie x2 a x10</span>.<br><br>Controle : <span class='key'>plaquette Almen</span> (intensite), <span class='key'>couverture</span> (% surface traitee), <span class='key'>profondeur</span> de la zone comprimee.<br><br>Applications aero : pieds d'aubes, disques turbine, ressorts, engrenages.<br><div class='remember'><b>Retenir :</b> Le grenaillage = mettre la surface en compression pour empecher les fissures de fatigue. C'est un TdS mecanique (pas chimique).</div>"},
+{t:"Traitement thermique et TdS",b:"Souvent le TdS est PRECEDE ou SUIVI d'un traitement thermique :<br><br><span class='key'>Avant TdS</span> :<br>- Detensionnement (stress relief) : supprimer les contraintes d'usinage avant decapage (sinon deformation)<br>- Mise en solution + trempe + revenu : donner au metal ses proprietes mecaniques finales<br><br><span class='key'>Apres TdS</span> :<br>- <span class='key'>Degazage</span> (baking) : chasser l'hydrogene apres electrodeposition (190°C, 4-24h)<br>- <span class='key'>Cuisson peinture</span> : polymerisation du primaire/finition (120-180°C)<br><br>L'ordre des operations dans la gamme de fabrication est CRITIQUE. Un TT apres anodisation peut degrader la couche."},
+{t:"REACH et substitution : l'enjeu actuel",b:"<span class='key'>REACH</span> (2007) = reglement europeen d'enregistrement des substances chimiques.<br><br>Substances en substitution dans l'aero :<br>- <span class='key'>Chrome VI</span> (CrO3, Cr2O7) : anodisation chromique → TSA. Alodine → TCP. Chromage dur → HVOF. Primaire chromate → sol-gel.<br>- <span class='key'>Cadmium</span> (Cd) : cadmiage → Zn-Ni electrolytique<br>- <span class='key'>Solvants chlores</span> : trichlo, perchloro → degraissants aqueux ou hydrocarbures<br><br>Calendrier : les <span class='key'>autorisations REACH</span> expirent progressivement (sunset dates). Les entreprises doivent qualifier les alternatives AVANT l'expiration.<br><div class='remember'><b>Retenir :</b> La substitution REACH = des milliards d'euros d'investissement dans l'aero. C'est LE sujet transverse en TdS. Qui sait qualifier les alternatives = tres demande.</div>"},
+{t:"Normes et specifications TdS en aero",b:"3 niveaux de specifications :<br><br><span class='key'>Normes internationales</span> :<br>- AMS (Aerospace Material Specification) : AMS 2470 (anodisation chromique), AMS 2471 (sulfurique), AMS 2700 (passivation inox)<br>- ASTM : ASTM B117 (brouillard salin), ASTM F519 (FPH)<br><br><span class='key'>Normes europeennes</span> :<br>- EN/NF : EN 2284 (anodisation), EN 9100 (qualite aero)<br><br><span class='key'>Specifications internes</span> :<br>- Safran : GAPS (procedures Safran internes). Chaque procede a une GAPS specifique.<br>- Les specs internes sont souvent PLUS severes que les normes generales.<br><br>Certification : <span class='key'>Nadcap</span> re-audite tous les 12-18 mois (ou 24 si merite)."},
+],
+4:[ // MAT + NORMES
+{t:"Nickel (parties chaudes)",b:"<span class='key'>Inconel 718, Waspaloy</span> → <span class='key'>turbine</span> (aubes, disques). Resistent a 1000°C+."},
+{t:"Titane (parties tiedes)",b:"<span class='key'>Ti-6Al-4V</span> → <span class='key'>compresseur</span>, pieces structurales. Leger + resistant, jusqu'a ~500°C."},
+{t:"Aluminium (parties froides)",b:"<span class='key'>2024, 7075</span> → <span class='key'>carters</span>, brides. Leger, se traite bien en voie humide (anodisation, Alodine)."},
+{t:"Acier (tres sollicite)",b:"→ <span class='key'>arbres moteur</span>, roulements. Tres haute resistance mecanique."},
+{t:"Nadcap",b:"<span class='key'>National Aerospace and Defense Contractors Accreditation Program.</span><br>Certifie les <span class='key'>procedes speciaux</span> : TdS, soudage, CND, traitements thermiques.<br>Procede special = on ne peut <span class='key'>pas verifier le resultat juste en regardant la piece</span>. Il faut maitriser le procede lui-meme."},
+{t:"EN 9100",b:"L'<span class='key'>ISO 9001 version aero</span>. Management qualite + tracabilite + gestion des risques + procedes speciaux."},
+{t:"REACH et Chrome VI",b:"<span class='key'>REACH</span> = reglement europeen sur les substances chimiques.<br><span class='key'>Chrome VI (Cr VI)</span> = cancerogene (CMR), inscrit a l'annexe XIV → autorisation obligatoire, substitution en cours.<br>Alternatives : <span class='key'>TSA</span> (remplace OAC) et <span class='key'>TCP</span> (remplace Alodine Cr VI).<br><div class='remember'><b>Retenir :</b> La substitution du Cr VI est LE sujet chaud en TdS aero.</div>"},
+{t:"Navigabilite",b:"Aptitude d'un aeronef a <span class='key'>voler en securite</span>. Certifiee par l'<span class='key'>EASA</span> (Europe) et la <span class='key'>FAA</span> (USA).<br>Un mauvais TdS sur piece critique = risque pour la navigabilite = <span class='key'>interdiction de vol</span>."},
+],
+};
+
+// ===== QUIZ DATA =====
+const quizzes={
+1:[ // AERO
+{q:"Les 4 forces sur un avion sont :",opts:["Portance, poids, poussee, trainee","Portance, poids, poussee, friction","Portance, gravite, traction, resistance","Sustentation, masse, propulsion, frottement"],c:0,e:"Portance (ailes, vers le haut), poids (gravite), poussee (moteur) et trainee (resistance de l'air)."},
+{q:"Dans un turboreacteur, l'air est d'abord :",opts:["Brule dans la chambre de combustion","Comprime par le compresseur","Ejecte par la tuyere","Refroidi par le fan"],c:1,e:"Ordre : entree d'air → compression → combustion → turbine → ejection."},
+{q:"Le compresseur et la turbine sont relies mecaniquement. Qui entraine qui ?",opts:["Le compresseur entraine la turbine","La turbine entraine le compresseur","Ils sont independants","La chambre de combustion entraine les deux"],c:1,e:"Les gaz chauds font tourner la turbine, qui entraine le compresseur via un arbre."},
+{q:"Dans un turboreacteur double flux, le flux froid :",opts:["Traverse la chambre de combustion","Contourne le moteur et genere ~80% de la poussee","Ne sert qu'au refroidissement","Est rejete vers l'avant"],c:1,e:"Le flux froid contourne le coeur du moteur et fournit la majorite de la poussee. C'est ca qui rend le double flux plus efficace."},
+{q:"Un taux de dilution eleve signifie :",opts:["Plus de bruit et plus de conso","Moins de bruit et moins de conso","Plus de vitesse","Moins de poussee"],c:1,e:"Taux de dilution = flux froid / flux chaud. Plus il est haut → moins bruyant, moins gourmand. Le LEAP a un taux de ~11."},
+{q:"Le turbopropulseur se distingue du turboreacteur car :",opts:["Il n'a pas de compresseur","La turbine entraine une helice via un reducteur","Il fonctionne sans kerosene","Il n'a pas de chambre de combustion"],c:1,e:"Turbopropulseur = turbine entraine une helice. Plus econome, utilise pour les avions a 300-800 km/h."},
+{q:"Le tangage d'un avion est controle par :",opts:["Les ailerons","La gouverne de direction","La gouverne de profondeur (empennage horizontal)","Les volets"],c:2,e:"Tangage = nez monte/descend = gouverne de profondeur. Roulis = ailerons. Lacet = gouverne de direction."},
+{q:"Le statoreacteur n'a pas de :",opts:["Chambre de combustion","Tuyere","Partie tournante (compresseur/turbine)","Entree d'air"],c:2,e:"Statoreacteur = pas de partie tournante. L'air est comprime par la vitesse de l'avion lui-meme. Utilisable seulement a grande vitesse."},
+{q:"La structure semi-monocoque d'un fuselage est composee de :",opts:["Longerons et nervures","Cadres, lisses et revetement porteur","Uniquement de composites","De treillis en bois"],c:1,e:"Semi-monocoque : cadres (torsion) + lisses (flexion) + revetement qui participe aux efforts."},
+{q:"Le duralumin est un alliage de :",opts:["Aluminium et titane","Aluminium et cuivre","Aluminium et nickel","Titane et cuivre"],c:1,e:"Duralumin = aluminium + cuivre. Materiau de base de l'aviation metallique depuis le Junkers J9 (1918)."},
+{q:"La poussee d'un reacteur vient de :",opts:["La combustion du kerosene directement","L'ejection des gaz a grande vitesse (action/reaction)","La rotation du compresseur","L'aspiration de l'air a l'avant"],c:1,e:"Principe de Newton : action/reaction. On ejecte des gaz rapides vers l'arriere → poussee vers l'avant."},
+{q:"Un turbomoteur est utilise sur :",opts:["Les avions de ligne","Les helicopteres","Les planeurs","Les drones"],c:1,e:"Turbomoteur = turbopropulseur qui entraine un rotor au lieu d'une helice. Safran Helicopter Engines est leader mondial."},
+{q:"Le decrochage aerodynamique se produit quand :",opts:["La vitesse depasse Mach 1","L'incidence depasse l'angle critique et l'air decolle de l'extrados","Le moteur tombe en panne","L'avion est trop lourd"],c:1,e:"Decrochage = incidence trop grande → l'ecoulement se separe de l'extrados → perte brutale de portance."},
+{q:"La trainee induite est causee par :",opts:["La viscosite de l'air","Les tourbillons en bout d'aile (lies a la portance)","La forme du fuselage","La temperature de l'air"],c:1,e:"Trainee induite = tourbillons marginaux en bout d'aile. C'est pour ca qu'on met des winglets."},
+{q:"Mach 1 correspond a environ :",opts:["150 m/s","240 m/s","340 m/s","500 m/s"],c:2,e:"Vitesse du son ≈ 340 m/s au niveau de la mer (15°C). Elle diminue avec l'altitude (air plus froid)."},
+{q:"Dans l'atmosphere standard (ISA), le gradient thermique est de :",opts:["-2°C / 1000 m","-6.5°C / 1000 m","-10°C / 1000 m","-15°C / 1000 m"],c:1,e:"-6.5°C par 1000 m d'altitude, jusqu'a la tropopause (~11 km, -56.5°C)."},
+{q:"Le cumulonimbus (Cb) est dangereux pour l'aviation car :",opts:["Il est trop beau et distrait les pilotes","Il provoque turbulences severes, givrage, grele et foudre","Il bloque les communications radio","Il empeche le GPS de fonctionner"],c:1,e:"Le Cb = LE danger meteo. Turbulences, givrage, grele, foudre, cisaillement de vent. On le contourne TOUJOURS."},
+{q:"L'EASA est :",opts:["L'autorite americaine de l'aviation","L'agence europeenne de securite aerienne (certification)","L'organisation mondiale de l'aviation civile","L'autorite francaise de l'aviation"],c:1,e:"EASA = European Union Aviation Safety Agency. Certifie les avions et moteurs en Europe. OACI = mondial, FAA = USA, DGAC = France."},
+{q:"Un 'certificat de type' (TC) certifie :",opts:["Qu'un avion individuel est apte au vol","Qu'un modele d'avion est conforme a sa conception","Que le pilote est qualifie","Que la compagnie aerienne est autorisee"],c:1,e:"TC = certificat de type. Certifie le modele (la conception). Le CofA certifie chaque avion individuel."},
+{q:"La SNECMA est devenue Safran en :",opts:["1995","2000","2005","2010"],c:2,e:"Fusion SNECMA + SAGEM = Safran en 2005."},
+{q:"Le premier vol controle et soutenu date de :",opts:["1890 (Ader)","1903 (freres Wright)","1909 (Bleriot)","1927 (Lindbergh)"],c:1,e:"1903 : freres Wright, 12 secondes, 37 metres. Ader (1890) a decolle mais n'a pas controle le vol."},
+{q:"La corrosion galvanique se produit quand :",opts:["Un metal est expose a l'air sec","Deux metaux differents sont en contact avec un electrolyte","Un metal est soumis a de la fatigue","La temperature depasse 500°C"],c:1,e:"Corrosion galvanique = couple de metaux + electrolyte. Le moins noble se corrode (ex : alu en contact avec acier)."},
+{q:"Le traitement de surface retarde la fatigue car :",opts:["Il alourdit la piece","Il protege la surface contre les micro-defauts qui amorcent les fissures","Il rend le metal plus souple","Il refroidit la piece"],c:1,e:"La fatigue commence en surface (amorcage sur defaut). Un bon TdS = surface lisse, protegee = retarde l'amorcage."},
+{q:"Les SAF (Sustainable Aviation Fuels) sont :",opts:["Des carburants pour fusees","Des biocarburants/e-fuels compatibles avec les moteurs actuels","Des carburants reserves aux helicopteres","Des additifs pour le kerosene uniquement"],c:1,e:"SAF = carburants d'aviation durables. Drop-in (compatibles moteurs existants). Objectif 50% du mix en 2050."},
+{q:"Quelle vitesse utilise le pilote pour eviter le decrochage ?",opts:["TAS (True Airspeed)","IAS (Indicated Airspeed)","Ground Speed","Mach"],c:1,e:"IAS = ce que voit l'anemometre. C'est la reference pour les limites de vol (decrochage, manoeuvres). TAS = navigation."},
+{q:"Le facteur de charge en virage a 60° d'inclinaison est de :",opts:["1g","1.5g","2g","3g"],c:2,e:"n = 1/cos(angle). A 60° : n = 1/cos(60°) = 1/0.5 = 2g."},
+],
+2:[ // SAFRAN + ENTREPRISES AERO
+{q:"Safran Aircraft Engines est :",opts:["Une coentreprise 50/50 avec GE","Une filiale 100% de Safran Group","Un concurrent de Rolls-Royce et GE","Une division de CFM International"],c:1,e:"Safran Aircraft Engines = filiale 100% Safran. CFM International est la coentreprise avec GE."},
+{q:"CFM International produit le LEAP. CFM est :",opts:["Une filiale de GE Aerospace","Une coentreprise 50/50 Safran + GE","Un fournisseur independant","Une division de Safran"],c:1,e:"CFM International = 50% Safran Aircraft Engines + 50% GE Aerospace."},
+{q:"Le LEAP equipe :",opts:["L'A380 et le B777","L'A320neo et le B737 MAX","Le Rafale","L'ATR 72"],c:1,e:"LEAP = courts/moyen-courriers. A320neo (Airbus) et B737 MAX (Boeing)."},
+{q:"Le LEAP consomme combien de moins que le CFM56 ?",opts:["5%","10%","15%","25%"],c:2,e:"-15% de consommation par rapport au CFM56. Grace au taux de dilution plus eleve."},
+{q:"Le M88 equipe :",opts:["L'A320","L'A400M","Le Rafale","Le Falcon 8X"],c:2,e:"M88 = moteur militaire du Rafale (Dassault Aviation)."},
+{q:"Le programme RISE est :",opts:["Un moteur en service depuis 2023","Un demonstrateur futur a architecture open-fan","Le remplacement du M88","Un programme de recyclage"],c:1,e:"RISE = demonstrateur open-fan (pas de nacelle autour du fan). Objectif -20% vs LEAP. Pas encore en service."},
+{q:"Le CEI de Corbeil est specialise dans :",opts:["Les trains d'atterrissage","Les interieurs cabine","Les pieces critiques moteur (aubes, disques)","Les systemes de navigation"],c:2,e:"CEI Corbeil = pieces critiques de moteurs. L'atelier TdS traite ces pieces par voie humide."},
+{q:"Le CA de Safran Group en 2024 :",opts:["7,3 Mds €","17,3 Mds €","27,3 Mds €","37,3 Mds €"],c:2,e:"27,3 milliards d'euros, 100 000 collaborateurs."},
+{q:"Quel moteur est le best-seller historique de l'aviation ?",opts:["Le LEAP","Le M88","Le CFM56","Le GE90"],c:2,e:"CFM56 = 33 000+ produits. Le LEAP est son successeur mais n'a pas encore atteint ces chiffres."},
+{q:"Pourquoi le LEAP consomme moins que le CFM56 ?",opts:["Il est plus petit","Son taux de dilution est plus eleve","Il utilise un carburant different","Sa chambre de combustion est en ceramique"],c:1,e:"Taux de dilution plus eleve → plus de flux froid → plus de poussee pour moins de kerosene brule."},
+{q:"GE Aerospace est le motoriste de :",opts:["A320neo (exclusif)","B787 (GEnx) et B777 (GE90)","A350 (exclusif)","Rafale"],c:1,e:"GE fait les gros moteurs long-courriers Boeing : GE90 (B777), GEnx (B787), GE9X (B777X). L'A350 = Rolls-Royce."},
+{q:"Le PW1000G (GTF) de Pratt & Whitney se distingue du LEAP car :",opts:["Il est plus gros","Il a un reducteur entre turbine BP et fan","Il n'a pas de fan","Il est militaire uniquement"],c:1,e:"GTF = Geared Turbofan. Le reducteur permet au fan de tourner plus lentement → plus grand diametre → meilleur rendement. Le LEAP n'a pas de reducteur."},
+{q:"Rolls-Royce motorise exclusivement :",opts:["L'A320neo","L'A350 (Trent XWB)","Le B737 MAX","Le Rafale"],c:1,e:"Le Trent XWB est le seul moteur disponible sur l'A350. RR n'est pas present sur les moyen-courriers."},
+{q:"Thales en aeronautique fait principalement :",opts:["Des moteurs","Des cellules d'avion","De l'avionique et des systemes electroniques","Des trains d'atterrissage"],c:2,e:"Thales = electronique : avionique (ecrans cockpit, FMS), radar, optronique, gestion du trafic aerien. Pas de propulsion ni de cellule."},
+{q:"Dassault Aviation produit :",opts:["Des moteurs et des avions","Le Rafale et les jets Falcon","Des helicopteres","Des satellites"],c:1,e:"Dassault = avionneur. Rafale (militaire, moteur M88 Safran) + Falcon (business jets, moteurs PW ou RR)."},
+{q:"Airbus est :",opts:["Un motoriste europeen","Un avionneur qui achete ses moteurs a d'autres","Un equipementier comme Thales","Le concurrent de Safran"],c:1,e:"Airbus = cellule (fuselage, ailes, assemblage). Il achete les moteurs a CFM/Safran, RR ou PW."},
+{q:"Dans la supply chain aero, Safran est :",opts:["OEM (Tier 0)","Tier 1 (systemes complets)","Tier 2 (sous-ensembles)","Tier 3 (pieces elementaires)"],c:1,e:"Tier 1 = fournisseur de systemes complets (moteurs, trains). Airbus/Boeing = OEM (Tier 0). Tier 2/3 = sous-traitants."},
+{q:"Le backlog Airbus+Boeing depasse :",opts:["5 000 avions","10 000 avions","17 000 avions","25 000 avions"],c:2,e:">17 000 avions en commande = ~10 ans de production. Le defi = produire assez vite (ramp-up)."},
+{q:"MTU Aero Engines est :",opts:["Le motoriste francais","Le motoriste allemand (participations dans GTF, TP400, EJ200)","Une filiale de Rolls-Royce","Le constructeur de l'Eurofighter"],c:1,e:"MTU = Munich. Pas de moteur complet seul mais des participations dans quasi tous les programmes (turbine BP du GTF, TP400, EJ200)."},
+{q:"Safran Helicopter Engines est :",opts:["Concurrent de GE sur les turbofans","Leader mondial des turbomoteurs pour helicopteres","Fabricant d'helicopteres","Division drones de Safran"],c:1,e:"Safran HE = turbomoteurs (helicopteres). Leader mondial. Base a Bordes (64)."},
+],
+3:[ // TDS + CHIMIE
+{q:"'Voie humide' signifie :",opts:["Procedes en environnement humide (salle blanche)","Procedes ou la piece est plongee dans un bain chimique","Procedes utilisant de la vapeur d'eau","Procedes sous l'eau"],c:1,e:"Voie humide = bains liquides (solutions chimiques). ≠ voie seche (CVD, PVD, plasma)."},
+{q:"Dans l'anodisation, la piece est :",opts:["La cathode (elle recoit un depot)","L'anode (elle s'oxyde)","L'electrolyte","Pas reliee au circuit electrique"],c:1,e:"Anode → anodisation. La piece s'oxyde pour creer une couche protectrice d'oxyde."},
+{q:"L'anodisation chromique (OAC) pose probleme car :",opts:["La couche est trop epaisse et fragile","Le bain contient du chrome VI, cancerogene (CMR)","Elle ne fonctionne pas sur l'aluminium","Elle est trop lente"],c:1,e:"Cr VI = CMR, annexe XIV REACH. D'ou la transition vers la TSA (sans chrome)."},
+{q:"La TSA remplace quelle technique ?",opts:["L'electrodeposition de cadmium","La passivation des aciers","L'anodisation chromique (OAC)","Le decapage alcalin"],c:2,e:"TSA (tartrique-sulfurique) = alternative sans chrome VI a l'OAC."},
+{q:"La conversion chimique (Alodine) se distingue de l'anodisation car :",opts:["Elle ne cree pas de couche","Elle n'utilise pas de courant electrique","Elle ne fonctionne que sur les aciers","Elle produit une couche plus epaisse"],c:1,e:"Conversion chimique = reaction chimique sans electrolyse. Anodisation = reaction electrochimique avec courant."},
+{q:"Le TCP est une alternative a :",opts:["L'anodisation sulfurique","La passivation des inox","La conversion chimique au chrome VI (Alodine 1200)","L'electrodeposition de nickel"],c:2,e:"TCP = Trivalent Chrome Process. Remplace l'Alodine 1200 (chrome hexavalent) par du chrome trivalent (non toxique)."},
+{q:"Le decapage se fait generalement :",opts:["Apres le traitement principal","Avant le traitement principal (preparation de surface)","A la place du traitement","Sur pieces finies uniquement"],c:1,e:"Decapage = nettoyage. C'est la premiere etape d'une gamme : on nettoie avant de traiter."},
+{q:"Dans l'electrodeposition, la piece est :",opts:["L'anode","La cathode","L'electrolyte","Le solvant"],c:1,e:"Electrodeposition : piece = cathode. Les ions metalliques du bain se deposent dessus. C'est l'inverse de l'anodisation."},
+{q:"Le cadmiage est en substitution car :",opts:["Le cadmium est trop cher","Le cadmium est un metal toxique (comme le Cr VI)","La couche de cadmium est trop mince","Le cadmium ne protege pas contre la corrosion"],c:1,e:"Cadmium = toxique, REACH. En substitution progressive comme le chrome VI."},
+{q:"Dans une gamme de traitement, les parametres critiques incluent :",opts:["La couleur du bain et l'humidite de la salle","Le temps, la temperature, la concentration et le pH","La marque des produits chimiques","L'heure de la journee"],c:1,e:"Temps, temperature, concentration, pH = parametres critiques strictement controles et traces."},
+{q:"L'ASA produit une couche de :",opts:["2-5 µm, excellente corrosion","5-25 µm, bonne durete et usure","100+ µm, isolation electrique","Moins de 1 µm, decorative"],c:1,e:"ASA = epaisse (5-25 µm), dure, resistance usure. OAC = fine (2-5 µm), meilleure corrosion."},
+{q:"La passivation d'un acier inoxydable consiste a :",opts:["Deposer du chrome par electrolyse","Enrichir la surface en chrome en dissolvant le fer libre","Peindre la surface avec un vernis protecteur","Chauffer la piece a 1000°C"],c:1,e:"Acide nitrique ou citrique dissout le fer libre en surface → enrichissement en chrome → couche passive renforcee."},
+{q:"Un 'procede special' en aero est un procede dont :",opts:["Le cout depasse 10 000 €","La qualite ne peut PAS etre verifiee par inspection visuelle du produit fini","Il faut un diplome d'ingenieur pour l'operer","Il est brevete"],c:1,e:"On ne peut pas 'voir' si un TdS est bien fait. Il faut maitriser le procede lui-meme → d'ou Nadcap."},
+{q:"A l'anode, il se passe :",opts:["Une reduction (gain d'electrons)","Une oxydation (perte d'electrons)","Aucune reaction","Un depot de metal"],c:1,e:"AN-OX : Anode = Oxydation. Cathode = Reduction. Toujours."},
+{q:"La constante de Faraday vaut :",opts:["9 648 C/mol","96 485 C/mol","964 850 C/mol","9,65 C/mol"],c:1,e:"F = 96 485 C/mol. C'est la charge d'une mole d'electrons. Sert a calculer les masses deposees."},
+{q:"L'aluminium (E° = -1.66V) est plus actif que le fer (E° = -0.44V). En contact, qui se corrode ?",opts:["Le fer","L'aluminium","Les deux egalement","Aucun des deux"],c:1,e:"Le plus actif (E° plus negatif) = l'alu. Il se corrode pour proteger le fer. C'est la corrosion galvanique : l'alu est l'anode sacrificielle."},
+{q:"Le colmatage d'une couche anodique sert a :",opts:["Augmenter l'epaisseur de la couche","Fermer les pores pour ameliorer la resistance a la corrosion","Colorer la couche","Augmenter la conductivite electrique"],c:1,e:"Colmatage = hydratation de Al2O3 → boehmite (gonflement) → pores fermes → meilleure tenue corrosion."},
+{q:"La fragilisation par hydrogene (FPH) est dangereuse car :",opts:["Elle colore la piece en noir","La piece semble normale puis casse sans prevenir sous contrainte","Elle fait fondre le metal","Elle est visible immediatement"],c:1,e:"FPH = fissuration retardee. La piece peut passer tous les controles visuels puis rompre en service."},
+{q:"Le degazage (baking) apres electrodeposition sur acier HR se fait a :",opts:["400°C pendant 1h","190-230°C pendant 4-24h, dans les 4h apres depot","50°C pendant 48h","Pas besoin si le depot est fin"],c:1,e:"190-230°C, 4-24h, DANS LES 4H apres le depot. Sinon l'hydrogene diffuse aux joints de grains = trop tard."},
+{q:"Le Zn-Ni remplace :",opts:["Le chromage dur","Le cadmiage (anticorrosion + REACH)","L'anodisation chromique","La peinture"],c:1,e:"Zn-Ni (12-16% Ni) = alternative REACH au cadmium. Excellente corrosion, non toxique."},
+{q:"Le HVOF (projection thermique) remplace en aero :",opts:["L'anodisation sulfurique","Le chromage dur (resistance usure, CrVI)","La passivation","Le degraissage"],c:1,e:"HVOF projette du WC-Co a >700 m/s. Alternative au chromage dur (CrVI) pour la resistance usure."},
+{q:"Le nickel chimique (electroless) se distingue du nickel electrolytique car :",opts:["Il necessite plus de courant","Il produit une epaisseur parfaitement uniforme sans courant","Il ne fonctionne que sur l'acier","Il est moins resistant a la corrosion"],c:1,e:"Nickel chimique = pas de courant, epaisseur uniforme partout (trous, angles). Electrolytique = plus epais aux aretes."},
+{q:"Le test de mouillabilite (waterbreak test) verifie :",opts:["L'epaisseur du depot","La proprete de la surface (absence de gras)","La durete du revetement","Le pH du bain"],c:1,e:"Si l'eau forme un film continu = propre. Si gouttes isolees = contamination grasse residuelle."},
+{q:"Le brouillard salin (salt spray) sert a tester :",opts:["L'adherence du depot","La resistance a la corrosion (heures avant apparition de rouille)","La durete de surface","La conductivite electrique"],c:1,e:"ISO 9227 : 5% NaCl, 35°C. On mesure les heures avant corrosion : 168h (basique), 500h, 1000h+ (excellent)."},
+{q:"Pour decaper du titane, il faut obligatoirement :",opts:["De la soude (NaOH)","De l'acide fluorhydrique (HF)","De l'acide chlorhydrique (HCl)","De l'eau oxygenee (H2O2)"],c:1,e:"HF = seul acide qui attaque la couche TiO2. Sans HF, le titane est quasiment inattaquable chimiquement."},
+{q:"Le shot peening (grenaillage) ameliore la tenue en fatigue car :",opts:["Il polit la surface","Il met la surface en compression (empeche les fissures de s'ouvrir)","Il ajoute un revetement protecteur","Il augmente l'epaisseur de la piece"],c:1,e:"Contraintes de compression en surface → les fissures de fatigue (qui s'ouvrent en tension) ne peuvent pas se propager."},
+{q:"AMS 2470 est la specification pour :",opts:["La passivation des inox","L'anodisation chromique (OAC)","Le nickelage electrolytique","Le brouillard salin"],c:1,e:"AMS 2470 = anodisation chromique. AMS 2471 = anodisation sulfurique. AMS 2700 = passivation inox."},
+{q:"Le sol-gel en aero sert a :",opts:["Decaper les pieces","Remplacer conversion chimique + primaire (alternative sans CrVI)","Faire de l'electrodeposition","Tester l'adherence"],c:1,e:"Sol-gel = couche hybride organique-inorganique. Remplace Alodine CrVI + primaire chromate en une seule etape. Technologie d'avenir."},
+{q:"La structure de la couche anodique est :",opts:["Compacte et lisse","Hexagonale poreuse (nid d'abeille)","Amorphe et irreguliere","Cristalline cubique"],c:1,e:"Structure hexagonale avec pores cylindriques verticaux. C'est pour ca qu'il faut colmater (fermer les pores) apres."},
+],
+4:[ // MAT + NORMES
+{q:"Les aubes de turbine sont en :",opts:["Aluminium (leger)","Titane (bon rapport resistance/poids)","Superalliage a base nickel (tenue haute temperature)","Composite carbone (leger et rigide)"],c:2,e:"Turbine = parties chaudes (1000°C+) → superalliages nickel (Inconel 718, Waspaloy)."},
+{q:"Le Ti-6Al-4V est utilise principalement pour :",opts:["Les aubes de turbine","Les compresseurs et pieces structurales","Les carters","Les boulons"],c:1,e:"Titane = compresseur + structure. Temperature moyenne (~500°C), bon rapport resistance/poids."},
+{q:"L'aluminium est traite en voie humide principalement par :",opts:["Passivation a l'acide nitrique","Anodisation et conversion chimique (Alodine)","Cadmiage par electrodeposition","Nitruration"],c:1,e:"L'alu s'anodise tres bien (alumine = Al2O3, tres dur). Alodine = conversion chimique sur alu."},
+{q:"Nadcap est gere par :",opts:["Safran","L'EASA","Le PRI (Performance Review Institute)","Airbus"],c:2,e:"PRI = organisme independant qui gere Nadcap. Les donneurs d'ordre (Safran, Airbus, Boeing) definissent les exigences."},
+{q:"EN 9100 est l'equivalent aero de :",opts:["La norme NF X50-110","L'ISO 14001 (environnement)","L'ISO 9001 (qualite)","La norme REACH"],c:2,e:"EN 9100 = ISO 9001 + exigences aero (tracabilite, procedes speciaux, gestion de configuration)."},
+{q:"Le chrome VI est classe :",opts:["Irritant","Allergisant","CMR (cancerogene, mutagene, reprotoxique)","Sans danger avec gants"],c:2,e:"CMR = la classification la plus severe. Inscrit annexe XIV REACH = autorisation obligatoire."},
+{q:"La navigabilite, c'est :",opts:["La capacite a naviguer sur l'eau","L'aptitude d'un aeronef a voler en securite, certifiee par l'EASA/FAA","Le plan de maintenance de l'avion","La certification du pilote"],c:1,e:"Navigabilite = droit de voler en securite. Un mauvais TdS sur piece critique peut la compromettre."},
+{q:"REACH annexe XIV concerne :",opts:["Les substances interdites definitivement","Les substances soumises a autorisation (avec date limite)","Les substances exemptees de tests","Les substances naturelles"],c:1,e:"Annexe XIV = autorisation obligatoire avec date de peremption. Le Cr VI y est inscrit."},
+{q:"L'EASA est :",opts:["L'agence europeenne de securite aerienne","L'ecole aero de Safran","L'association des equipementiers","L'agence spatiale europeenne"],c:0,e:"EASA = European Union Aviation Safety Agency. Certifie la navigabilite en Europe."},
+{q:"Pourquoi les TdS sont des 'procedes speciaux' ?",opts:["Ils utilisent des produits chimiques dangereux","Un defaut peut etre invisible a l'oeil nu mais compromettre la tenue de la piece","Ils sont tres couteux","Ils necessitent un diplome specifique"],c:1,e:"On ne voit pas un defaut de TdS a l'oeil nu. Il peut provoquer de la corrosion ou de la fatigue bien plus tard."},
+],
+5:[ // PARCOURS
+{q:"Ton taux de conformite CVD est passe de :",opts:["30% a 80%","50% a 95%","20% a 100%","40% a 90%"],c:2,e:"CVD = 20→100%. Attention : 30→80% c'est la compatibilite matiere du projet TPE."},
+{q:"Ta compatibilite matiere TPE est passee de :",opts:["20% a 100%","30% a 80%","50% a 90%","10% a 70%"],c:1,e:"TPE = 30→80%. Le 20→100% c'est le CVD. Les deux chiffres sont a connaitre par coeur."},
+{q:"Tu as contribue a combien de brevets ?",opts:["0","1","2","3"],c:2,e:"2 brevets deposes lors du projet CVD chez Aptar."},
+{q:"En entretien, tu dis :",opts:["Mon alternance chez Aptar Beauty","Mon experience en R&D industrielle chez Aptar Group","Mon stage de 2 ans","Mon contrat pro"],c:1,e:"Jamais 'alternance' (junior). Jamais 'Beauty' → 'Group'. Jamais 'stage'."},
+{q:"Le Parylene C :",opts:["C'est ton expertise, tu dois en parler","C'est confidentiel Aptar, ne jamais le mentionner","Tu peux le mentionner si on te le demande","C'est un procede Safran"],c:1,e:"Confidentiel Aptar. Dire 'depot CVD sur polyolefines' ou 'revetement barriere'."},
+{q:"Ton prof de corrosion/TdS a Paris-Saclay :",opts:["M. Legrand","M. Dupont","M. Knittel","Mme Martin"],c:2,e:"M. Knittel, anciennement a Safran Corbeil. Un lien direct a mentionner en entretien !"},
+{q:"Ta localisation a donner en entretien :",opts:["Paris (75)","Evry-Courcouronnes","Ile-de-France / Ris-Orangis (91)","Corbeil-Essonnes"],c:2,e:"Ris-Orangis (91) ou Ile-de-France. Jamais Evry-Courcouronnes, jamais Paris."},
+{q:"Le chiffre '40→80%' dans ta LM concerne :",opts:["Le projet CVD specifiquement","Le projet TPE specifiquement","Ta methodologie de selection matiere en general","Le taux de recyclage chez Aptar"],c:2,e:"C'est ta methodo de selection matiere (general), pas un projet specifique. Ne pas conflater."},
+{q:"Ta force distinctive pour ce poste :",opts:["Anglais courant","Double casquette R&D + support production","5 ans d'experience","Expertise en voie humide"],c:1,e:"R&D ET support production = pas seulement labo. C'est ce qui te differencie des profils purement academiques."},
+{q:"Quand on te demande un defaut, tu reponds :",opts:["Je n'ai pas de defaut","J'ai pas d'experience en voie humide, mais mon etat de l'art l'incluait + formation electrochimie = montee rapide","Je suis trop perfectionniste","Je suis parfois en retard"],c:1,e:"Transformer la faiblesse : pas d'experience directe voie humide mais bases theoriques solides + methodologie transferable."},
+],
+};
+
+// ===== RENDER LEARN =====
+function renderLearn(){
+Object.entries(learnData).forEach(([mod,cards])=>{
+const el=document.getElementById(`mod${mod}learn`);
+if(!el||!cards.length)return;
+el.innerHTML=cards.map((c,i)=>`<div class="lc" id="lc${mod}_${i}"><div class="lc-h" onclick="document.getElementById('lc${mod}_${i}').classList.toggle('open')">${c.t}<span class="lc-a">&#9660;</span></div><div class="lc-b">${c.b}</div></div>`).join('');
+});}
+
+// ===== QUIZ ENGINE (with manual next button) =====
+let activeQuiz={mod:0,idx:0,score:0,answered:[],data:[]};
+
+function startModQuiz(mod){
+const el=document.getElementById(`mod${mod}quiz`);
+el.style.display='block';
+// Daily rotation: shuffle with today's date as seed
+const data=seededShuffle(quizzes[mod],dayKey()+mod);
+activeQuiz={mod,idx:0,score:0,answered:new Array(data.length).fill(null),data};
+renderModQuiz(mod);
+el.scrollIntoView({behavior:'smooth'});
+}
+
+function renderModQuiz(mod){
+const el=document.getElementById(`mod${mod}quiz`);
+const{idx,data,score,answered}=activeQuiz;
+if(idx>=data.length){
+const pct=Math.round(score/data.length*100);
+scores[mod]=Math.max(scores[mod]||0,pct);
+history.push({mod,score:pct,date:dayKey()});
+saveAll();renderDash();updNav();
+el.innerHTML=`<div class="card" style="text-align:center;padding:1.5rem"><div style="font-size:2rem;margin-bottom:.3rem">${pct>=80?'🏆':pct>=60?'👍':'💪'}</div><h2 style="margin:0 0 .2rem">${score}/${data.length} (${pct}%)</h2><p style="color:var(--muted);font-size:.82rem;margin-bottom:.8rem">${pct>=80?'Module maitrise !':pct>=60?'Pas mal, revois tes erreurs.':'Relis les fiches et reessaie.'}</p><button class="btn btn-p btn-sm" onclick="startModQuiz(${mod})">Recommencer</button></div>`;
+return;}
+const q=data[idx];
+const dots=data.map((_,i)=>{let c='qdot';if(i===idx)c+=' cur';if(answered[i]===true)c+=' right';if(answered[i]===false)c+=' wrong';return`<div class="${c}"></div>`}).join('');
+el.innerHTML=`<div class="qdots">${dots}</div><div class="card"><div class="quiz-q">Q${idx+1}/${data.length}. ${q.q}</div><div class="quiz-opts">${q.opts.map((o,i)=>`<div class="qopt" onclick="ansModQuiz(${mod},${i})">${o}</div>`).join('')}</div><div class="qexp" id="qexp${mod}">${q.e}</div><div class="q-next" id="qnext${mod}" style="display:none"><button class="btn btn-p btn-sm" onclick="activeQuiz.idx++;renderModQuiz(${mod})">Question suivante →</button></div></div>`;
+}
+
+function ansModQuiz(mod,i){
+const{idx,data}=activeQuiz;const q=data[idx];
+const opts=document.querySelectorAll(`#mod${mod}quiz .qopt`);
+opts.forEach((o,j)=>{o.classList.add('off');if(j===q.c)o.classList.add('ok');if(j===i&&j!==q.c)o.classList.add('ko')});
+document.getElementById(`qexp${mod}`).classList.add('show');
+document.getElementById(`qnext${mod}`).style.display='block';
+if(i===q.c)activeQuiz.score++;
+activeQuiz.answered[idx]=i===q.c;
+}
+
+// ===== EXAM =====
+let exam={idx:0,score:0,answered:[],data:[]};
+function buildExam(){
+const all=[];
+Object.entries(quizzes).forEach(([mod,qs])=>{
+const shuffled=seededShuffle(qs,dayKey()+'exam'+mod);
+const pick={1:4,2:3,3:5,4:4,5:4}[mod]||4;
+shuffled.slice(0,pick).forEach(q=>all.push({...q,mod:+mod}));
+});
+return seededShuffle(all,dayKey()+'examfinal').slice(0,20);
+}
+function startExam(){exam={idx:0,score:0,data:buildExam(),answered:[]};exam.answered=new Array(exam.data.length).fill(null);renderExam()}
+function renderExam(){
+const c=document.getElementById('examContainer');const d=document.getElementById('examDots');const{idx,data,score,answered}=exam;
+if(!data.length){c.innerHTML='<div style="text-align:center"><button class="btn btn-a" onclick="startExam()">Lancer l\'examen (20 questions)</button></div>';d.innerHTML='';return}
+if(idx>=data.length){
+const pct=Math.round(score/data.length*100);scores[8]=Math.max(scores[8]||0,pct);history.push({mod:'exam',score:pct,date:dayKey()});saveAll();renderDash();updNav();
+c.innerHTML=`<div class="card" style="text-align:center;padding:1.5rem"><div style="font-size:2rem;margin-bottom:.3rem">${pct>=80?'🏆':pct>=60?'👍':'💪'}</div><h2>${score}/20 (${pct}%)</h2><p style="color:var(--muted);font-size:.82rem;margin-bottom:.8rem">${pct>=80?'Tu es prete !':pct>=60?'Presque ! Revois les modules faibles.':'Continue a reviser !'}</p><button class="btn btn-p btn-sm" onclick="startExam()">Recommencer</button></div>`;return;}
+const q=data[idx];const modN={1:'Aero',2:'Safran',3:'TdS',4:'Mat/Normes',5:'Parcours'}[q.mod]||'';
+d.innerHTML=data.map((_,i)=>{let cl='qdot';if(i===idx)cl+=' cur';if(answered[i]===true)cl+=' right';if(answered[i]===false)cl+=' wrong';return`<div class="${cl}"></div>`}).join('');
+c.innerHTML=`<div class="card"><span class="tag tag-b">${modN}</span><div class="quiz-q" style="margin-top:.4rem">Q${idx+1}/20. ${q.q}</div><div class="quiz-opts">${q.opts.map((o,i)=>`<div class="qopt" onclick="ansExam(${i})">${o}</div>`).join('')}</div><div class="qexp" id="qexpExam">${q.e}</div><div class="q-next" id="qnextExam" style="display:none"><button class="btn btn-p btn-sm" onclick="exam.idx++;renderExam()">Question suivante →</button></div></div>`;
+}
+function ansExam(i){
+const q=exam.data[exam.idx];const opts=document.querySelectorAll('#examContainer .qopt');
+opts.forEach((o,j)=>{o.classList.add('off');if(j===q.c)o.classList.add('ok');if(j===i&&j!==q.c)o.classList.add('ko')});
+document.getElementById('qexpExam').classList.add('show');document.getElementById('qnextExam').style.display='block';
+if(i===q.c)exam.score++;exam.answered[exam.idx]=i===q.c;}
+
+// ===== STAR =====
+function renderStars(){
+const stars=[
+{q:"Raconte un projet technique complexe",s:"Pièces PP avec 80% de défaillance chimique. Aucune solution existante.",t:"Trouver et industrialiser un TdS qui garantit la tenue chimique.",a:"Etat de l'art 4 technos → selection CVD → pilotage POC → industrialisation. 2 brevets.",r:"Conformite 20% → 100%. Procede valide pour deploiement industriel."},
+{q:"Comment tu geres une non-conformite urgente ?",s:"Developpement TPE : degradation chimique inattendue sur des lots.",t:"Cause racine + fix sans arreter la production.",a:"FTIR comparee, vieillissement accelere, croisement parametres. Test grades alternatifs en parallele.",r:"Compatibilite 30% → 80%. Production maintenue."},
+{q:"Comment tu travailles en equipe ?",s:"Projet CVD : R&D, labo, production, prestataire externe.",t:"Coordonner tout le monde.",a:"Points reguliers, rapports de synthese, adaptation du discours selon le public.",r:"Projet livre dans les delais, passage POC → indus fluide."},
+{q:"Ton plus gros point faible ?",s:"Pas d'experience directe voie humide ni aero.",t:"Mon etat de l'art incluait la voie humide.",a:"Formation electrochimie, corrosion, TdS. Exigences tracabilite et qualification transferables.",r:"Montee en competence rapide : fondamentaux + methodo."},
+];
+document.getElementById('starCards').innerHTML=stars.map((s,i)=>`<div class="star-card" id="st${i}"><div class="star-q" onclick="document.getElementById('st${i}').classList.toggle('open')">${s.q}<span class="sa">▼</span></div><div class="star-body"><div class="ss"><span class="sl sl-s">S</span><span class="sc blur" onclick="this.classList.remove('blur')">${s.s}</span></div><div class="ss"><span class="sl sl-t">T</span><span class="sc blur" onclick="this.classList.remove('blur')">${s.t}</span></div><div class="ss"><span class="sl sl-a">A</span><span class="sc blur" onclick="this.classList.remove('blur')">${s.a}</span></div><div class="ss"><span class="sl sl-r">R</span><span class="sc blur" onclick="this.classList.remove('blur')">${s.r}</span></div><div style="font-size:.68rem;color:var(--muted);text-align:right;font-style:italic;margin-top:.2rem">Clique chaque ligne pour reveler</div></div></div>`).join('');
+}
+
+// ===== SIMULATION =====
+const simQs=[
+{q:"Presentez-vous.",a:"Ton <b>pitch</b> (1:30-2:00). Finis par pourquoi Safran."},
+{q:"Pourquoi les traitements de surface ?",a:"Formation electrochimie/corrosion + projet CVD chez Aptar = passion pour le lien surface-performance. En aero les TdS conditionnent la <b>securite des vols</b>, pas juste l'esthetique."},
+{q:"Pourquoi Safran et pas un concurrent ?",a:"Leader propulsion. Les TdS = <b>securite moteur</b> (navigabilite). Site Corbeil a 15 min. Formation M. Knittel (ancien Safran). Programme RISE = innovation."},
+{q:"Pas d'experience voie humide. Comment monter en competence ?",a:"Etat de l'art incluait la voie humide. Formation electrochimie = fondamentaux directs. Methodo identique : plans d'essais, qualification, parametres critiques."},
+{q:"Un exemple de resolution de probleme technique ?",a:"Projet CVD : conformite a 20%, diagnostic parametres, iterations → 100%. OU Projet TPE : degradation, FTIR, grades alternatifs → 30→80%."},
+{q:"Vos qualites / defauts ?",a:"Rigoureuse, organisee, bon relationnel. Defaut : perfectionnisme, canalise par deadlines intermediaires."},
+{q:"Que savez-vous de Nadcap ?",a:"Certification procedes speciaux aero. Audits exigeants : maitrise procede + tracabilite. Pas d'experience directe mais rigueur documentaire transferable."},
+{q:"Le chrome VI, vous en pensez quoi ?",a:"CMR, REACH annexe XIV. Substitution en cours : TSA (vs OAC), TCP (vs Alodine). Je connais REACH depuis Aptar."},
+{q:"Ou dans 5 ans ?",a:"Experte TdS, piloter des projets d'industrialisation ou de substitution Cr VI. Evolution vers chef de projet methode."},
+{q:"Des questions ?",a:"OUI toujours. Utilise tes questions preparees. Jamais dire non."},
+];
+let simIdx=0;
+function renderSim(){
+const c=document.getElementById('simContainer');const b=document.getElementById('simBtns');
+if(simIdx>=simQs.length){c.innerHTML=`<div class="sim-card"><div style="font-size:2rem;margin-bottom:.3rem">💪</div><h2 style="color:var(--green)">Termine !</h2></div>`;b.innerHTML=`<button class="btn btn-o btn-sm" onclick="simIdx=0;renderSim()">Recommencer</button>`;return;}
+const q=simQs[simIdx];
+c.innerHTML=`<div class="sim-card"><div class="sim-icon">👤</div><div class="sim-q">${q.q}</div><div id="simThink"><div class="sim-dots"><span></span><span></span><span></span></div><div style="font-size:.75rem;color:var(--muted);margin-top:.2rem">Reflechis...</div></div><div class="sim-ans" id="simAns">${q.a}</div></div>`;
+b.innerHTML=`<button class="btn btn-p" id="simRevBtn" onclick="document.getElementById('simThink').style.display='none';document.getElementById('simAns').classList.add('show');document.getElementById('simBtns').innerHTML='<button class=\\'btn btn-a\\' onclick=\\'simIdx++;renderSim()\\'>Suivante</button>'">Voir la reponse</button>`;
+}
+
+// ===== TIMER =====
+let tOn=false,tSec=0,tInt;
+function toggleTimer(){const b=document.getElementById('timerBtn');if(tOn){clearInterval(tInt);tOn=false;b.textContent='Relancer'}else{tSec=0;tOn=true;b.textContent='Stop';updT();tInt=setInterval(()=>{tSec++;updT()},1000)}}
+function updT(){const m=Math.floor(tSec/60),s=tSec%60;const el=document.getElementById('timer');el.textContent=m+':'+String(s).padStart(2,'0');el.className='timer-d'+(tSec>120?' warn':'')+(tSec>150?' over':'');document.getElementById('timerHint').textContent=tSec>150?'Trop long !':tSec>120?'Bientot 2 min...':'1:30 - 2:00'}
+
+// ===== CHECKLIST =====
+function updChk(){const all=document.querySelectorAll('.jourj input');const done=[...all].filter(c=>c.checked).length;document.getElementById('checkProg').style.width=(done/all.length*100)+'%';all.forEach(c=>c.closest('.chk').classList.toggle('done',c.checked))}
+
+// ===== DASHBOARD =====
+function renderDash(){
+const el=document.getElementById('dashboard');if(!el)return;
+const db=document.getElementById('dayBadge');if(db)db.textContent='Jour '+dayKey().slice(-2);
+const mods=[{i:1,n:'Aero & BIA',c:'var(--light)'},{i:2,n:'Industrie Aero',c:'var(--accent)'},{i:3,n:'TdS & Chimie',c:'var(--green)'},{i:4,n:'Materiaux/Normes',c:'var(--purple)'},{i:5,n:'Mon Parcours',c:'var(--yellow)'},{i:8,n:'Examen Final',c:'var(--blue)'}];
+let html=mods.map(m=>{const s=scores[m.i]||0;return`<div class="mod-row"><div class="mod-name">${m.n}</div><div class="mod-bar"><div class="prog-bar"><div class="prog-fill" style="width:${s}%;background:${m.c}"></div></div></div><div class="mod-score" style="color:${s>=80?'var(--green)':s>=60?'var(--yellow)':'var(--muted)'}">${s?s+'%':'—'}</div></div>`}).join('');
+if(history.length){html+='<div class="sec-label" style="margin-top:.8rem">Historique</div>';
+const recent=history.slice(-8).reverse();
+const modN={1:'Aero',2:'Safran',3:'TdS',4:'Mat/N',5:'Parcours',exam:'Exam'};
+recent.forEach(h=>{html+=`<div class="history-row"><span>${h.date} — ${modN[h.mod]||h.mod}</span><span style="font-weight:600;color:${h.score>=80?'var(--green)':h.score>=60?'var(--yellow)':'var(--red)'}">${h.score}%</span></div>`})}
+el.innerHTML=html;}
+
+// ===== INIT =====
+initNav();loadAll();renderLearn();renderStars();renderSim();renderExam();if(!learnStyle)renderDiag();
+</script>
+</body>
+</html>
