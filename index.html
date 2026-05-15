@@ -35,9 +35,12 @@ body.dark .info p{color:#94a3b8}
 </style>
 </head>
 <body>
-<header>
+<header style="display:flex;align-items:center;justify-content:center;gap:12px;position:relative">
+<div style="text-align:center;flex:1">
 <h1>Mes Hubs</h1>
 <p>Tous mes outils de formation et de préparation</p>
+</div>
+<button onclick="forceUpdate()" title="Mettre à jour" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:2px solid #e5e7eb;border-radius:12px;padding:10px 14px;font-size:20px;cursor:pointer;line-height:1;transition:all .2s" id="refresh-btn">🔄</button>
 </header>
 <main>
 
@@ -126,8 +129,7 @@ body.dark .info p{color:#94a3b8}
 
 </main>
 <script>
-async function resetCache(){
-if(!confirm('Purger le cache et recharger ?\n(Vos données localStorage sont conservées.)'))return;
+async function purgeAll(){
 if('serviceWorker' in navigator){
 const regs=await navigator.serviceWorker.getRegistrations();
 for(const r of regs)await r.unregister();
@@ -136,7 +138,29 @@ if('caches' in window){
 const keys=await caches.keys();
 for(const k of keys)await caches.delete(k);
 }
+}
+async function forceUpdate(){
+var btn=document.getElementById('refresh-btn');
+btn.style.animation='spin .6s ease';
+await purgeAll();
 location.reload(true);
+}
+async function resetCache(){
+if(!confirm('Purger le cache et recharger ?\n(Vos données localStorage sont conservées.)'))return;
+await purgeAll();
+location.reload(true);
+}
+</script>
+<style>@keyframes spin{from{transform:translateY(-50%) rotate(0)}to{transform:translateY(-50%) rotate(360deg)}}</style>
+<script>
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('/sw.js').then(reg=>{
+reg.addEventListener('updatefound',()=>{
+const nw=reg.installing;
+nw.addEventListener('statechange',()=>{if(nw.state==='activated')location.reload()});
+});
+if(reg.waiting)location.reload();
+});
 }
 </script>
 </body>
