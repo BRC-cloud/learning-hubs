@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programme Sport - Prep Marathon 2027</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+            color: #e94560;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .context {
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            background: #0f3460;
+            border-radius: 10px;
+            padding: 1.2rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #bbb;
+        }
+        .context strong { color: #e94560; }
+        .week {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .day {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid #e94560;
+            transition: transform 0.2s;
+        }
+        .day:hover { transform: translateY(-2px); }
+        .day.rest { border-left-color: #4a90d9; opacity: 0.85; }
+        .day.run { border-left-color: #2ecc71; }
+        .day.crossfit { border-left-color: #f39c12; }
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .day-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #e94560;
+        }
+        .day.rest .day-name { color: #4a90d9; }
+        .day.run .day-name { color: #2ecc71; }
+        .day.crossfit .day-name { color: #f39c12; }
+        .day-date {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .focus {
+            background: #0f3460;
+            border-radius: 6px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: #e94560;
+        }
+        .day.rest .focus { color: #4a90d9; }
+        .day.run .focus { color: #2ecc71; }
+        .day.crossfit .focus { color: #f39c12; }
+        .duration {
+            float: right;
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            line-height: 1.5;
+        }
+        li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #e94560;
+        }
+        .day.rest li::before { color: #4a90d9; }
+        .day.run li::before { color: #2ecc71; }
+        .day.crossfit li::before { color: #f39c12; }
+        .alert {
+            background: #2d1b1b;
+            border: 1px solid #e94560;
+            border-radius: 6px;
+            padding: 0.5rem 0.8rem;
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+            color: #ff8a8a;
+        }
+        .notes {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            background: #16213e;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid #e94560;
+        }
+        .notes h2 {
+            color: #e94560;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+        .editable-hint {
+            text-align: center;
+            color: #555;
+            font-size: 0.8rem;
+            margin-top: 2rem;
+            padding: 0.5rem;
+            border: 1px dashed #333;
+            border-radius: 6px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        [contenteditable]:focus {
+            outline: 2px solid #e9456044;
+            border-radius: 4px;
+        }
+        .save-bar {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .save-bar button {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .save-bar button:hover { background: #d63851; }
+        .save-bar button.secondary {
+            background: #0f3460;
+        }
+        .save-bar button.secondary:hover { background: #1a4a7a; }
+        @media print {
+            body { background: white; color: #222; }
+            .day { border: 1px solid #ccc; }
+            .save-bar, .editable-hint { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<h1 contenteditable="true">Prep Marathon Paris 2027</h1>
+<div class="subtitle">Semaine du 10 au 16 mai 2026 — Phase 1 : reprise progressive</div>
+
+<div class="context" contenteditable="true">
+    <strong>Contraintes :</strong> Ténosynovite péronière droite (douleur après ~7 min course) — semelles anti-pronation — baskets drop 10mm à venir<br>
+    <strong>Objectifs :</strong> Marathon Paris 2027 | Perte de poids 95→73 kg | HOMA à baisser | Fer à remonter<br>
+    <strong>Principe :</strong> Construire la base aérobie sans impact (vélo, elliptique, natation) + marche/course très progressive sous le seuil de douleur. CrossFit 1x/sem. Renfo ciblé stabilité cheville/pied.
+</div>
+
+<div class="week">
+
+    <div class="day">
+        <div class="day-header">
+            <span class="day-name">SAMEDI 10</span>
+            <span class="duration">~50 min</span>
+        </div>
+        <div class="focus">Cardio sans impact + renfo pieds</div>
+        <ul contenteditable="true">
+            <li>Vélo ou elliptique 30 min zone 2 (conversation possible)</li>
+            <li>Renfo cheville : heel raises 3x15 bilatéral</li>
+            <li>Équilibre unipodal 3x30s chaque pied</li>
+            <li>Towel scrunches (orteils) 3x20</li>
+            <li>Étirements mollets + péroniers 5 min</li>
+        </ul>
+    </div>
+
+    <div class="day rest">
+        <div class="day-header">
+            <span class="day-name">DIMANCHE 11</span>
+            <span class="duration">~40 min</span>
+        </div>
+        <div class="focus">Récupération active + mobilité</div>
+        <ul contenteditable="true">
+            <li>Marche 30 min rythme soutenu (pas de course)</li>
+            <li>Mobilité hanches + chevilles 10 min</li>
+            <li>Rouleau mollets + voûte plantaire</li>
+            <li>Auto-massage péroniers (balle de tennis)</li>
+        </ul>
+    </div>
+
+    <div class="day run">
+        <div class="day-header">
+            <span class="day-name">LUNDI 12</span>
+            <span class="duration">~35 min</span>
+        </div>
+        <div class="focus">Marche/course — test seuil douleur</div>
+        <ul contenteditable="true">
+            <li>Marche rapide 10 min échauffement</li>
+            <li>Alternance : 4 min course LENTE / 3 min marche x3</li>
+            <li>STOP immédiat si douleur péronier (passer en marche)</li>
+            <li>Marche retour au calme 5 min</li>
+            <li>Glaçage cheville 10 min après</li>
+        </ul>
+        <div class="alert">Règle absolue : aucune douleur. Si ça tire avant 4 min, on descend à 3 min ou 2 min. Pas de fierté, on construit.</div>
+    </div>
+
+    <div class="day crossfit">
+        <div class="day-header">
+            <span class="day-name">MARDI 13</span>
+            <span class="duration">~60 min</span>
+        </div>
+        <div class="focus">CrossFit (séance box)</div>
+        <ul contenteditable="true">
+            <li>Séance CrossFit habituelle</li>
+            <li>Adapter si WOD a beaucoup de running : remplacer par rameur ou vélo</li>
+            <li>Éviter box jumps réception dure si cheville sensible</li>
+            <li>Post-WOD : 5 min étirements + glaçage si besoin</li>
+        </ul>
+    </div>
+
+    <div class="day">
+        <div class="day-header">
+            <span class="day-name">MERCREDI 14</span>
+            <span class="duration">~50 min</span>
+        </div>
+        <div class="focus">Renfo muscu (bas du corps + core)</div>
+        <ul contenteditable="true">
+            <li>Squat goblet ou barre 4x10</li>
+            <li>Fentes avant 3x10/jambe (contrôle descente)</li>
+            <li>Hip thrust ou pont fessier 3x12</li>
+            <li>Leg curl ou soulevé de terre roumain 3x10</li>
+            <li>Heel raises excentriques lents 3x12 (unipodal)</li>
+            <li>Planche 3x45s + dead bug 3x10</li>
+        </ul>
+    </div>
+
+    <div class="day">
+        <div class="day-header">
+            <span class="day-name">JEUDI 15</span>
+            <span class="duration">~45 min</span>
+        </div>
+        <div class="focus">Cardio long sans impact</div>
+        <ul contenteditable="true">
+            <li>Vélo 40 min continu zone 2 (ou natation si accès piscine)</li>
+            <li>Objectif : tenir une conversation, FC 120-140 bpm</li>
+            <li>Renfo pieds en fin : alphabet cheville + élastique éversion 3x15</li>
+        </ul>
+    </div>
+
+    <div class="day run">
+        <div class="day-header">
+            <span class="day-name">VENDREDI 16</span>
+            <span class="duration">~35 min</span>
+        </div>
+        <div class="focus">Marche/course — séance 2</div>
+        <ul contenteditable="true">
+            <li>Marche rapide 10 min</li>
+            <li>Alternance : 5 min course / 3 min marche x3 (si lundi OK)</li>
+            <li>Si lundi était douloureux : rester à 3 min course / 3 min marche</li>
+            <li>Retour au calme marche 5 min</li>
+            <li>Glaçage + étirements péroniers</li>
+        </ul>
+        <div class="alert">Progression : on ajoute 1 min de course par semaine seulement si ZÉRO douleur la semaine précédente.</div>
+    </div>
+
+</div>
+
+<div class="notes">
+    <h2 contenteditable="true">Notes importantes</h2>
+    <div contenteditable="true" style="min-height: 80px; line-height: 1.8;">
+        <strong>Poids :</strong> Le déficit calorique vient principalement de l'alimentation. Le cardio zone 2 aide mais ne suffit pas seul. Viser -0.5 à -0.7 kg/semaine max pour protéger le muscle.<br><br>
+        <strong>Fer :</strong> Prendre la supplémentation loin du thé/café. Viande rouge 2-3x/sem ou complément si prescrit. Le manque de fer impacte directement l'endurance.<br><br>
+        <strong>HOMA :</strong> Le cardio zone 2 régulier + la perte de poids sont les meilleurs leviers. Limiter les pics glycémiques (manger les glucides après l'entraînement).<br><br>
+        <strong>Cheville :</strong> Si nouvelles baskets + semelles améliorent la situation, on augmentera la course. En attendant, on construit l'aérobie par le vélo/elliptique/natation — le transfert vers la course est réel.<br><br>
+        <strong>Progression course :</strong> Sem 1 = 4 min x3 | Sem 2 = 5 min x3 | Sem 3 = 6 min x3 ... Objectif juin : tenir 15 min continu sans douleur.
+    </div>
+</div>
+
+<div class="editable-hint">
+    Tout est modifiable : cliquer sur un texte pour l'éditer. Sauvegarde locale (navigateur) ou export HTML.
+</div>
+
+<div class="save-bar">
+    <button class="secondary" onclick="saveLocal()">Sauver</button>
+    <button onclick="downloadHTML()">Exporter HTML</button>
+</div>
+
+<script>
+    function saveLocal() {
+        localStorage.setItem('programme_sport_v2', document.querySelector('body').innerHTML);
+        alert('Sauvegardé !');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('programme_sport_v2');
+        if (saved && saved.includes('Marathon')) {
+            document.querySelector('body').innerHTML = saved;
+        }
+    });
+
+    function downloadHTML() {
+        const html = document.documentElement.outerHTML;
+        const blob = new Blob(['<!DOCTYPE html>\n' + html], { type: 'text/html' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'Programme_Sport.html';
+        a.click();
+    }
+</script>
+
+</body>
+</html>
