@@ -2,7 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#4a6adf">
 <title>English Learning Hub - Caother</title>
 <style>
 :root {
@@ -543,10 +546,34 @@ input[type="text"]:focus, select:focus { outline: none; border-color: var(--acce
 /* KEYBOARD SHORTCUT HINT */
 .kbd{display:inline-block;padding:2px 6px;border:1px solid var(--border);border-radius:4px;font-size:11px;color:var(--text2);background:var(--surface2);font-family:monospace}
 
+/* BOTTOM NAV (mobile) */
+.bot-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:100;padding:4px 0 env(safe-area-inset-bottom,0)}
+.bot-nav-inner{display:flex;justify-content:space-around;max-width:500px;margin:0 auto}
+.bot-nav button{background:none;border:none;padding:6px 8px;font-size:10px;color:var(--text2);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .2s;min-width:52px}
+.bot-nav button.active{color:var(--accent)}
+.bot-nav button .nav-icon{font-size:20px}
+.more-menu{position:fixed;bottom:calc(60px + env(safe-area-inset-bottom,0));left:8px;right:8px;background:var(--surface);border-radius:16px;box-shadow:0 -4px 24px rgba(0,0,0,.15);padding:12px;z-index:101;display:none;max-height:60vh;overflow-y:auto}
+.more-menu.show{display:block}
+.more-menu button{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;background:none;border:none;border-radius:10px;font-size:15px;color:var(--text);cursor:pointer;transition:background .15s;text-align:left}
+.more-menu button:hover{background:var(--surface2)}
+.more-menu-backdrop{position:fixed;top:0;left:0;right:0;bottom:0;z-index:100;display:none}
+.more-menu-backdrop.show{display:block}
+
+/* SYNC */
+.sync-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);font-size:13px;cursor:pointer;transition:all .2s;color:var(--text2)}
+.sync-btn:hover{border-color:var(--accent);color:var(--accent)}
+.sync-btn.synced{border-color:var(--green);color:var(--green)}
+.sync-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:300;display:none;justify-content:center;align-items:center}
+.sync-modal.active{display:flex}
+.sync-modal-box{background:var(--surface);border-radius:16px;padding:28px;max-width:440px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+
 @media(max-width:768px){
   #search-overlay{padding-top:20px}
   #search-box{width:95%;max-height:90vh;border-radius:12px}
   .add-lesson-form .grid-3{grid-template-columns:1fr!important}
+  .bot-nav{display:block}
+  nav{display:none}
+  main{padding-bottom:80px}
 }
 </style>
 </head>
@@ -578,8 +605,13 @@ input[type="text"]:focus, select:focus { outline: none; border-color: var(--acce
 
 <!-- ============ DASHBOARD ============ -->
 <div id="dashboard" class="section active">
-  <h1>English Learning Hub</h1>
-  <p>Cours Preply - Preparation entretiens techniques - Niveau B2 &rarr; C1</p>
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div>
+      <h1>English Learning Hub</h1>
+      <p>Cours Preply - Preparation entretiens techniques - Niveau B2 &rarr; C1</p>
+    </div>
+    <button class="sync-btn" id="dash-sync-btn" onclick="toggleSyncModal()" title="Synchronisation cross-device">🔄 Sync</button>
+  </div>
 
   <div class="stats-grid" style="margin-top:24px">
     <div class="card" style="text-align:center;cursor:pointer" onclick="showSection('lessons')">
@@ -1462,6 +1494,55 @@ Thank you so much for..." oninput="saveHomework()"></textarea>
 
 </main>
 
+<!-- BOTTOM NAV (mobile) -->
+<div class="bot-nav">
+  <div class="bot-nav-inner">
+    <button class="active" data-nav="dashboard" onclick="navTo('dashboard')"><span class="nav-icon">📊</span>Accueil</button>
+    <button data-nav="lessons" onclick="navTo('lessons')"><span class="nav-icon">📝</span>Cours</button>
+    <button data-nav="vocab" onclick="navTo('vocab')"><span class="nav-icon">📚</span>Vocab</button>
+    <button data-nav="sentences" onclick="navTo('sentences')"><span class="nav-icon">💬</span>Phrases</button>
+    <button data-nav="homework" onclick="navTo('homework')"><span class="nav-icon">📋</span>Devoirs</button>
+    <button onclick="toggleMoreMenu()"><span class="nav-icon">⋯</span>Plus</button>
+  </div>
+</div>
+<div class="more-menu-backdrop" id="more-backdrop" onclick="toggleMoreMenu()"></div>
+<div class="more-menu" id="more-menu">
+  <button onclick="navTo('grammar')">📖 Grammaire</button>
+  <button onclick="navTo('oral')">🎤 Oral Drill</button>
+  <button onclick="navTo('task1')">🎯 Entrainement</button>
+  <button onclick="navTo('errors')">⚠️ Erreurs</button>
+  <button onclick="navTo('progress')">📈 Progression</button>
+  <button onclick="toggleMoreMenu();toggleSearch()">🔍 Recherche</button>
+  <button onclick="toggleMoreMenu();toggleSyncModal()">🔄 Synchronisation</button>
+  <button onclick="location.href='index.html'">🏠 Tous les hubs</button>
+</div>
+
+<!-- SYNC MODAL -->
+<div class="sync-modal" id="sync-modal" onclick="if(event.target===this)toggleSyncModal()">
+  <div class="sync-modal-box">
+    <h3 style="margin-bottom:16px">🔄 Synchronisation cross-device</h3>
+    <p style="font-size:14px;margin-bottom:16px">Synchronise ta progression entre telephone et ordinateur via GitHub Gist (prive, gratuit).</p>
+    <div id="sync-status"></div>
+    <div id="sync-form">
+      <label style="font-size:13px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px">GitHub Personal Access Token</label>
+      <input type="text" id="sync-token" placeholder="ghp_xxxxxxxxxxxx" style="width:100%;margin-bottom:8px">
+      <p style="font-size:12px;color:var(--text2);margin-bottom:16px">Cree un token sur github.com/settings/tokens &rarr; "Gist" scope uniquement.</p>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-primary" onclick="syncSetup()">Activer la sync</button>
+        <button class="btn btn-secondary" onclick="toggleSyncModal()">Annuler</button>
+      </div>
+    </div>
+    <div id="sync-actions" style="display:none">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" onclick="syncPull()">⬇️ Recuperer</button>
+        <button class="btn btn-secondary btn-sm" onclick="syncPush()">⬆️ Envoyer</button>
+        <button class="btn btn-danger btn-sm" onclick="syncDisconnect()">Deconnecter</button>
+      </div>
+      <p id="sync-last" style="font-size:12px;color:var(--text2);margin-top:12px"></p>
+    </div>
+  </div>
+</div>
+
 <script>
 // ==================== DATA ====================
 
@@ -1565,54 +1646,54 @@ const IDIOMS = [
 
 const KEY_SENTENCES = [
   // Lesson 2
-  {text:"My background is in chemistry and materials engineering.",lesson:2,theme:"Introduction"},
-  {text:"I specialise in polymers, but I am looking to move into metallic materials.",lesson:2,theme:"Introduction"},
-  {text:"During my internship, I worked on developing new polymer composites.",lesson:2,theme:"Experience"},
-  {text:"One of my main strengths is my ability to analyse complex data.",lesson:2,theme:"Forces"},
-  {text:"One challenge I overcame was developing a chemical immersion panel from scratch.",lesson:2,theme:"Experience"},
-  {text:"I am really motivated to contribute to a team working on advanced materials.",lesson:2,theme:"Motivation"},
+  {text:"My background is in chemistry and materials engineering.",fr:"Mon parcours est en chimie et ingenierie des materiaux.",lesson:2,theme:"Introduction"},
+  {text:"I specialise in polymers, but I am looking to move into metallic materials.",fr:"Je me specialise dans les polymeres, mais je cherche a me tourner vers les materiaux metalliques.",lesson:2,theme:"Introduction"},
+  {text:"During my internship, I worked on developing new polymer composites.",fr:"Pendant mon stage, j'ai travaille au developpement de nouveaux composites polymeres.",lesson:2,theme:"Experience"},
+  {text:"One of my main strengths is my ability to analyse complex data.",fr:"L'un de mes principaux atouts est ma capacite a analyser des donnees complexes.",lesson:2,theme:"Forces"},
+  {text:"One challenge I overcame was developing a chemical immersion panel from scratch.",fr:"Un defi que j'ai surmonte a ete de developper un panel d'immersion chimique de zero.",lesson:2,theme:"Experience"},
+  {text:"I am really motivated to contribute to a team working on advanced materials.",fr:"Je suis vraiment motivee pour contribuer a une equipe travaillant sur les materiaux avances.",lesson:2,theme:"Motivation"},
   // Lesson 3
-  {text:"In the next two years, I am aiming to transition into metallic materials and surface treatments.",lesson:3,theme:"Vision"},
-  {text:"My long-term vision is to build expertise in materials science and eventually work as a freelance engineer.",lesson:3,theme:"Vision"},
-  {text:"The experience I have gained in polymers has given me a strong foundation to expand into new areas.",lesson:3,theme:"Transferabilite"},
-  {text:"I believe my contribution to your team would be a fresh perspective combined with strong analytical skills.",lesson:3,theme:"Valeur"},
-  {text:"I am always looking for opportunities to learn, grow, and take on more responsibility.",lesson:3,theme:"Motivation"},
-  {text:"I am excited about where this role could take my career, and I am ready to pursue it fully.",lesson:3,theme:"Motivation"},
+  {text:"In the next two years, I am aiming to transition into metallic materials and surface treatments.",fr:"Dans les deux prochaines annees, je vise a transitionner vers les materiaux metalliques et les traitements de surface.",lesson:3,theme:"Vision"},
+  {text:"My long-term vision is to build expertise in materials science and eventually work as a freelance engineer.",fr:"Ma vision a long terme est de construire une expertise en science des materiaux et de travailler comme ingenieure freelance.",lesson:3,theme:"Vision"},
+  {text:"The experience I have gained in polymers has given me a strong foundation to expand into new areas.",fr:"L'experience que j'ai acquise en polymeres m'a donne une base solide pour m'etendre a de nouveaux domaines.",lesson:3,theme:"Transferabilite"},
+  {text:"I believe my contribution to your team would be a fresh perspective combined with strong analytical skills.",fr:"Je pense que ma contribution a votre equipe serait un regard neuf combine a de solides competences analytiques.",lesson:3,theme:"Valeur"},
+  {text:"I am always looking for opportunities to learn, grow, and take on more responsibility.",fr:"Je cherche toujours des opportunites pour apprendre, progresser et prendre plus de responsabilites.",lesson:3,theme:"Motivation"},
+  {text:"I am excited about where this role could take my career, and I am ready to pursue it fully.",fr:"Ce poste m'enthousiasme pour ma carriere, et je suis prete a m'y investir pleinement.",lesson:3,theme:"Motivation"},
   // Lesson 4
-  {text:"One area I am working to improve is my experience with metallic materials, which is exactly why I am pursuing this role.",lesson:4,theme:"Faiblesse"},
-  {text:"After my internship, I have been actively applying and continuing to develop my knowledge independently.",lesson:4,theme:"Parcours"},
-  {text:"I handle pressure by focusing on what I can control and breaking the problem into smaller steps.",lesson:4,theme:"Pression"},
-  {text:"When I face a setback, I take time to reflect on what I can learn from it and then I move forward.",lesson:4,theme:"Resilience"},
-  {text:"That is a great question. Let me think for just a moment.",lesson:4,theme:"Gagner du temps"},
-  {text:"What I mean to say is that...",lesson:4,theme:"Se reformuler"},
+  {text:"One area I am working to improve is my experience with metallic materials, which is exactly why I am pursuing this role.",fr:"Un domaine que je travaille a ameliorer est mon experience avec les materiaux metalliques, c'est exactement pourquoi je vise ce poste.",lesson:4,theme:"Faiblesse"},
+  {text:"After my internship, I have been actively applying and continuing to develop my knowledge independently.",fr:"Apres mon stage, j'ai activement postule et continue a developper mes connaissances de maniere autonome.",lesson:4,theme:"Parcours"},
+  {text:"I handle pressure by focusing on what I can control and breaking the problem into smaller steps.",fr:"Je gere la pression en me concentrant sur ce que je peux controler et en decoupant le probleme en petites etapes.",lesson:4,theme:"Pression"},
+  {text:"When I face a setback, I take time to reflect on what I can learn from it and then I move forward.",fr:"Quand je fais face a un revers, je prends le temps de reflechir a ce que je peux en apprendre, puis j'avance.",lesson:4,theme:"Resilience"},
+  {text:"That is a great question. Let me think for just a moment.",fr:"C'est une excellente question. Laissez-moi reflechir un instant.",lesson:4,theme:"Gagner du temps"},
+  {text:"What I mean to say is that...",fr:"Ce que je veux dire, c'est que...",lesson:4,theme:"Se reformuler"},
   // Lesson 5
-  {text:"Hi, I am Caother. I am a materials engineer, currently looking for opportunities in aeronautics.",lesson:5,theme:"Pitch"},
-  {text:"That is interesting, I actually have experience with surface treatments as well.",lesson:5,theme:"Networking"},
-  {text:"What kind of projects are you working on at the moment?",lesson:5,theme:"Networking"},
-  {text:"I would love to hear more about that. How long have you been working in that area?",lesson:5,theme:"Networking"},
-  {text:"I am really looking to transition into metallic materials and surface treatments.",lesson:5,theme:"Objectif"},
-  {text:"It was really great talking to you. Would it be okay if I followed up with you on LinkedIn?",lesson:5,theme:"Networking"},
+  {text:"Hi, I am Caother. I am a materials engineer, currently looking for opportunities in aeronautics.",fr:"Bonjour, je suis Caother. Je suis ingenieure materiaux, actuellement a la recherche d'opportunites dans l'aeronautique.",lesson:5,theme:"Pitch"},
+  {text:"That is interesting, I actually have experience with surface treatments as well.",fr:"C'est interessant, en fait j'ai aussi de l'experience en traitements de surface.",lesson:5,theme:"Networking"},
+  {text:"What kind of projects are you working on at the moment?",fr:"Sur quel type de projets travaillez-vous en ce moment ?",lesson:5,theme:"Networking"},
+  {text:"I would love to hear more about that. How long have you been working in that area?",fr:"J'aimerais beaucoup en savoir plus. Depuis combien de temps travaillez-vous dans ce domaine ?",lesson:5,theme:"Networking"},
+  {text:"I am really looking to transition into metallic materials and surface treatments.",fr:"Je cherche vraiment a transitionner vers les materiaux metalliques et les traitements de surface.",lesson:5,theme:"Objectif"},
+  {text:"It was really great talking to you. Would it be okay if I followed up with you on LinkedIn?",fr:"C'etait vraiment super de discuter avec vous. Ca vous derangerait si je vous recontactais sur LinkedIn ?",lesson:5,theme:"Networking"},
   // Lesson 6
-  {text:"Hi, I am Caother. Thank you so much for taking the time to speak with me today.",lesson:6,theme:"Ouverture appel"},
-  {text:"Just to confirm, can you hear me clearly?",lesson:6,theme:"Appel video"},
-  {text:"I am sorry, could you clarify what you mean by that?",lesson:6,theme:"Demander aide"},
-  {text:"That is a great question. Could I take just a moment to think about that?",lesson:6,theme:"Gagner du temps"},
-  {text:"Could you tell me a little more about what the day-to-day role looks like?",lesson:6,theme:"Questions"},
-  {text:"Thank you so much for your time today. I really look forward to the next steps.",lesson:6,theme:"Cloture appel"},
+  {text:"Hi, I am Caother. Thank you so much for taking the time to speak with me today.",fr:"Bonjour, je suis Caother. Merci beaucoup de prendre le temps de me parler aujourd'hui.",lesson:6,theme:"Ouverture appel"},
+  {text:"Just to confirm, can you hear me clearly?",fr:"Juste pour confirmer, vous m'entendez bien ?",lesson:6,theme:"Appel video"},
+  {text:"I am sorry, could you clarify what you mean by that?",fr:"Excusez-moi, pourriez-vous preciser ce que vous entendez par la ?",lesson:6,theme:"Demander aide"},
+  {text:"That is a great question. Could I take just a moment to think about that?",fr:"C'est une excellente question. Puis-je prendre un instant pour y reflechir ?",lesson:6,theme:"Gagner du temps"},
+  {text:"Could you tell me a little more about what the day-to-day role looks like?",fr:"Pourriez-vous m'en dire un peu plus sur le quotidien du poste ?",lesson:6,theme:"Questions"},
+  {text:"Thank you so much for your time today. I really look forward to the next steps.",fr:"Merci beaucoup pour votre temps aujourd'hui. J'ai vraiment hate de connaitre les prochaines etapes.",lesson:6,theme:"Cloture appel"},
   // Lesson 7
-  {text:"Hi, this is Caother. Thank you so much for taking the time to speak with me today.",lesson:7,theme:"Ouverture telephone"},
-  {text:"Just to confirm, can you hear me clearly?",lesson:7,theme:"Check audio"},
-  {text:"I am sorry, could you clarify what you mean by that?",lesson:7,theme:"Clarification"},
-  {text:"That is a great question. Could I take just a moment to think about that?",lesson:7,theme:"Gagner du temps"},
-  {text:"Could you tell me a little more about what the day-to-day role looks like?",lesson:7,theme:"Question polie"},
-  {text:"Thank you so much for your time today. I really look forward to the next steps.",lesson:7,theme:"Conclusion"},
+  {text:"Hi, this is Caother. Thank you so much for taking the time to speak with me today.",fr:"Bonjour, c'est Caother. Merci beaucoup de prendre le temps de me parler aujourd'hui.",lesson:7,theme:"Ouverture telephone"},
+  {text:"Just to confirm, can you hear me clearly?",fr:"Juste pour confirmer, vous m'entendez bien ?",lesson:7,theme:"Check audio"},
+  {text:"I am sorry, could you clarify what you mean by that?",fr:"Excusez-moi, pourriez-vous preciser ce que vous entendez par la ?",lesson:7,theme:"Clarification"},
+  {text:"That is a great question. Could I take just a moment to think about that?",fr:"C'est une excellente question. Puis-je prendre un instant pour y reflechir ?",lesson:7,theme:"Gagner du temps"},
+  {text:"Could you tell me a little more about what the day-to-day role looks like?",fr:"Pourriez-vous m'en dire un peu plus sur le quotidien du poste ?",lesson:7,theme:"Question polie"},
+  {text:"Thank you so much for your time today. I really look forward to the next steps.",fr:"Merci beaucoup pour votre temps aujourd'hui. J'ai vraiment hate de connaitre les prochaines etapes.",lesson:7,theme:"Conclusion"},
   // Lesson 8
-  {text:"I led that project from proof of concept through to industrialisation, and the compliance rate improved from 20 to 100 percent.",lesson:8,theme:"Pitch - resultat"},
-  {text:"I am now looking to bring that experience into the aeronautics sector.",lesson:8,theme:"Pitch - transition"},
-  {text:"Before I started testing, I had already completed a thorough literature review.",lesson:8,theme:"Past perfect"},
-  {text:"I hold myself to very high standards.",lesson:8,theme:"Exigeant - remplacement"},
-  {text:"I thrive in demanding environments where the stakes are real.",lesson:8,theme:"Exigeant - remplacement"},
-  {text:"When I face a setback, I first take a step back and assess whether I have explored all the available options.",lesson:8,theme:"Resilience"},
+  {text:"I led that project from proof of concept through to industrialisation, and the compliance rate improved from 20 to 100 percent.",fr:"J'ai mene ce projet de la preuve de concept jusqu'a l'industrialisation, et le taux de conformite est passe de 20 a 100 pour cent.",lesson:8,theme:"Pitch - resultat"},
+  {text:"I am now looking to bring that experience into the aeronautics sector.",fr:"Je cherche maintenant a apporter cette experience dans le secteur aeronautique.",lesson:8,theme:"Pitch - transition"},
+  {text:"Before I started testing, I had already completed a thorough literature review.",fr:"Avant de commencer les essais, j'avais deja realise une revue de litterature approfondie.",lesson:8,theme:"Past perfect"},
+  {text:"I hold myself to very high standards.",fr:"Je me fixe des exigences tres elevees.",lesson:8,theme:"Exigeant - remplacement"},
+  {text:"I thrive in demanding environments where the stakes are real.",fr:"Je m'epanouis dans des environnements exigeants ou les enjeux sont reels.",lesson:8,theme:"Exigeant - remplacement"},
+  {text:"When I face a setback, I first take a step back and assess whether I have explored all the available options.",fr:"Quand je fais face a un revers, je prends d'abord du recul et j'evalue si j'ai explore toutes les options disponibles.",lesson:8,theme:"Resilience"},
 ];
 
 const ERRORS = [
@@ -1736,6 +1817,17 @@ const GRAMMAR_QUIZ = [
   {q:"\"I hold myself to very high ___.\"",options:["demands","standards","expectations","levels"],correct:1,explain:"'High standards' est l'expression naturelle pour remplacer le francais 'exigeant'."},
 ];
 
+const DEFAULT_LESSONS = [
+  {id:1,number:1,date:'2026-04-18',teacher:'Preply',topics:'Evaluation initiale (Trial Lesson)',grammar:'',homework:[],notes:'Comprehension B2, vocabulaire B1-B2, expression orale A2-B1. "Excellent receptive skills, passive knowledge ahead of active production."',vocab:[]},
+  {id:2,number:2,date:'2026-04-22',teacher:'Preply',topics:'Present simple/past simple, Interview toolkit',grammar:'Present simple vs Past simple',homework:[{text:'Preparer 3 reponses de pitch oral',done:true}],notes:'12 premiers mots + 6 phrases-cles. "My background is in chemistry and materials engineering."',vocab:['internship','specialism','achievement','strength','challenge','background','specialise','contribute','develop','overcome','demonstrate','achieve']},
+  {id:3,number:3,date:'2026-04-26',teacher:'Preply',topics:'Present perfect, Career vision',grammar:'Present perfect vs Past simple',homework:[{text:'Ecrire sa vision de carriere en 5 phrases',done:true}],notes:'Video technique comprise sans sous-titres — "genuinely impressive at B2 level." Auto-correction "peoples" → "people".',vocab:['ambition','vision','expertise','trajectory','opportunity','contribution','aim','pursue','transition','expand','lead','apply']},
+  {id:4,number:4,date:'2026-04-28',teacher:'Preply',topics:'Resilience/pression, Glossaire technique',grammar:'Present perfect continuous (for/since)',homework:[{text:'Trouver 10 termes techniques de surface en anglais',done:true}],notes:'10 termes techniques trouves en autonomie. 4 role plays reussis. "Whisper Flow" suggere (initiative proactive).',vocab:['weakness','resilience','setback','pressure','gap','expectation','handle','adapt','reflect','improve','recover','acknowledge']},
+  {id:5,number:5,date:'2026-05-01',teacher:'Preply',topics:'Present perfect continuous, Networking',grammar:'For vs Since, Present perfect continuous',homework:[{text:'Simuler 3 conversations de networking',done:true}],notes:'3 role plays networking fluides. Decision strategique sur timing email follow-up. For/since maitrises.',vocab:['connection','impression','introduction','common ground','follow-up','introduce','connect','mention','exchange','follow up','stand out']},
+  {id:6,number:6,date:'2026-05-05',teacher:'Preply',topics:'Modal verbs, Communication pro',grammar:'Would, could, should, might',homework:[{text:'Oral Pitch : 3 questions, 3 repetitions, enregistrer la 3eme',done:true},{text:'Ecrire un email de follow-up (5-7 phrases)',done:false},{text:'Exercice modaux : reecrire 4 phrases poliment',done:false}],notes:'Consolidation vocabulaire (qualite > quantite). Emails professionnels. "Too Rude or Too Right" game.',vocab:['touch base']},
+  {id:7,number:7,date:'2026-05-08',teacher:'Preply',topics:'Questions indirectes, Interview phone/video',grammar:'Questions indirectes (Could you tell me, I was wondering, Do you mind me asking)',homework:[{text:'Oral Pitch report de L6 avec corrections',done:true},{text:'Reecrire 5 questions en forme indirecte',done:true},{text:'Debrief Monday conversation event',done:true}],notes:'Inscription au conversation event lundi. Mock call Thales reussi. Pitch 30s fluide avec conviction.',vocab:['agenda','clarification','availability','rapport','initiative','bandwidth','confirm','clarify','elaborate','wrap up','bear with','reach out']},
+  {id:8,number:8,date:'2026-05-12',teacher:'Preply',topics:'Past perfect, Mock interview complet',grammar:'Past perfect (had + participe passe) pour storytelling',homework:[{text:'3 reponses CAR avec past perfect',done:false},{text:'Remplacer "exigeant" : memoriser 1 phrase',done:false},{text:'"Go the extra mile" : 1 phrase + 5 repetitions',done:false}],notes:'Chatter Learning : introduction devant 8 inconnus (5 en materials science). Mock interview 6 questions sans pause. Formule CAR maitrisee. "Exigeant" a remplacer par "demanding".',vocab:['proof of concept','foundation','demanding','high standards','escalate','assess']},
+];
+
 // ==================== STATE ====================
 let state = {
   vocabRatings: {},
@@ -1764,6 +1856,10 @@ function loadState() {
       state = {...state, ...parsed};
     }
   } catch(e) {}
+  if (!state.lessons || state.lessons.length === 0) {
+    state.lessons = JSON.parse(JSON.stringify(DEFAULT_LESSONS));
+    saveState();
+  }
 }
 
 function saveState() {
@@ -1774,9 +1870,124 @@ function saveState() {
       oralSessions: state.oralSessions,
       homework: state.homework,
       customErrors: state.customErrors,
-      lessons: state.lessons
+      lessons: state.lessons,
+      _ts: Date.now()
     }));
   } catch(e) {}
+  syncDebounce();
+}
+
+// ==================== SYNC (Gist) ====================
+var SYNC_SK='_hub_sync',HUB_FILE='english.json',syncCfg={},syncTimer=null;
+try{syncCfg=JSON.parse(localStorage.getItem(SYNC_SK)||'{}')}catch(e){}
+function isSyncOn(){return!!(syncCfg.token&&syncCfg.gistId)}
+function syncDebounce(){if(!isSyncOn())return;clearTimeout(syncTimer);syncTimer=setTimeout(syncPush,3000)}
+
+async function syncPush(){
+  if(!isSyncOn())return;
+  try{
+    const data=localStorage.getItem('english_hub_state');
+    const res=await fetch(`https://api.github.com/gists/${syncCfg.gistId}`,{
+      method:'PATCH',
+      headers:{'Authorization':`token ${syncCfg.token}`,'Content-Type':'application/json'},
+      body:JSON.stringify({files:{[HUB_FILE]:{content:data}}})
+    });
+    if(res.ok){syncCfg.lastPush=Date.now();localStorage.setItem(SYNC_SK,JSON.stringify(syncCfg))}
+  }catch(e){console.warn('sync push failed',e)}
+}
+
+async function syncPull(){
+  if(!isSyncOn())return;
+  try{
+    const res=await fetch(`https://api.github.com/gists/${syncCfg.gistId}`,{
+      headers:{'Authorization':`token ${syncCfg.token}`}
+    });
+    if(!res.ok)return;
+    const gist=await res.json();
+    const file=gist.files[HUB_FILE];
+    if(file&&file.content){
+      const remote=JSON.parse(file.content);
+      const local=JSON.parse(localStorage.getItem('english_hub_state')||'{}');
+      if((remote._ts||0)>(local._ts||0)){
+        localStorage.setItem('english_hub_state',file.content);
+        loadState();
+        showCard();renderSentences();renderErrors();renderOralHistory();renderLessons();renderDashboardTodo();loadHomework();updateStats();
+        alert('Donnees synchronisees depuis un autre appareil !');
+      }else{alert('Tes donnees locales sont deja a jour.')}
+    }
+  }catch(e){console.warn('sync pull failed',e);alert('Erreur de synchronisation.')}
+}
+
+async function syncSetup(){
+  const token=document.getElementById('sync-token').value.trim();
+  if(!token){alert('Token requis');return}
+  try{
+    const listRes=await fetch('https://api.github.com/gists',{headers:{'Authorization':`token ${token}`}});
+    if(!listRes.ok){alert('Token invalide');return}
+    const gists=await listRes.json();
+    let gist=gists.find(g=>g.description==='learning-hubs-sync');
+    if(!gist){
+      const createRes=await fetch('https://api.github.com/gists',{
+        method:'POST',
+        headers:{'Authorization':`token ${token}`,'Content-Type':'application/json'},
+        body:JSON.stringify({description:'learning-hubs-sync',public:false,files:{[HUB_FILE]:{content:localStorage.getItem('english_hub_state')||'{}'}}})
+      });
+      if(!createRes.ok){alert('Impossible de creer le Gist');return}
+      gist=await createRes.json();
+    }
+    syncCfg={token,gistId:gist.id,lastPush:Date.now()};
+    localStorage.setItem(SYNC_SK,JSON.stringify(syncCfg));
+    updateSyncUI();
+    syncPush();
+    alert('Sync activee !');
+  }catch(e){alert('Erreur : '+e.message)}
+}
+
+function syncDisconnect(){
+  if(!confirm('Desactiver la sync ?'))return;
+  syncCfg={};localStorage.removeItem(SYNC_SK);
+  updateSyncUI();
+}
+
+function toggleSyncModal(){
+  const modal=document.getElementById('sync-modal');
+  modal.classList.toggle('active');
+  updateSyncUI();
+}
+
+function updateSyncUI(){
+  const status=document.getElementById('sync-status');
+  const form=document.getElementById('sync-form');
+  const actions=document.getElementById('sync-actions');
+  if(isSyncOn()){
+    status.innerHTML='<div style="padding:12px;background:var(--green-bg);border-radius:8px;margin-bottom:16px;font-size:14px"><strong style="color:var(--green)">✓ Sync active</strong> — Gist ID: '+syncCfg.gistId.substring(0,8)+'...</div>';
+    form.style.display='none';
+    actions.style.display='block';
+    const last=syncCfg.lastPush?new Date(syncCfg.lastPush).toLocaleString('fr-FR'):'jamais';
+    document.getElementById('sync-last').textContent='Dernier envoi : '+last;
+  }else{
+    status.innerHTML='';
+    form.style.display='block';
+    actions.style.display='none';
+  }
+}
+
+// ==================== BOTTOM NAV ====================
+function navTo(id){
+  closeMoreMenu();
+  showSection(id);
+  document.querySelectorAll('.bot-nav button[data-nav]').forEach(b=>{
+    b.classList.toggle('active',b.dataset.nav===id);
+  });
+}
+
+function toggleMoreMenu(){
+  document.getElementById('more-menu').classList.toggle('show');
+  document.getElementById('more-backdrop').classList.toggle('show');
+}
+function closeMoreMenu(){
+  document.getElementById('more-menu').classList.remove('show');
+  document.getElementById('more-backdrop').classList.remove('show');
 }
 
 // ==================== NAVIGATION ====================
@@ -1788,7 +1999,11 @@ function showSection(id) {
     b.classList.remove('active');
     if (b.textContent === map[id]) b.classList.add('active');
   });
+  document.querySelectorAll('.bot-nav button[data-nav]').forEach(b=>{
+    b.classList.toggle('active',b.dataset.nav===id);
+  });
   if (id === 'lessons') renderLessons();
+  window.scrollTo(0,0);
 }
 
 // ==================== FLASHCARDS ====================
@@ -1983,6 +2198,7 @@ function renderSentences() {
             <div class="sent-actions">
               <button onclick="sentPracticeBlur(${globalIdx})">👁 Blur</button>
               <button onclick="sentPracticeType(${globalIdx})">⌨️ Taper</button>
+              ${s.fr ? `<button onclick="sentPracticeTranslate(${globalIdx})">🇫🇷→🇬🇧</button>` : ''}
             </div>
           </div>
           <div class="sentence-text" id="sent-text-${globalIdx}" style="margin-top:8px;font-size:15px">"${s.text}"</div>
@@ -3271,9 +3487,33 @@ function sentPracticeType(idx) {
   setTimeout(() => document.getElementById(`sent-input-${idx}`)?.focus(), 100);
 }
 
-function sentCheckType(idx) {
+function sentPracticeTranslate(idx) {
   const s = KEY_SENTENCES[idx];
-  const input = document.getElementById(`sent-input-${idx}`);
+  if (!s || !s.fr) return;
+  const practiceEl = document.getElementById(`sent-practice-${idx}`);
+  const textEl = document.getElementById(`sent-text-${idx}`);
+  textEl.style.filter = 'blur(8px)';
+  textEl.style.cursor = 'pointer';
+  textEl.onclick = () => { textEl.style.filter = textEl.style.filter === 'none' ? 'blur(8px)' : 'none'; };
+
+  practiceEl.innerHTML = `
+    <p style="font-size:14px;color:var(--accent);font-weight:600;margin:0 0 4px">🇫🇷 ${s.fr}</p>
+    <p style="font-size:13px;color:var(--text2);margin:0 0 4px">Traduis en anglais :</p>
+    <input type="text" id="sent-translate-${idx}" placeholder="Type in English..." autocomplete="off" onkeydown="if(event.key==='Enter')sentCheckType(${idx},'translate')">
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn btn-sm btn-primary" onclick="sentCheckType(${idx},'translate')">Verifier</button>
+      <button class="btn btn-sm btn-secondary" onclick="sentPracticeBlur(${idx})">Annuler</button>
+    </div>
+    <div id="sent-feedback-${idx}" style="margin-top:8px"></div>
+  `;
+  practiceEl.classList.add('active');
+  setTimeout(() => document.getElementById(`sent-translate-${idx}`)?.focus(), 100);
+}
+
+function sentCheckType(idx, mode) {
+  const s = KEY_SENTENCES[idx];
+  const inputId = mode === 'translate' ? `sent-translate-${idx}` : `sent-input-${idx}`;
+  const input = document.getElementById(inputId);
   const feedback = document.getElementById(`sent-feedback-${idx}`);
   const textEl = document.getElementById(`sent-text-${idx}`);
   if (!s || !input) return;
@@ -3402,6 +3642,13 @@ document.addEventListener('DOMContentLoaded', () => {
   renderDashboardTodo();
   loadHomework();
   updateStats();
+
+  // Sync status
+  if(isSyncOn()){
+    const btn=document.getElementById('dash-sync-btn');
+    if(btn){btn.classList.add('synced');btn.innerHTML='🔄 Synced';}
+    syncPull().catch(()=>{});
+  }
 });
 </script>
 
