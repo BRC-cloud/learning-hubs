@@ -567,17 +567,35 @@ input[type="text"]:focus, select:focus { outline: none; border-color: var(--acce
 .sync-modal.active{display:flex}
 .sync-modal-box{background:var(--surface);border-radius:16px;padding:28px;max-width:440px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 
+/* MOBILE HEADER */
+.mob-header{display:none;position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:env(safe-area-inset-top,12px) 16px 10px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.mob-header .mob-title{font-size:16px;font-weight:700;color:var(--accent)}
+.mob-header .mob-actions{position:absolute;right:12px;top:env(safe-area-inset-top,12px);display:flex;gap:4px;align-items:center}
+.mob-header .mob-actions button{background:none;border:none;font-size:18px;padding:4px 8px;cursor:pointer;border-radius:8px}
+.mob-header .mob-actions button:hover{background:var(--surface2)}
+.mob-header .mob-home{position:absolute;left:12px;top:env(safe-area-inset-top,12px);font-size:18px;text-decoration:none;padding:4px 8px;border-radius:8px}
+
 @media(max-width:768px){
   #search-overlay{padding-top:20px}
   #search-box{width:95%;max-height:90vh;border-radius:12px}
   .add-lesson-form .grid-3{grid-template-columns:1fr!important}
   .bot-nav{display:block}
+  .mob-header{display:block}
   nav{display:none}
-  main{padding-bottom:80px}
+  main{padding:16px 16px 80px}
 }
 </style>
 </head>
 <body>
+
+<div class="mob-header">
+  <a href="index.html" class="mob-home" title="Tous les hubs">🏠</a>
+  <span class="mob-title">EN Hub</span>
+  <div class="mob-actions">
+    <button onclick="toggleSearch()" title="Recherche">🔍</button>
+    <button onclick="toggleSyncModal()" title="Sync">🔄</button>
+  </div>
+</div>
 
 <nav><a href="index.html" style="font-size:18px;text-decoration:none;padding:6px 10px;border-radius:8px;line-height:1;flex-shrink:0;transition:all .2s;opacity:.7" onmouseover="this.style.opacity=1;this.style.background='rgba(0,0,0,.05)'" onmouseout="this.style.opacity=.7;this.style.background='none'" title="Tous les hubs">🏠</a>
   <span class="logo">EN Hub</span>
