@@ -2353,7 +2353,7 @@ function renderSyncUI(){
   }
 }
 function promptSyncSetup(){
-  var t=prompt('Colle ton token GitHub (gist scope).\\n\\nCrée-le sur :\\ngithub.com/settings/tokens?type=beta\\n→ Fine-grained token → Gists: Read and Write');
+  var t=prompt('Colle ton token GitHub (gist scope).\n\nCrée-le sur :\ngithub.com/settings/tokens?type=beta\n→ Fine-grained token\n→ Gists: Read and Write');
   if(!t)return;
   var btn=document.querySelector('#syncUI button');if(btn)btn.textContent='Connexion...';
   syncSetup(t).then(function(ok){if(ok){alert('Synchro activée !');renderSyncUI()}else{alert('Token invalide.');renderSyncUI()}});
