@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#1e3a5f">
@@ -142,7 +142,7 @@ input[type="range"]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;b
 .lesson-note-box .ln-btn{flex:1;padding:6px;border:none;border-radius:6px;font-size:12px;cursor:pointer;font-weight:600;background:rgba(255,255,255,.5)}
 .lesson-note-box .ln-btn:hover{background:rgba(251,191,36,.15)}
 @media(max-width:960px){.lesson-wrap{flex-direction:column}.lesson-note-box{width:100%}}
-@media(max-width:480px){main{padding:16px 12px}.stats-grid{grid-template-columns:1fr;gap:10px}.stat-card{padding:14px}.nav-btn{padding:6px 10px;font-size:12px}}
+@media(max-width:480px){main{padding:16px 12px 88px}.stat-card{padding:14px}}
 .itw-card{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border);margin-bottom:12px;box-shadow:var(--shadow-sm)}
 .itw-cat{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700;color:white;margin-bottom:10px}
 .itw-q{font-size:16px;font-weight:700;margin-bottom:12px;line-height:1.5}
@@ -208,19 +208,43 @@ body.dark mark{background:#854d0e;color:#fef08a}
 .memo-card li{font-size:14px;line-height:1.5;margin-bottom:4px;color:var(--text)}
 .memo-card .memo-formula{background:var(--bg);border-radius:6px;padding:6px 10px;font-family:monospace;font-size:13px;margin:4px 0;display:inline-block}
 body.dark .memo-card .memo-formula{background:#1e293b}
+.bot-nav{display:none}
+.more-menu{display:none;position:fixed;bottom:68px;right:8px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:6px;z-index:101;box-shadow:var(--shadow-lg);animation:slideUp .2s var(--ease)}
+.more-menu.show{display:block}
+.more-menu button{display:block;width:100%;padding:10px 16px;background:none;border:none;font-size:14px;text-align:left;border-radius:8px;cursor:pointer;color:var(--text);font-weight:500;white-space:nowrap}
+.more-menu button:hover,.more-menu button:active{background:var(--bg)}
+body.dark .bot-nav{background:var(--card);border-color:var(--border)}
+body.dark .more-menu{background:var(--card);border-color:var(--border)}
+@media(max-width:768px){
+  .nav-tabs{display:none!important}
+  nav{justify-content:center;height:44px;padding:0 16px}
+  nav h1{margin:0;font-size:15px}
+  main{padding:16px 14px 88px}
+  .bot-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--card);border-top:1px solid var(--border);padding:4px 0 calc(4px + env(safe-area-inset-bottom,0));box-shadow:0 -2px 10px rgba(0,0,0,.08)}
+  .bot-nav button{flex:1;background:none;border:none;padding:6px 0 2px;font-size:10px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;transition:color .15s;-webkit-tap-highlight-color:transparent}
+  .bot-nav button.active{color:var(--pri2);font-weight:700}
+  .bot-nav button span{font-size:20px;line-height:1.2}
+  .more-menu{bottom:calc(60px + env(safe-area-inset-bottom,0))}
+  .stats-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .stat-card{padding:12px 8px}
+  .stat-num{font-size:24px}
+  .stat-label{font-size:11px}
+  .streak-bar{padding:16px;gap:14px}
+  .streak-num{font-size:32px}
+}
 </style>
 </head>
 <body>
-<nav><a href="index.html" style="font-size:18px;text-decoration:none;padding:6px 10px;border-radius:8px;line-height:1;flex-shrink:0;transition:all .2s;opacity:.7" onmouseover="this.style.opacity=1;this.style.background='rgba(0,0,0,.05)'" onmouseout="this.style.opacity=.7;this.style.background='none'" title="Tous les hubs">🏠</a>
+<nav>
 <h1>Learning Hub <span style="font-size:11px;opacity:.5">v24</span></h1>
 <div class="nav-tabs">
-<button class="nav-btn active" onclick="showPage('dashboard')">Accueil</button>
-<button class="nav-btn" onclick="showPage('modules')">Modules</button>
-<button class="nav-btn" onclick="showPage('stats')">Stats</button>
-<button class="nav-btn" onclick="showPage('search')">Recherche</button>
-<button class="nav-btn" onclick="showPage('glossary')">Glossaire</button>
-<button class="nav-btn" onclick="showPage('memo')">Mémo</button>
-<button class="nav-btn" onclick="showPage('settings')">Réglages</button>
+<button class="nav-btn active" data-nav="dashboard" onclick="showPage('dashboard')">Accueil</button>
+<button class="nav-btn" data-nav="modules" onclick="showPage('modules')">Modules</button>
+<button class="nav-btn" data-nav="stats" onclick="showPage('stats')">Stats</button>
+<button class="nav-btn" data-nav="search" onclick="showPage('search')">Recherche</button>
+<button class="nav-btn" data-nav="glossary" onclick="showPage('glossary')">Glossaire</button>
+<button class="nav-btn" data-nav="memo" onclick="showPage('memo')">Mémo</button>
+<button class="nav-btn" data-nav="settings" onclick="showPage('settings')">Réglages</button>
 </div>
 </nav>
 <main>
@@ -266,6 +290,18 @@ body.dark .memo-card .memo-formula{background:#1e293b}
 <div class="setting"><div><label>Importer</label><small>Restaurer une sauvegarde JSON</small></div><div><button onclick="document.getElementById('importFile').click()" style="background:var(--green);color:white;border:none;padding:.4rem .7rem;border-radius:6px;font-size:.78rem;cursor:pointer">Import</button><input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(this)"></div></div>
 </div>
 </main>
+<div class="bot-nav">
+<button data-nav="dashboard" onclick="showPage('dashboard')"><span>🏠</span>Accueil</button>
+<button data-nav="modules" onclick="showPage('modules')"><span>📚</span>Cours</button>
+<button data-nav="search" onclick="showPage('search')"><span>🔍</span>Chercher</button>
+<button data-nav="stats" onclick="showPage('stats')"><span>📊</span>Stats</button>
+<button id="moreBtn" onclick="toggleMore(event)"><span>⋯</span>Plus</button>
+</div>
+<div class="more-menu" id="moreMenu">
+<button onclick="showPage('glossary');closeMore()">📖 Glossaire</button>
+<button onclick="showPage('memo');closeMore()">📝 Mémo</button>
+<button onclick="showPage('settings');closeMore()">⚙️ Réglages</button>
+</div>
 
 <script>
 const SK='lhub_v4';
@@ -334,7 +370,7 @@ L1:[
 {q:"Un centrage avant donne :",o:["Plus de stabilité, moins de maniabilité","Plus de maniabilité, moins de stabilité","Aucun effet","Plus de traînée induite"],c:0,e:"<svg viewBox='0 0 300 100' style='width:100%;max-width:300px;display:block;margin:.5rem auto'><path d='M50,50 L250,50' stroke='#e2e5ea' stroke-width='2'/><path d='M30,40 Q50,25 250,40 Q260,42 270,50 Q260,58 250,60 Q50,75 30,60 Z' stroke='#1e3a5f' stroke-width='2' fill='#e2e5ea'/><circle cx='100' cy='50' r='6' fill='#059669'/><text x='100' y='38' font-size='8' fill='#059669' text-anchor='middle' font-weight='bold'>CG avant</text><text x='100' y='70' font-size='7' fill='#059669' text-anchor='middle'>Stable, lourd</text><circle cx='190' cy='50' r='6' fill='#dc2626'/><text x='190' y='38' font-size='8' fill='#dc2626' text-anchor='middle' font-weight='bold'>CG arrière</text><text x='190' y='70' font-size='7' fill='#dc2626' text-anchor='middle'>Agile, risqué</text><text x='30' y='50' font-size='8' fill='#6b7280' dominant-baseline='middle'>Nez</text><text x='255' y='50' font-size='8' fill='#6b7280' dominant-baseline='middle'>Queue</text></svg>Le <b>centrage</b> = position du <b>centre de gravité</b> (CG) par rapport à l'aile.<br><br><b>Centrage AVANT</b> (CG vers le nez) → plus <b>stable</b> (l'avion revient en position tout seul après une perturbation), mais moins maniable. L'empennage doit compenser plus → plus de traînée.<br><br><b>Centrage ARRIÈRE</b> (CG vers la queue) → moins stable (dangereux si trop arrière → l'avion peut devenir incontrôlable), mais plus <b>maniable</b> (réagit vite).<br><br><b>Mnémo :</b> Avant = sûr mais lourd. Arrière = agile mais risqué. Les chasseurs militaires (Rafale, F-16) sont centrés arrière volontairement → très manœuvrables, mais ils ont besoin de commandes de vol électriques (fly-by-wire) pour rester contrôlables."},
 {q:"C'est quoi un aéronef ?",o:["Tout appareil capable de se déplacer dans les airs","Uniquement un avion à réaction","Un avion militaire uniquement","Un appareil qui roule sur la piste"],c:0,e:"Un <b>aéronef</b> (aircraft) = tout appareil capable de s'élever et de circuler dans l'atmosphère. Ça inclut les <b>avions, hélicoptères, planeurs, ULM, ballons, dirigeables, drones</b>."},
 {q:"Le fuselage c'est :",o:["Le corps principal de l'avion","Le bout de l'aile","Le train d'atterrissage","Le moteur"],c:0,e:"<svg viewBox='0 0 340 110' style='width:100%;max-width:340px;display:block;margin:.5rem auto'><path d='M30,50 Q40,30 80,30 L260,30 Q300,30 310,50 Q300,60 260,60 L80,60 Q40,60 30,50Z' fill='#e2e5ea' stroke='#1e3a5f' stroke-width='2'/><text x='170' y='50' text-anchor='middle' font-size='10' fill='#1e3a5f' font-weight='bold'>Fuselage</text><line x1='100' y1='45' x2='30' y2='30' stroke='#1e3a5f' stroke-width='2.5'/><line x1='100' y1='45' x2='30' y2='60' stroke='#1e3a5f' stroke-width='2.5'/><text x='25' y='22' font-size='7' fill='#059669'>Aile</text><line x1='260' y1='30' x2='290' y2='15' stroke='#1e3a5f' stroke-width='2'/><text x='295' y='15' font-size='7' fill='#d97706'>Dérive</text><line x1='250' y1='30' x2='300' y2='28' stroke='#1e3a5f' stroke-width='2'/><text x='305' y='30' font-size='7' fill='#7c3aed'>Stab. H</text><circle cx='120' cy='68' r='4' fill='#475569'/><circle cx='180' cy='68' r='4' fill='#475569'/><text x='150' y='82' text-anchor='middle' font-size='7' fill='#475569'>Train</text><ellipse cx='85' cy='65' rx='15' ry='8' fill='none' stroke='#f97316' stroke-width='1.5'/><text x='85' y='90' text-anchor='middle' font-size='7' fill='#f97316'>Moteur</text><text x='170' y='100' text-anchor='middle' font-size='8' fill='#94a3b8'>Vue schématique d'un avion</text></svg>Le <b>fuselage</b> = le <b>corps principal</b>. Structure <b>semi-monocoque</b> : cadres (anneaux) + lisses (longitudinaux) + revêtement (peau alu ou composite)."},
-{q:"L'empennage c'est :",o:["La partie arrière de l'avion","Le nez de l'avion","Le train d'atterrissage","Les moteurs sous les ailes"],c:0,e:"<svg viewBox='0 0 350 130' style='width:100%;max-width:350px;display:block;margin:.5rem auto'><path d='M20,60 Q35,50 60,50 L230,50 Q255,48 270,38 L272,30 Q274,25 276,30 L276,50 Q278,54 276,58 L276,62 Q274,66 268,66 L230,62 L60,62 Q35,70 20,60Z' fill='#e2e5ea' stroke='#1e3a5f' stroke-width='2'/><path d='M242,50 L262,20 L276,20 Q279,20 276,38' fill='#e2e5ea' stroke='#1e3a5f' stroke-width='2'/><path d='M232,56 L298,48 L296,54 L232,60Z' fill='#e2e5ea' stroke='#1e3a5f' stroke-width='1.5'/><path d='M95,62 L55,95 L155,95 L130,62Z' fill='#e2e5ea' stroke='#1e3a5f' stroke-width='1.5'/><path d='M28,56 Q38,52 50,51' stroke='#60a5fa' stroke-width='2.5' fill='none'/><rect x='222' y='14' width='86' height='60' rx='8' fill='#7c3aed' opacity='0.13' stroke='#7c3aed' stroke-width='2' stroke-dasharray='5,3'/><text x='265' y='95' text-anchor='middle' font-size='12' fill='#7c3aed' font-weight='bold'>Empennage</text><text x='265' y='108' text-anchor='middle' font-size='9' fill='#7c3aed'>= partie arrière</text><text x='30' y='45' font-size='8' fill='#94a3b8'>Nez</text><text x='140' y='44' text-anchor='middle' font-size='8' fill='#94a3b8'>Fuselage</text><text x='100' y='115' text-anchor='middle' font-size='8' fill='#94a3b8'>Aile</text></svg>L'<b>empennage</b> = toute la <b>partie arrière</b> de l'avion (zone violette sur le schéma). Il comprend :<br>- Empennage <b>horizontal</b> : stabilisateur + gouverne de profondeur → <b>tangage</b><br>- Empennage <b>vertical</b> (dérive) : + gouverne de direction → <b>lacet</b>"},
+{q:"L'empennage c'est :",o:["La partie arrière de l'avion","Le nez de l'avion","Le train d'atterrissage","Les moteurs sous les ailes"],c:0,e:"<svg viewBox='0 0 200 240' style='width:100%;max-width:180px;display:block;margin:.5rem auto'><path d='M92,18 Q100,4 108,18Z' fill='#e2e5ea' stroke='#1e3a5f' stroke-width='2'/><rect x='92' y='18' width='16' height='180' rx='2' fill='#e2e5ea' stroke='#1e3a5f' stroke-width='2'/><path d='M92,70 L12,108 L12,116 L92,90Z' fill='#cbd5e1' stroke='#1e3a5f' stroke-width='1.5'/><path d='M108,70 L188,108 L188,116 L108,90Z' fill='#cbd5e1' stroke='#1e3a5f' stroke-width='1.5'/><path d='M92,170 L42,190 L42,196 L92,182Z' fill='#e2e5ea' stroke='#1e3a5f' stroke-width='1.5'/><path d='M108,170 L158,190 L158,196 L108,182Z' fill='#e2e5ea' stroke='#1e3a5f' stroke-width='1.5'/><rect x='32' y='160' width='136' height='45' rx='8' fill='#7c3aed' opacity='0.13' stroke='#7c3aed' stroke-width='2.5' stroke-dasharray='6,3'/><text x='100' y='12' text-anchor='middle' font-size='9' fill='#94a3b8'>Nez (avant)</text><text x='100' y='55' text-anchor='middle' font-size='9' fill='#94a3b8'>Fuselage</text><text x='18' y='130' font-size='9' fill='#94a3b8'>Aile</text><text x='158' y='130' font-size='9' fill='#94a3b8'>Aile</text><text x='100' y='222' text-anchor='middle' font-size='13' fill='#7c3aed' font-weight='bold'>EMPENNAGE</text><text x='100' y='236' text-anchor='middle' font-size='9' fill='#7c3aed'>= partie arrière</text></svg>L'<b>empennage</b> = toute la <b>partie arrière</b> de l'avion (zone violette). Il comprend :<br>- Empennage <b>horizontal</b> : stabilisateur + gouverne de profondeur → <b>tangage</b><br>- Empennage <b>vertical</b> (dérive) : + gouverne de direction → <b>lacet</b>"},
 {q:"Les volets servent à :",o:["Augmenter la portance à basse vitesse","Augmenter la vitesse maximale","Réduire le poids de l'avion","Protéger le moteur de la pluie"],c:0,e:"<svg viewBox='0 0 300 130' style='width:100%;max-width:300px;display:block;margin:.5rem auto'><text x='10' y='15' font-size='9' fill='#6b7280' font-weight='bold'>Volets rentrés (croisière) :</text><path d='M30,45 Q80,30 200,40 Q220,42 230,45' stroke='#1e3a5f' stroke-width='3' fill='#e2e5ea'/><text x='240' y='48' font-size='8' fill='#6b7280'>→ Bord de fuite</text><text x='10' y='75' font-size='9' fill='#059669' font-weight='bold'>Volets sortis (atterrissage) :</text><path d='M30,105 Q80,85 180,95' stroke='#1e3a5f' stroke-width='3' fill='#e2e5ea'/><path d='M180,95 L200,110 Q210,115 215,112' stroke='#e8722a' stroke-width='3' fill='#fed7aa'/><text x='220' y='115' font-size='8' fill='#e8722a' font-weight='bold'>Volet</text><path d='M120,98 L120,120' stroke='#059669' stroke-width='1' marker-end='url(#arr)'/><text x='85' y='128' font-size='8' fill='#059669'>+ courbure + surface</text></svg>Les <b>volets</b> <span class='en'>(Flaps)</span> = surfaces mobiles sur le <b>bord de fuite</b> (arrière de l'aile). En les sortant, on augmente la <b>courbure</b> et la <b>surface</b> de l'aile → plus de portance à basse vitesse.<br><br><b>Quand les utilise-t-on ?</b><br>- <b>Décollage</b> : volets partiellement sortis (ex : flaps 15°) → portance suffisante pour décoller à vitesse réduite<br>- <b>Atterrissage</b> : volets plein sortis (ex : flaps 30-40°) → l'avion peut voler plus lentement → atterrir sur une piste plus courte<br>- <b>Croisière</b> : volets rentrés → moins de traînée, vitesse max<br><br>Sur un A320 : 4 positions de volets (0, 1, 2, 3, Full)."},
 {q:"C'est quoi le bord d'attaque ?",o:["Le nez arrondi à l'avant de l'aile","L'arrière fin de l'aile","Le bout de l'aile","Le dessous de l'aile"],c:0,e:"<svg viewBox='0 0 300 120' style='width:100%;max-width:300px;display:block;margin:.5rem auto'><path d='M30,55 Q70,20 160,30 Q230,35 270,52 Q230,58 160,60 Q70,70 30,55Z' fill='#e2e5ea' stroke='#1e3a5f' stroke-width='2'/><circle cx='30' cy='55' r='5' fill='#059669'/><text x='30' y='82' text-anchor='middle' font-size='9' fill='#059669' font-weight='bold'>Bord d'attaque</text><text x='30' y='92' text-anchor='middle' font-size='7' fill='#059669'>(leading edge)</text><circle cx='270' cy='52' r='3' fill='#dc2626'/><text x='260' y='82' text-anchor='middle' font-size='9' fill='#dc2626' font-weight='bold'>Bord de fuite</text><text x='260' y='92' text-anchor='middle' font-size='7' fill='#dc2626'>(trailing edge)</text><text x='160' y='22' text-anchor='middle' font-size='8' fill='#7c3aed'>Extrados (dessus)</text><text x='160' y='75' text-anchor='middle' font-size='8' fill='#d97706'>Intrados (dessous)</text><line x1='30' y1='55' x2='270' y2='52' stroke='#94a3b8' stroke-width='1' stroke-dasharray='3'/><text x='150' y='50' text-anchor='middle' font-size='7' fill='#94a3b8'>Corde</text><path d='M5,55 L25,55' stroke='#059669' stroke-width='2'/><polygon points='23,52 30,55 23,58' fill='#059669'/><text x='10' y='48' font-size='7' fill='#059669'>Air →</text></svg>Le <b>bord d'attaque</b> = la partie <b>avant arrondie</b> de l'aile, celle qui rencontre l'air en premier. Le <b>bord de fuite</b> = l'arrière fin (où se trouvent volets et ailerons)."},
 {q:"L'envergure d'un avion c'est :",o:["La distance entre les deux bouts d'ailes","La longueur du fuselage","La hauteur de l'avion au sol","Le diamètre du moteur"],c:0,e:"L'<b>envergure</b> (wingspan) = la distance entre les deux <b>saumons</b> (extrémités d'ailes). Ex : A320 = 36 m, A380 = 80 m, B747 = 64 m."},
@@ -1334,14 +1370,44 @@ if(!S.lessonVer)S.lessonVer={};
 })();
 
 // ============================================================
+// QUESTION MIGRATION — preserve progress when question text is reworded
+// ============================================================
+if(!S.qTexts)S.qTexts={};
+(function(){
+  var curIds=new Set(),curMap={};
+  Object.keys(C).forEach(function(cId){['L1','L2','L3'].forEach(function(lvl){(C[cId][lvl]||[]).forEach(function(q,i){var qId=getQId(cId,lvl,i);curIds.add(qId);curMap[qId]={cId:cId,lvl:lvl,q:q.q}})})});
+  function getCourse(k){return Object.keys(C).find(function(cId){return k.startsWith(cId+'_')})||null}
+  function wds(s){return s.toLowerCase().replace(/[^a-zàâéèêëïîôùûüœç\s]/g,'').split(/\s+/).filter(function(w){return w.length>2})}
+  function sim(a,b){var wa=wds(a),wb=wds(b),st=new Set(wb);if(!wa.length||!st.size)return 0;var c=0;wa.forEach(function(w){if(st.has(w))c++});return c/Math.max(wa.length,st.size)}
+  var orphans=[];
+  Object.keys(S.boxes).forEach(function(k){if(!curIds.has(k)&&S.qTexts[k]){var cId=getCourse(k);if(cId)orphans.push({key:k,text:S.qTexts[k],cId:cId})}});
+  if(orphans.length>0){
+    var migrated=0,lost=0,matched=new Set();
+    orphans.forEach(function(o){
+      var best=null,bestS=0;
+      Object.keys(curMap).forEach(function(qId){if(matched.has(qId)||S.boxes[qId])return;if(curMap[qId].cId!==o.cId)return;var s=sim(o.text,curMap[qId].q);if(s>bestS){bestS=s;best=qId}});
+      if(best&&bestS>=0.5){S.boxes[best]=S.boxes[o.key];matched.add(best);migrated++}else{lost++}
+      delete S.boxes[o.key];delete S.qTexts[o.key];
+    });
+    if(migrated||lost){S._migrationMsg=(migrated?migrated+' question(s) reformulée(s) : progression conservée. ':'')+(lost?lost+' question(s) modifiée(s) : progression réinitialisée.':'');save()}
+  }
+  var txtChanged=false;
+  Object.keys(S.boxes).forEach(function(k){if(curMap[k]&&S.qTexts[k]!==curMap[k].q){S.qTexts[k]=curMap[k].q;txtChanged=true}});
+  if(txtChanged)save();
+})();
+
+// ============================================================
 // PAGE NAVIGATION
 // ============================================================
+function toggleMore(e){e&&e.stopPropagation();document.getElementById('moreMenu').classList.toggle('show')}
+function closeMore(){document.getElementById('moreMenu').classList.remove('show')}
+document.addEventListener('click',function(e){if(!e.target.closest('#moreMenu')&&!e.target.closest('#moreBtn'))closeMore()});
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('pg-'+id).classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  const map={dashboard:0,modules:1,stats:2,search:3,glossary:4,memo:5,settings:6,course:1,quiz:1,interview:0};
-  document.querySelectorAll('.nav-btn')[map[id]||0]?.classList.add('active');
+  const pageMap={course:'modules',quiz:'modules',interview:'dashboard'};
+  const target=pageMap[id]||id;
+  document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('active',b.dataset.nav===target));
   document.querySelector('main').style.maxWidth=id==='quiz'?'980px':'720px';
   if(id==='dashboard')renderDash();
   if(id==='modules')renderMods();
@@ -1349,12 +1415,15 @@ function showPage(id){
   if(id==='glossary')renderGlossary('');
   if(id==='memo')renderMemo();
   if(id==='settings'){document.getElementById('sQps').value=S.qps;document.getElementById('vQps').textContent=S.qps;if(S.dark)document.getElementById('sDark').checked=true}
+  closeMore();
 }
 
 // ============================================================
 // DASHBOARD
 // ============================================================
 function renderDash(){
+  var mb=document.getElementById('migBanner');
+  if(S._migrationMsg){if(!mb){mb=document.createElement('div');mb.id='migBanner';mb.style.cssText='background:var(--card);border:1px solid var(--pri);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:.8rem;color:var(--text);display:flex;justify-content:space-between;align-items:center';document.getElementById('pg-dashboard').querySelector('.course-header')?.after(mb)||document.getElementById('pg-dashboard').prepend(mb)}mb.innerHTML=S._migrationMsg+'<button onclick="delete S._migrationMsg;save();this.parentElement.remove()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem">✕</button>'}else if(mb){mb.remove()}
   document.getElementById('dStreak').textContent=S.streak;
   document.getElementById('dLast').textContent='Dernière session : '+(S.lastDate||'jamais');
   let mast=0,learn=0,nw=0;
