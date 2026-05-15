@@ -236,6 +236,7 @@ body.dark .more-menu{background:var(--card);border-color:var(--border)}
 </head>
 <body>
 <nav>
+<a href="./" style="font-size:1.1rem;text-decoration:none;padding:4px 8px;border-radius:8px;transition:background .2s" title="Retour aux hubs">🏠</a>
 <h1>Learning Hub <span style="font-size:11px;opacity:.5">v24</span></h1>
 <div class="nav-tabs">
 <button class="nav-btn active" data-nav="dashboard" onclick="showPage('dashboard')">Accueil</button>
@@ -299,6 +300,7 @@ body.dark .more-menu{background:var(--card);border-color:var(--border)}
 <button id="moreBtn" onclick="toggleMore(event)"><span>⋯</span>Plus</button>
 </div>
 <div class="more-menu" id="moreMenu">
+<button onclick="location.href='./'">🏠 Mes Hubs</button>
 <button onclick="showPage('glossary');closeMore()">📖 Glossaire</button>
 <button onclick="showPage('memo');closeMore()">📝 Mémo</button>
 <button onclick="showPage('settings');closeMore()">⚙️ Réglages</button>

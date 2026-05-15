@@ -498,56 +498,6 @@ input[type="text"]:focus, select:focus { outline: none; border-color: var(--acce
   border: 2px solid var(--bg);
 }
 .timeline-date { color: var(--text2); font-size: 13px; margin-bottom: 4px; }
-
-/* SEARCH OVERLAY */
-#search-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;display:none;justify-content:center;padding-top:80px}
-#search-overlay.active{display:flex}
-#search-box{background:var(--surface);border-radius:16px;width:90%;max-width:640px;max-height:80vh;box-shadow:0 20px 60px rgba(0,0,0,.3);display:flex;flex-direction:column;overflow:hidden}
-#search-input{width:100%;padding:18px 24px;border:none;font-size:18px;font-family:inherit;background:transparent;color:var(--text);border-bottom:1px solid var(--border);outline:none}
-#search-results{overflow-y:auto;padding:12px;flex:1}
-.sr-group{margin-bottom:16px}
-.sr-group-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text2);padding:4px 12px}
-.sr-item{padding:10px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:background .15s}
-.sr-item:hover{background:var(--surface2)}
-.sr-item .sr-main{flex:1;font-size:14px}
-.sr-item .sr-sub{font-size:12px;color:var(--text2);margin-top:2px}
-.sr-item .sr-badge{font-size:11px;padding:2px 8px;border-radius:12px;background:var(--surface2);color:var(--text2);white-space:nowrap}
-
-/* LESSON JOURNAL */
-.lesson-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.lesson-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px}
-.lesson-title{font-size:17px;font-weight:700}
-.lesson-date{font-size:13px;color:var(--text2)}
-.lesson-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.lesson-hw-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;margin-bottom:4px;background:var(--surface2);cursor:pointer;transition:all .2s;font-size:14px}
-.lesson-hw-item.done{text-decoration:line-through;opacity:.6}
-.lesson-hw-check{width:18px;height:18px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px}
-.lesson-hw-item.done .lesson-hw-check{background:var(--green);border-color:var(--green);color:white}
-.add-lesson-form{background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:24px;margin-bottom:24px}
-.add-lesson-form label{display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:4px;margin-top:14px}
-.add-lesson-form label:first-child{margin-top:0}
-.add-lesson-form input[type="text"],.add-lesson-form input[type="date"],.add-lesson-form input[type="number"],.add-lesson-form textarea{width:100%}
-.lesson-notes-text{font-size:14px;color:var(--text2);line-height:1.6;white-space:pre-wrap}
-
-/* SENTENCE PRACTICE INLINE */
-.sent-practice{margin-top:10px;padding:12px;background:var(--surface2);border-radius:8px;display:none}
-.sent-practice.active{display:block}
-.sent-practice input[type="text"]{width:100%;padding:10px;border:2px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;background:var(--surface);color:var(--text);margin-top:8px}
-.sent-practice input[type="text"]:focus{outline:none;border-color:var(--accent)}
-.sent-practice input.correct{border-color:var(--green);background:var(--green-bg)}
-.sent-practice input.wrong{border-color:var(--red);background:var(--red-bg)}
-.sentence-card .sent-actions{display:flex;gap:6px;flex-shrink:0}
-.sentence-card .sent-actions button{padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);cursor:pointer;font-size:12px;transition:all .2s}
-.sentence-card .sent-actions button:hover{border-color:var(--accent);color:var(--accent)}
-
-/* KEYBOARD SHORTCUT HINT */
-.kbd{display:inline-block;padding:2px 6px;border:1px solid var(--border);border-radius:4px;font-size:11px;color:var(--text2);background:var(--surface2);font-family:monospace}
-
-@media(max-width:768px){
-  #search-overlay{padding-top:20px}
-  #search-box{width:95%;max-height:90vh;border-radius:12px}
-  .add-lesson-form .grid-3{grid-template-columns:1fr!important}
-}
 </style>
 </head>
 <body>
@@ -555,7 +505,6 @@ input[type="text"]:focus, select:focus { outline: none; border-color: var(--acce
 <nav><a href="index.html" style="font-size:18px;text-decoration:none;padding:6px 10px;border-radius:8px;line-height:1;flex-shrink:0;transition:all .2s;opacity:.7" onmouseover="this.style.opacity=1;this.style.background='rgba(0,0,0,.05)'" onmouseout="this.style.opacity=.7;this.style.background='none'" title="Tous les hubs">🏠</a>
   <span class="logo">EN Hub</span>
   <button class="active" onclick="showSection('dashboard')">Dashboard</button>
-  <button onclick="showSection('lessons')">Mes Cours</button>
   <button onclick="showSection('vocab')">Vocabulaire</button>
   <button onclick="showSection('grammar')">Grammaire</button>
   <button onclick="showSection('sentences')">Phrases-cles</button>
@@ -564,15 +513,7 @@ input[type="text"]:focus, select:focus { outline: none; border-color: var(--acce
   <button onclick="showSection('homework')">Devoirs</button>
   <button onclick="showSection('errors')">Erreurs</button>
   <button onclick="showSection('progress')">Progression</button>
-  <button onclick="toggleSearch()" title="Recherche (Ctrl+K)" style="font-size:16px;padding:8px 12px">🔍</button>
 </nav>
-
-<div id="search-overlay" onclick="if(event.target===this)toggleSearch()">
-  <div id="search-box">
-    <input type="text" id="search-input" placeholder="Rechercher partout... (vocab, grammaire, phrases, erreurs, cours)" oninput="doSearch(this.value)" autocomplete="off">
-    <div id="search-results"><p style="padding:24px;color:var(--text2);text-align:center">Tape pour chercher dans tout le hub &nbsp;<span class="kbd">Esc</span> pour fermer</p></div>
-  </div>
-</div>
 
 <main>
 
@@ -582,9 +523,9 @@ input[type="text"]:focus, select:focus { outline: none; border-color: var(--acce
   <p>Cours Preply - Preparation entretiens techniques - Niveau B2 &rarr; C1</p>
 
   <div class="stats-grid" style="margin-top:24px">
-    <div class="card" style="text-align:center;cursor:pointer" onclick="showSection('lessons')">
-      <div class="stat-number" id="lesson-count">0</div>
-      <div class="stat-label">Cours enregistres</div>
+    <div class="card" style="text-align:center">
+      <div class="stat-number">7</div>
+      <div class="stat-label">Lessons</div>
     </div>
     <div class="card" style="text-align:center">
       <div class="stat-number" id="vocab-mastered">0</div>
@@ -645,63 +586,6 @@ input[type="text"]:focus, select:focus { outline: none; border-color: var(--acce
       <span class="tag tag-orange">A travailler</span>
       <p style="margin-top:8px; color:var(--text)">Past perfect en storytelling : placer le chiffre 20-100% dans la reponse d'ouverture</p>
     </div>
-  </div>
-</div>
-
-<!-- ============ MES COURS ============ -->
-<div id="lessons" class="section">
-  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
-    <div>
-      <h1>Mes Cours</h1>
-      <p>Journal de tes lecons Preply. Ajoute chaque cours pour garder une trace complete.</p>
-    </div>
-    <button class="btn btn-primary" onclick="toggleAddLesson()">+ Ajouter un cours</button>
-  </div>
-
-  <div id="add-lesson-form" class="add-lesson-form" style="display:none;margin-top:20px">
-    <h3 style="margin-bottom:4px;color:var(--accent)">Nouveau cours</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px" class="grid-3">
-      <div>
-        <label>Numero de lecon</label>
-        <input type="number" id="lesson-number" placeholder="9" min="1">
-      </div>
-      <div>
-        <label>Date</label>
-        <input type="date" id="lesson-date">
-      </div>
-      <div>
-        <label>Professeur</label>
-        <input type="text" id="lesson-teacher" placeholder="Preply" value="Preply">
-      </div>
-    </div>
-    <label>Sujets abordes</label>
-    <input type="text" id="lesson-topics" placeholder="Future forms, conditionals, salary negotiation...">
-    <label>Points de grammaire</label>
-    <input type="text" id="lesson-grammar" placeholder="First conditional, will vs going to...">
-    <label>Devoirs donnes (un par ligne)</label>
-    <textarea id="lesson-hw" placeholder="Write 3 sentences with first conditional&#10;Record pitch with future forms&#10;..." style="min-height:80px"></textarea>
-    <label>Notes / points cles du cours</label>
-    <textarea id="lesson-notes" placeholder="Ce que j'ai appris, ce qui etait difficile, ce qu'il faut retenir..." style="min-height:100px"></textarea>
-    <label>Nouveaux mots appris (separes par virgule)</label>
-    <input type="text" id="lesson-vocab" placeholder="negotiate, raise, benchmark...">
-    <div style="display:flex;gap:8px;margin-top:16px">
-      <button class="btn btn-primary" onclick="saveLesson()">Sauvegarder</button>
-      <button class="btn btn-secondary" onclick="toggleAddLesson()">Annuler</button>
-    </div>
-  </div>
-
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin:20px 0">
-    <button class="btn btn-sm btn-primary lesson-filter active" data-lf="all" onclick="filterLessons('all',this)">Tous</button>
-    <button class="btn btn-sm btn-secondary lesson-filter" data-lf="hw-pending" onclick="filterLessons('hw-pending',this)">Devoirs en cours</button>
-    <button class="btn btn-sm btn-secondary lesson-filter" data-lf="hw-done" onclick="filterLessons('hw-done',this)">Devoirs termines</button>
-  </div>
-
-  <div id="lessons-list"></div>
-
-  <div id="lessons-empty" class="card" style="text-align:center;padding:48px 24px;display:none">
-    <div style="font-size:48px;margin-bottom:16px">📝</div>
-    <h3 style="margin-bottom:8px">Aucun cours enregistre</h3>
-    <p>Clique sur "+ Ajouter un cours" apres chaque lecon Preply pour garder une trace.</p>
   </div>
 </div>
 
@@ -794,11 +678,6 @@ input[type="text"]:focus, select:focus { outline: none; border-color: var(--acce
     <button class="btn btn-sm btn-secondary sent-filter" data-lesson="8">L8</button>
   </div>
 
-  <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
-    <span style="font-size:13px;color:var(--text2)">Mode :</span>
-    <button class="btn btn-sm btn-secondary" id="sent-mode-list" onclick="setSentMode('list')" style="font-weight:700;background:var(--accent);color:#fff">Liste</button>
-    <button class="btn btn-sm btn-secondary" id="sent-mode-practice" onclick="setSentMode('practice')">Pratique</button>
-  </div>
   <div id="sentences-list"></div>
 
   <h2>Mode recitation</h2>
@@ -1743,7 +1622,6 @@ let state = {
   oralSessions: [],
   homework: {},
   customErrors: [],
-  lessons: [],
   currentCard: 0,
   currentFilter: 'all',
   currentRecit: 0,
@@ -1751,9 +1629,7 @@ let state = {
   oralTimerSeconds: 0,
   oralTimerRunning: false,
   currentOralQ: 0,
-  currentOralType: 'pitch',
-  lessonFilter: 'all',
-  editingLessonId: null
+  currentOralType: 'pitch'
 };
 
 function loadState() {
@@ -1773,8 +1649,7 @@ function saveState() {
       sentenceRatings: state.sentenceRatings,
       oralSessions: state.oralSessions,
       homework: state.homework,
-      customErrors: state.customErrors,
-      lessons: state.lessons
+      customErrors: state.customErrors
     }));
   } catch(e) {}
 }
@@ -1783,12 +1658,20 @@ function saveState() {
 function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  const map = {dashboard:'Dashboard',lessons:'Mes Cours',vocab:'Vocabulaire',grammar:'Grammaire',sentences:'Phrases-cles',oral:'Oral Drill',task1:'Entrainement',homework:'Devoirs',errors:'Erreurs',progress:'Progression'};
   document.querySelectorAll('nav button').forEach(b => {
     b.classList.remove('active');
-    if (b.textContent === map[id]) b.classList.add('active');
+    if (b.textContent.toLowerCase().includes(id.substring(0,4)) ||
+        (id==='dashboard' && b.textContent==='Dashboard') ||
+        (id==='vocab' && b.textContent==='Vocabulaire') ||
+        (id==='grammar' && b.textContent==='Grammaire') ||
+        (id==='sentences' && b.textContent==='Phrases-cles') ||
+        (id==='oral' && b.textContent==='Oral Drill') ||
+        (id==='task1' && b.textContent==='Entrainement') ||
+        (id==='homework' && b.textContent==='Devoirs') ||
+        (id==='errors' && b.textContent==='Erreurs') ||
+        (id==='progress' && b.textContent==='Progression'))
+      b.classList.add('active');
   });
-  if (id === 'lessons') renderLessons();
 }
 
 // ==================== FLASHCARDS ====================
@@ -1957,52 +1840,23 @@ function renderGrammarQuiz() {
 }
 
 // ==================== KEY SENTENCES ====================
-var sentMode = 'list';
-function setSentMode(mode) {
-  sentMode = mode;
-  document.getElementById('sent-mode-list').style.cssText = mode==='list' ? 'font-weight:700;background:var(--accent);color:#fff' : '';
-  document.getElementById('sent-mode-practice').style.cssText = mode==='practice' ? 'font-weight:700;background:var(--accent);color:#fff' : '';
-  renderSentences();
-}
-
 function renderSentences() {
   const container = document.getElementById('sentences-list');
   const filter = document.querySelector('.sent-filter.active')?.dataset.lesson || 'all';
+
   const filtered = filter === 'all' ? KEY_SENTENCES : KEY_SENTENCES.filter(s => s.lesson === parseInt(filter));
 
-  if (sentMode === 'practice') {
-    container.innerHTML = filtered.map((s, idx) => {
-      const globalIdx = KEY_SENTENCES.indexOf(s);
-      const rating = state.sentenceRatings[s.text];
-      const ratingTag = rating === 'pass' ? '<span class="tag tag-green">OK</span>' :
-                        rating === 'fail' ? '<span class="tag tag-red">A revoir</span>' : '';
-      return `
-        <div class="sentence-card" style="flex-direction:column;align-items:stretch">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-            <div style="font-size:13px;color:var(--text2)">L${s.lesson} - ${s.theme} ${ratingTag}</div>
-            <div class="sent-actions">
-              <button onclick="sentPracticeBlur(${globalIdx})">👁 Blur</button>
-              <button onclick="sentPracticeType(${globalIdx})">⌨️ Taper</button>
-            </div>
-          </div>
-          <div class="sentence-text" id="sent-text-${globalIdx}" style="margin-top:8px;font-size:15px">"${s.text}"</div>
-          <div class="sent-practice" id="sent-practice-${globalIdx}"></div>
-        </div>
-      `;
-    }).join('');
-  } else {
-    container.innerHTML = filtered.map((s, i) => {
-      const rating = state.sentenceRatings[s.text];
-      const ratingTag = rating === 'pass' ? '<span class="tag tag-green" style="margin-left:8px">OK</span>' :
-                        rating === 'fail' ? '<span class="tag tag-red" style="margin-left:8px">A revoir</span>' : '';
-      return `
-        <div class="sentence-card">
-          <div class="sentence-text">"${s.text}" ${ratingTag}</div>
-          <div class="sentence-lesson">L${s.lesson} - ${s.theme}</div>
-        </div>
-      `;
-    }).join('');
-  }
+  container.innerHTML = filtered.map((s, i) => {
+    const rating = state.sentenceRatings[s.text];
+    const ratingTag = rating === 'pass' ? '<span class="tag tag-green" style="margin-left:8px">OK</span>' :
+                      rating === 'fail' ? '<span class="tag tag-red" style="margin-left:8px">A revoir</span>' : '';
+    return `
+      <div class="sentence-card">
+        <div class="sentence-text">"${s.text}" ${ratingTag}</div>
+        <div class="sentence-lesson">L${s.lesson} - ${s.theme}</div>
+      </div>
+    `;
+  }).join('');
 }
 
 // ==================== RECITATION ====================
@@ -2258,8 +2112,6 @@ function updateStats() {
   document.getElementById('vocab-mastered').textContent = vocabMastered;
   document.getElementById('sentences-mastered').textContent = sentencesMastered;
   document.getElementById('error-count').textContent = errorCount;
-  const lc = document.getElementById('lesson-count');
-  if (lc) lc.textContent = state.lessons.length;
 }
 
 function renderDashboardTodo() {
@@ -2274,17 +2126,6 @@ function renderDashboardTodo() {
     {text:'"Go the extra mile" : 1 phrase + 5 repetitions', done: !!hasExtraMile, priority:'medium'},
     {text:'Reciter les 42 phrases-cles', done: Object.keys(state.sentenceRatings).length >= 36, priority:'daily'},
   ];
-
-  // Add pending homework from lessons
-  if (state.lessons.length > 0) {
-    const latestWithHw = state.lessons.filter(l => l.homework && l.homework.some(h => !h.done));
-    latestWithHw.slice(0, 2).forEach(l => {
-      const pending = l.homework.filter(h => !h.done);
-      pending.forEach(h => {
-        todos.unshift({text:`L${l.number} : ${h.text}`, done: false, priority:'high'});
-      });
-    });
-  }
 
   div.innerHTML = todos.map(t => `
     <div class="checklist-item ${t.done ? 'done' : ''}" onclick="toggleCheck(this)" style="border-left:3px solid ${t.priority==='high'?'var(--red)':t.priority==='medium'?'var(--orange)':'var(--text2)'}">
@@ -2959,355 +2800,6 @@ function t1UpdateProgress() {
   });
 }
 
-// ==================== SEARCH ====================
-function toggleSearch() {
-  const overlay = document.getElementById('search-overlay');
-  const isActive = overlay.classList.toggle('active');
-  if (isActive) {
-    document.getElementById('search-input').value = '';
-    document.getElementById('search-input').focus();
-    document.getElementById('search-results').innerHTML = '<p style="padding:24px;color:var(--text2);text-align:center">Tape pour chercher dans tout le hub</p>';
-  }
-}
-
-function doSearch(query) {
-  const q = query.toLowerCase().trim();
-  const resultsDiv = document.getElementById('search-results');
-  if (!q || q.length < 2) {
-    resultsDiv.innerHTML = '<p style="padding:24px;color:var(--text2);text-align:center">Tape au moins 2 caracteres...</p>';
-    return;
-  }
-
-  const results = [];
-
-  VOCABULARY.forEach(v => {
-    if (v.word.toLowerCase().includes(q) || v.def.toLowerCase().includes(q) || (v.example||'').toLowerCase().includes(q))
-      results.push({type:'vocab',icon:'📚',main:v.word,sub:v.def,badge:`L${v.lesson}`,section:'vocab'});
-  });
-
-  TECH_GLOSSARY.forEach(t => {
-    if (t.en.toLowerCase().includes(q) || t.fr.toLowerCase().includes(q))
-      results.push({type:'vocab',icon:'🔧',main:t.en,sub:t.fr,badge:'Technique',section:'vocab'});
-  });
-
-  KEY_SENTENCES.forEach(s => {
-    if (s.text.toLowerCase().includes(q) || s.theme.toLowerCase().includes(q))
-      results.push({type:'sentences',icon:'💬',main:s.text.substring(0,80)+(s.text.length>80?'...':''),sub:s.theme,badge:`L${s.lesson}`,section:'sentences'});
-  });
-
-  GRAMMAR_RULES.forEach(g => {
-    if (g.title.toLowerCase().includes(q) || g.rule.toLowerCase().includes(q))
-      results.push({type:'grammar',icon:'📖',main:g.title,sub:g.rule.substring(0,80)+'...',badge:`L${g.lesson}`,section:'grammar'});
-  });
-
-  [...ERRORS, ...state.customErrors].forEach(e => {
-    if (e.wrong.toLowerCase().includes(q) || e.right.toLowerCase().includes(q) || e.rule.toLowerCase().includes(q))
-      results.push({type:'errors',icon:'⚠️',main:`${e.wrong} → ${e.right}`,sub:e.rule,badge:e.type,section:'errors'});
-  });
-
-  ORAL_QUESTIONS.forEach(o => {
-    if (o.q.toLowerCase().includes(q) || o.hints.toLowerCase().includes(q))
-      results.push({type:'oral',icon:'🎤',main:o.q.substring(0,80),sub:o.cat,badge:o.type,section:'oral'});
-  });
-
-  state.lessons.forEach(l => {
-    const searchable = `${l.topics||''} ${l.grammar||''} ${l.notes||''} ${(l.homework||[]).map(h=>h.text).join(' ')} ${(l.vocab||[]).join(' ')}`.toLowerCase();
-    if (searchable.includes(q))
-      results.push({type:'lessons',icon:'📝',main:`Lesson ${l.number} - ${l.topics||''}`.substring(0,80),sub:l.date,badge:`L${l.number}`,section:'lessons'});
-  });
-
-  IDIOMS.forEach(id => {
-    if (id.phrase.toLowerCase().includes(q) || id.def.toLowerCase().includes(q))
-      results.push({type:'vocab',icon:'💡',main:id.phrase,sub:id.def,badge:`L${id.lesson}`,section:'vocab'});
-  });
-
-  if (results.length === 0) {
-    resultsDiv.innerHTML = `<p style="padding:24px;color:var(--text2);text-align:center">Aucun resultat pour "${query}"</p>`;
-    return;
-  }
-
-  const groups = {};
-  const groupLabels = {vocab:'Vocabulaire',sentences:'Phrases-cles',grammar:'Grammaire',errors:'Erreurs',oral:'Oral',lessons:'Mes Cours'};
-  results.forEach(r => {
-    if (!groups[r.type]) groups[r.type] = [];
-    groups[r.type].push(r);
-  });
-
-  let html = '';
-  Object.entries(groups).forEach(([type, items]) => {
-    html += `<div class="sr-group"><div class="sr-group-title">${groupLabels[type]||type} (${items.length})</div>`;
-    items.slice(0, 8).forEach(item => {
-      const hl = (text) => text.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`,'gi'), '<mark>$1</mark>');
-      html += `<div class="sr-item" onclick="toggleSearch();showSection('${item.section}')">
-        <span style="font-size:18px">${item.icon}</span>
-        <div><div class="sr-main">${hl(item.main)}</div><div class="sr-sub">${hl(item.sub)}</div></div>
-        <span class="sr-badge">${item.badge}</span>
-      </div>`;
-    });
-    if (items.length > 8) html += `<div style="padding:4px 12px;font-size:12px;color:var(--text2)">+${items.length-8} autres resultats</div>`;
-    html += '</div>';
-  });
-
-  resultsDiv.innerHTML = html;
-}
-
-// ==================== LESSONS JOURNAL ====================
-function toggleAddLesson() {
-  const form = document.getElementById('add-lesson-form');
-  const isVisible = form.style.display !== 'none';
-  form.style.display = isVisible ? 'none' : 'block';
-  if (!isVisible) {
-    if (!state.editingLessonId) {
-      document.getElementById('lesson-date').value = new Date().toISOString().split('T')[0];
-      const maxNum = state.lessons.reduce((max, l) => Math.max(max, l.number || 0), 8);
-      document.getElementById('lesson-number').value = maxNum + 1;
-    }
-    document.getElementById('lesson-topics').focus();
-  } else {
-    state.editingLessonId = null;
-    clearLessonForm();
-  }
-}
-
-function clearLessonForm() {
-  ['lesson-number','lesson-topics','lesson-grammar','lesson-hw','lesson-notes','lesson-vocab'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  document.getElementById('lesson-teacher').value = 'Preply';
-  document.getElementById('lesson-date').value = '';
-}
-
-function saveLesson() {
-  const num = parseInt(document.getElementById('lesson-number').value) || 0;
-  const date = document.getElementById('lesson-date').value;
-  const teacher = document.getElementById('lesson-teacher').value.trim();
-  const topics = document.getElementById('lesson-topics').value.trim();
-  const grammar = document.getElementById('lesson-grammar').value.trim();
-  const hwText = document.getElementById('lesson-hw').value.trim();
-  const notes = document.getElementById('lesson-notes').value.trim();
-  const vocabText = document.getElementById('lesson-vocab').value.trim();
-
-  if (!num || !date) { alert('Numero et date obligatoires'); return; }
-
-  const homework = hwText ? hwText.split('\n').filter(l => l.trim()).map(text => ({text: text.trim(), done: false})) : [];
-  const vocab = vocabText ? vocabText.split(',').map(v => v.trim()).filter(v => v) : [];
-
-  if (state.editingLessonId) {
-    const idx = state.lessons.findIndex(l => l.id === state.editingLessonId);
-    if (idx >= 0) {
-      const old = state.lessons[idx];
-      state.lessons[idx] = {...old, number: num, date, teacher, topics, grammar, homework: old.homework.length === homework.length ? old.homework : homework, notes, vocab};
-    }
-    state.editingLessonId = null;
-  } else {
-    state.lessons.push({
-      id: Date.now(),
-      number: num,
-      date,
-      teacher,
-      topics,
-      grammar,
-      homework,
-      notes,
-      vocab
-    });
-  }
-
-  state.lessons.sort((a, b) => b.number - a.number || b.date.localeCompare(a.date));
-  saveState();
-  clearLessonForm();
-  document.getElementById('add-lesson-form').style.display = 'none';
-  renderLessons();
-  renderDashboardTodo();
-  updateStats();
-}
-
-function renderLessons() {
-  const container = document.getElementById('lessons-list');
-  const emptyMsg = document.getElementById('lessons-empty');
-  const filter = state.lessonFilter || 'all';
-
-  let lessons = [...state.lessons];
-  if (filter === 'hw-pending') lessons = lessons.filter(l => l.homework && l.homework.some(h => !h.done));
-  if (filter === 'hw-done') lessons = lessons.filter(l => l.homework && l.homework.length > 0 && l.homework.every(h => h.done));
-
-  if (state.lessons.length === 0) {
-    emptyMsg.style.display = 'block';
-    container.innerHTML = '';
-    return;
-  }
-  emptyMsg.style.display = 'none';
-
-  container.innerHTML = lessons.map(l => {
-    const hwCount = (l.homework || []).length;
-    const hwDone = (l.homework || []).filter(h => h.done).length;
-    const hwPct = hwCount > 0 ? Math.round(hwDone / hwCount * 100) : 0;
-    const hwTag = hwCount === 0 ? '' :
-      hwPct === 100 ? '<span class="tag tag-green">Devoirs termines</span>' :
-      `<span class="tag tag-orange">${hwDone}/${hwCount} devoirs</span>`;
-
-    const dateStr = l.date ? new Date(l.date + 'T00:00:00').toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'}) : '';
-
-    return `
-      <div class="lesson-card">
-        <div class="lesson-header">
-          <div>
-            <div class="lesson-title">Lesson ${l.number}${l.teacher ? ' - ' + l.teacher : ''}</div>
-            <div class="lesson-date">${dateStr}</div>
-          </div>
-          <div style="display:flex;gap:6px;align-items:center">
-            ${hwTag}
-            <button class="btn btn-sm btn-secondary" onclick="editLesson(${l.id})" style="padding:4px 10px">✏️</button>
-            <button class="btn btn-sm btn-secondary" onclick="deleteLesson(${l.id})" style="padding:4px 10px">🗑️</button>
-          </div>
-        </div>
-        ${l.topics ? `<div class="lesson-meta"><span class="tag tag-purple">${l.topics}</span></div>` : ''}
-        ${l.grammar ? `<div style="margin-bottom:10px"><span style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase">Grammaire :</span> <span style="font-size:14px">${l.grammar}</span></div>` : ''}
-        ${l.homework && l.homework.length > 0 ? `
-          <div style="margin-bottom:10px">
-            <span style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase">Devoirs :</span>
-            ${l.homework.map((h, hi) => `
-              <div class="lesson-hw-item ${h.done?'done':''}" onclick="toggleLessonHw(${l.id},${hi})">
-                <div class="lesson-hw-check">${h.done?'✓':''}</div>
-                <span>${h.text}</span>
-              </div>
-            `).join('')}
-            ${hwCount > 0 ? `<div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:${hwPct}%;background:${hwPct===100?'var(--green)':'var(--accent)'}"></div></div>` : ''}
-          </div>
-        ` : ''}
-        ${l.vocab && l.vocab.length > 0 ? `
-          <div style="margin-bottom:10px">
-            <span style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase">Mots :</span>
-            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">${l.vocab.map(v => `<span class="tag tag-purple">${v}</span>`).join('')}</div>
-          </div>
-        ` : ''}
-        ${l.notes ? `<div class="lesson-notes-text">${l.notes}</div>` : ''}
-      </div>
-    `;
-  }).join('');
-}
-
-function editLesson(id) {
-  const l = state.lessons.find(l => l.id === id);
-  if (!l) return;
-  state.editingLessonId = id;
-  document.getElementById('lesson-number').value = l.number;
-  document.getElementById('lesson-date').value = l.date;
-  document.getElementById('lesson-teacher').value = l.teacher || 'Preply';
-  document.getElementById('lesson-topics').value = l.topics || '';
-  document.getElementById('lesson-grammar').value = l.grammar || '';
-  document.getElementById('lesson-hw').value = (l.homework || []).map(h => h.text).join('\n');
-  document.getElementById('lesson-notes').value = l.notes || '';
-  document.getElementById('lesson-vocab').value = (l.vocab || []).join(', ');
-  document.getElementById('add-lesson-form').style.display = 'block';
-  document.getElementById('add-lesson-form').scrollIntoView({behavior:'smooth'});
-}
-
-function deleteLesson(id) {
-  if (!confirm('Supprimer ce cours ?')) return;
-  state.lessons = state.lessons.filter(l => l.id !== id);
-  saveState();
-  renderLessons();
-  renderDashboardTodo();
-  updateStats();
-}
-
-function toggleLessonHw(lessonId, hwIdx) {
-  const l = state.lessons.find(l => l.id === lessonId);
-  if (!l || !l.homework[hwIdx]) return;
-  l.homework[hwIdx].done = !l.homework[hwIdx].done;
-  saveState();
-  renderLessons();
-  renderDashboardTodo();
-}
-
-function filterLessons(filter, btn) {
-  state.lessonFilter = filter;
-  document.querySelectorAll('.lesson-filter').forEach(b => {
-    b.classList.remove('active','btn-primary');
-    b.classList.add('btn-secondary');
-  });
-  btn.classList.add('active','btn-primary');
-  btn.classList.remove('btn-secondary');
-  renderLessons();
-}
-
-// ==================== SENTENCE PRACTICE ====================
-function sentPracticeBlur(idx) {
-  const textEl = document.getElementById(`sent-text-${idx}`);
-  const practiceEl = document.getElementById(`sent-practice-${idx}`);
-  if (!textEl) return;
-  if (textEl.style.filter === 'blur(8px)') {
-    textEl.style.filter = 'none';
-    practiceEl.innerHTML = '';
-    practiceEl.classList.remove('active');
-  } else {
-    textEl.style.filter = 'blur(8px)';
-    textEl.style.cursor = 'pointer';
-    textEl.onclick = () => { textEl.style.filter = textEl.style.filter === 'none' ? 'blur(8px)' : 'none'; };
-    practiceEl.innerHTML = '<p style="font-size:13px;color:var(--text2);margin:0">Clique sur la phrase pour reveler/cacher. Essaie de la dire a voix haute d\'abord !</p>';
-    practiceEl.classList.add('active');
-  }
-}
-
-function sentPracticeType(idx) {
-  const s = KEY_SENTENCES[idx];
-  if (!s) return;
-  const practiceEl = document.getElementById(`sent-practice-${idx}`);
-  const textEl = document.getElementById(`sent-text-${idx}`);
-  textEl.style.filter = 'blur(8px)';
-
-  practiceEl.innerHTML = `
-    <p style="font-size:13px;color:var(--text2);margin:0 0 4px">Tape la phrase de memoire :</p>
-    <input type="text" id="sent-input-${idx}" placeholder="Type the sentence..." autocomplete="off" onkeydown="if(event.key==='Enter')sentCheckType(${idx})">
-    <div style="display:flex;gap:8px;margin-top:8px">
-      <button class="btn btn-sm btn-primary" onclick="sentCheckType(${idx})">Verifier</button>
-      <button class="btn btn-sm btn-secondary" onclick="sentPracticeBlur(${idx})">Annuler</button>
-    </div>
-    <div id="sent-feedback-${idx}" style="margin-top:8px"></div>
-  `;
-  practiceEl.classList.add('active');
-  setTimeout(() => document.getElementById(`sent-input-${idx}`)?.focus(), 100);
-}
-
-function sentCheckType(idx) {
-  const s = KEY_SENTENCES[idx];
-  const input = document.getElementById(`sent-input-${idx}`);
-  const feedback = document.getElementById(`sent-feedback-${idx}`);
-  const textEl = document.getElementById(`sent-text-${idx}`);
-  if (!s || !input) return;
-
-  const normalize = t => t.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
-  const userN = normalize(input.value);
-  const correctN = normalize(s.text);
-
-  const userWords = userN.split(' ');
-  const correctWords = correctN.split(' ');
-  const matching = userWords.filter(w => correctWords.includes(w)).length;
-  const pct = Math.round(matching / correctWords.length * 100);
-
-  textEl.style.filter = 'none';
-
-  if (pct >= 90) {
-    input.classList.add('correct');
-    input.classList.remove('wrong');
-    feedback.innerHTML = `<span style="color:var(--green);font-weight:600">Excellent ! ${pct}% correct</span>`;
-    state.sentenceRatings[s.text] = 'pass';
-  } else if (pct >= 60) {
-    input.classList.remove('correct','wrong');
-    input.style.borderColor = 'var(--orange)';
-    feedback.innerHTML = `<span style="color:var(--orange);font-weight:600">Presque ! ${pct}% — relis et reessaie</span>`;
-  } else {
-    input.classList.add('wrong');
-    input.classList.remove('correct');
-    feedback.innerHTML = `<span style="color:var(--red);font-weight:600">${pct}% — relis la phrase et reessaie</span>`;
-    state.sentenceRatings[s.text] = 'fail';
-  }
-  saveState();
-  updateStats();
-}
-
 // ==================== FILTERS (event listeners) ====================
 document.addEventListener('DOMContentLoaded', () => {
   loadState();
@@ -3375,18 +2867,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Keyboard shortcut for search (Ctrl+K / Cmd+K)
-  document.addEventListener('keydown', e => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      toggleSearch();
-    }
-    if (e.key === 'Escape') {
-      const overlay = document.getElementById('search-overlay');
-      if (overlay.classList.contains('active')) toggleSearch();
-    }
-  });
-
   // Init Task 1
   t1Init();
 
@@ -3398,7 +2878,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSentences();
   renderErrors();
   renderOralHistory();
-  renderLessons();
   renderDashboardTodo();
   loadHomework();
   updateStats();
