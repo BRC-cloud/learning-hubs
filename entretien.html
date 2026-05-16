@@ -2,886 +2,683 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#003366">
-<title>Hub Entretien - Caother BERRIACHE</title>
+<meta name="theme-color" content="#1e293b">
+<title>Hub Entretien</title>
 <style>
-:root{--pri:#003366;--pri2:#0055a4;--acc:#e8722a;--bg:#f7f8fa;--card:#fff;--text:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--green:#059669;--red:#dc2626;--yellow:#d97706;--shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 12px 32px rgba(0,0,0,.12);--ease:cubic-bezier(.23,1,.32,1)}
+:root{--primary:#2563eb;--primary-light:#dbeafe;--bg:#0f172a;--surface:#1e293b;--surface2:#334155;--text:#e2e8f0;--text2:#94a3b8;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--accent:#8b5cf6;--radius:14px;--nav-h:64px;--header-h:56px}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
-
-nav{background:linear-gradient(135deg,#001a33 0%,var(--pri) 50%,var(--pri2) 100%);padding:.6rem .8rem .5rem;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.25);border-bottom:2px solid var(--acc)}
-nav h1{color:white;font-size:.95rem;text-align:center;margin-bottom:.4rem;letter-spacing:-.3px;text-shadow:0 1px 2px rgba(0,0,0,.2)}
-nav h1 span{color:var(--acc);font-weight:800}
-.nav-tabs{display:flex;gap:.3rem;overflow-x:auto;justify-content:center;padding-bottom:2px;-webkit-overflow-scrolling:touch}
-.nav-btn{background:rgba(255,255,255,.08);color:rgba(255,255,255,.65);border:none;padding:.35rem .75rem;border-radius:20px;font-size:.72rem;cursor:pointer;white-space:nowrap;transition:all .3s var(--ease);font-weight:500;backdrop-filter:blur(4px)}
-.nav-btn:hover{background:rgba(255,255,255,.18);color:white;transform:translateY(-1px)}
-.nav-btn.active{background:var(--acc);color:white;font-weight:700;box-shadow:0 4px 12px rgba(232,114,42,.35)}
-
-main{max-width:720px;margin:0 auto;padding:1rem}
-.page{display:none;animation:fadeIn .35s var(--ease)}.page.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-
-.progress-bar{background:var(--border);height:6px;border-radius:3px;overflow:hidden;margin:.5rem 0}
-.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--green),#34d399);transition:width .6s var(--ease)}
-
-h1.page-title{font-size:1.3rem;color:var(--pri);margin-bottom:.2rem}
-.page-sub{color:var(--muted);font-size:.82rem;margin-bottom:1rem;line-height:1.5}
-
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:.7rem;overflow:hidden;box-shadow:var(--shadow-sm);transition:all .3s var(--ease)}
-.card:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
-.card-head{padding:.75rem 1rem;display:flex;align-items:center;gap:.6rem;cursor:pointer;transition:all .25s var(--ease)}
-.card-head:hover{background:rgba(0,51,102,.03)}
-.card-check{width:18px;height:18px;accent-color:var(--green);cursor:pointer;flex-shrink:0}
-.card-title{flex:1;font-size:.87rem;font-weight:600;color:var(--pri)}
-.card-lang{font-size:.65rem;background:var(--pri);color:white;padding:.12rem .4rem;border-radius:8px;font-weight:700;flex-shrink:0}
-.card-lang.fr{background:var(--acc)}
-.card-arrow{color:var(--muted);font-size:.75rem;transition:transform .35s var(--ease);flex-shrink:0}
-.card.open .card-arrow{transform:rotate(180deg)}
-.card-body{display:none;padding:0 1rem 1rem;font-size:.84rem;line-height:1.7;color:#333}
-.card.open .card-body{display:block;animation:slideUp .3s var(--ease)}
-
-.key{font-weight:700;color:var(--pri2)}
-.highlight{background:#fef3c7;padding:1px 3px;border-radius:3px;font-weight:600}
-.en-text{color:#0d9488;font-style:italic}
-.remember{background:linear-gradient(135deg,#fefce8,#fef3c7);border-left:3px solid var(--yellow);padding:.5rem .7rem;margin-top:.6rem;font-size:.8rem;border-radius:0 8px 8px 0}
-.tip-box{background:linear-gradient(135deg,#f0f7ff,#e0f2fe);border:1px solid #93c5fd;border-left:3px solid var(--pri2);border-radius:0 8px 8px 0;padding:.6rem .8rem;margin:.5rem 0;font-size:.82rem;line-height:1.5}
-.warn-box{background:#fef2f2;border:1px solid #fecaca;border-left:3px solid var(--red);border-radius:0 8px 8px 0;padding:.6rem .8rem;margin:.5rem 0;font-size:.82rem}
-
-.section-label{font-size:.72rem;color:var(--acc);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin:1.2rem 0 .5rem;display:flex;align-items:center;gap:.5rem}
-.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-
-.phrase-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.75rem 1rem;margin-bottom:.4rem;display:flex;align-items:center;gap:.6rem;box-shadow:var(--shadow-sm);transition:all .2s var(--ease)}
-.phrase-card:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
-.phrase-icon{font-size:1rem;flex-shrink:0}
-.phrase-en{font-size:.85rem;font-weight:600;color:var(--pri)}
-.phrase-fr{font-size:.75rem;color:var(--muted);margin-top:.1rem}
-
-.timer-wrap{background:linear-gradient(135deg,var(--pri),var(--pri2));border-radius:12px;padding:1rem 1.2rem;display:flex;align-items:center;gap:1rem;margin-bottom:.8rem;color:white}
-.timer-btn{background:var(--acc);color:white;border:none;padding:.5rem 1.2rem;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s}
-.timer-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
-.timer-display{font-size:2rem;font-weight:800;font-variant-numeric:tabular-nums;min-width:3.5rem}
-.timer-display.warn{color:var(--yellow)}.timer-display.over{color:var(--red)}
-.timer-label{font-size:.72rem;opacity:.7;margin-left:auto}
-
-.glossary-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin:.5rem 0}
-.glossary-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.5rem .7rem;font-size:.78rem;box-shadow:var(--shadow-sm);transition:all .2s var(--ease)}
-.glossary-item:hover{box-shadow:var(--shadow);border-color:var(--pri2)}
-.glossary-en{font-weight:700;color:var(--pri)}
-.glossary-fr{color:var(--muted);font-size:.72rem}
-
-.company-header{background:linear-gradient(135deg,var(--pri),var(--pri2));border-radius:12px;padding:1.2rem;color:white;margin-bottom:.8rem;border:none}
-.company-header h2{font-size:1.1rem;margin-bottom:.4rem}
-.company-header .meta{display:grid;grid-template-columns:1fr 1fr;gap:.2rem .6rem;font-size:.78rem;opacity:.9}
-.company-header .meta b{opacity:1}
-
-.star-label{display:inline-block;font-weight:800;font-size:.78rem;min-width:1rem;margin-right:.3rem}
-.star-s{color:var(--pri)}.star-t{color:var(--acc)}.star-a{color:var(--pri2)}.star-r{color:var(--green)}
-
-.fr-placeholder{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px dashed var(--acc);border-radius:10px;padding:.8rem 1rem;margin:.8rem 0;font-size:.82rem;color:var(--acc)}
-
-@media(max-width:500px){main{padding:.7rem}.nav-btn{padding:.3rem .55rem;font-size:.68rem}.glossary-grid{grid-template-columns:1fr}}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px))}
+header{background:var(--surface);border-bottom:1px solid var(--surface2);padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0px));position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:8px}
+header h1{font-size:18px;font-weight:800;white-space:nowrap}
+.lang-toggle{display:flex;background:var(--surface2);border-radius:20px;overflow:hidden}
+.lang-toggle button{border:none;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:var(--text2);transition:all .2s}
+.lang-toggle button.active{background:var(--primary);color:white}
+.company-tabs{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;background:var(--bg);border-bottom:1px solid var(--surface2);-webkit-overflow-scrolling:touch}
+.company-tabs::-webkit-scrollbar{display:none}
+.ctab{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid var(--surface2);background:transparent;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all .2s}
+.ctab.active{background:var(--primary);border-color:var(--primary);color:white}
+main{max-width:640px;margin:0 auto;padding:16px}
+.page{display:none}
+.page.active{display:block}
+.card{background:var(--surface);border-radius:var(--radius);padding:16px;margin-bottom:12px;border:1px solid var(--surface2)}
+.card h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.card p{font-size:13px;color:var(--text2);line-height:1.5}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.stat{background:var(--surface);border-radius:12px;padding:14px 10px;text-align:center;border:1px solid var(--surface2)}
+.stat .num{font-size:22px;font-weight:800;color:var(--primary)}
+.stat .lbl{font-size:11px;color:var(--text2);margin-top:2px}
+.module-list{display:flex;flex-direction:column;gap:10px}
+.module-item{background:var(--surface);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;border:1px solid var(--surface2);transition:all .2s}
+.module-item:active{transform:scale(.98)}
+.module-item .icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.module-item .info{flex:1;min-width:0}
+.module-item .info h4{font-size:14px;font-weight:600}
+.module-item .info span{font-size:12px;color:var(--text2)}
+.module-item .badge{padding:3px 8px;border-radius:10px;font-size:11px;font-weight:700}
+.section-title{font-size:13px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin:20px 0 10px;padding-left:2px}
+.section-title:first-child{margin-top:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .2s;gap:8px}
+.btn-primary{background:var(--primary);color:white}
+.btn-primary:active{transform:scale(.96)}
+.btn-outline{background:transparent;border:2px solid var(--surface2);color:var(--text)}
+.btn-full{width:100%}
+.quiz-option{background:var(--surface);border:2px solid var(--surface2);border-radius:12px;padding:14px 16px;margin-bottom:8px;cursor:pointer;font-size:14px;transition:all .15s;text-align:left;width:100%;color:var(--text)}
+.quiz-option:active{transform:scale(.98)}
+.quiz-option.selected{border-color:var(--primary);background:rgba(37,99,235,.1)}
+.quiz-option.correct{border-color:var(--success);background:rgba(16,185,129,.1)}
+.quiz-option.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.timer{font-size:28px;font-weight:800;text-align:center;margin:16px 0;font-variant-numeric:tabular-nums}
+.timer.warning{color:var(--warning)}
+.timer.danger{color:var(--danger)}
+.pitch-text{background:var(--surface);border-radius:var(--radius);padding:16px;font-size:14px;line-height:1.7;border-left:3px solid var(--primary);margin-bottom:12px}
+.star-card{background:var(--surface);border-radius:var(--radius);padding:16px;margin-bottom:10px;border:1px solid var(--surface2)}
+.star-card .letter{display:inline-block;width:24px;height:24px;border-radius:6px;font-size:12px;font-weight:800;text-align:center;line-height:24px;margin-right:8px}
+.star-card .s-letter{background:#dbeafe;color:#1e40af}
+.star-card .t-letter{background:#fef3c7;color:#92400e}
+.star-card .a-letter{background:#d1fae5;color:#065f46}
+.star-card .r-letter{background:#ede9fe;color:#5b21b6}
+.reveal-btn{background:var(--surface2);border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;margin-top:8px}
+.hidden-content{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--surface2)}
+.hidden-content.show{display:block}
+.vocab-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--surface2)}
+.vocab-item:last-child{border-bottom:none}
+.vocab-fr{font-weight:600;font-size:14px}
+.vocab-en{color:var(--text2);font-size:13px}
+.checklist-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--surface2)}
+.checklist-item input[type=checkbox]{width:20px;height:20px;accent-color:var(--primary);flex-shrink:0;margin-top:1px}
+.checklist-item label{font-size:14px;line-height:1.4;cursor:pointer}
+.nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--surface2);display:flex;justify-content:space-around;padding:8px 0;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:100}
+.nav button{border:none;background:transparent;color:var(--text2);font-size:10px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 8px;transition:color .2s}
+.nav button .ico{font-size:22px}
+.nav button.active{color:var(--primary)}
+.flashcard{perspective:1000px;margin:16px 0;height:200px;cursor:pointer}
+.flashcard-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;font-size:16px;font-weight:600}
+.flashcard-front{background:var(--surface);border:2px solid var(--primary)}
+.flashcard-back{background:var(--primary);color:white;transform:rotateY(180deg)}
+.sim-question{font-size:16px;font-weight:600;text-align:center;padding:20px;min-height:80px;display:flex;align-items:center;justify-content:center}
+.answer-guide{background:var(--surface);border-radius:var(--radius);padding:16px;margin-top:12px;border-left:3px solid var(--success)}
+.answer-guide h4{font-size:13px;color:var(--success);margin-bottom:8px;font-weight:700}
+.answer-guide p{font-size:13px;line-height:1.6;color:var(--text2)}
+.tag{display:inline-block;padding:3px 8px;border-radius:8px;font-size:11px;font-weight:600;margin-right:4px}
+@media(max-width:380px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
-<nav><a href="index.html" style="font-size:18px;text-decoration:none;padding:6px 10px;border-radius:8px;line-height:1;flex-shrink:0;transition:all .2s;opacity:.7" onmouseover="this.style.opacity=1;this.style.background='rgba(0,0,0,.05)'" onmouseout="this.style.opacity=.7;this.style.background='none'" title="Tous les hubs">🏠</a>
-<h1>Hub <span>Entretien</span> - C. BERRIACHE</h1>
-<div class="nav-tabs" id="navTabs"></div>
+<header>
+<h1>Hub Entretien</h1>
+<div class="lang-toggle">
+<button class="active" onclick="setLang('fr')">FR</button>
+<button onclick="setLang('en')">EN</button>
+</div>
+</header>
+
+<div class="company-tabs" id="company-tabs">
+<button class="ctab active" onclick="setCompany('general')">Tous</button>
+<button class="ctab" onclick="setCompany('safran')">Safran</button>
+<button class="ctab" onclick="setCompany('thales')">Thales</button>
+<button class="ctab" onclick="setCompany('hutchinson')">Hutchinson</button>
+</div>
+
+<main>
+<!-- PAGE: ACCUEIL -->
+<div class="page active" id="page-home">
+<div class="stat-grid">
+<div class="stat"><div class="num" id="stat-quiz">0</div><div class="lbl">Quiz</div></div>
+<div class="stat"><div class="num" id="stat-sim">0</div><div class="lbl">Simulations</div></div>
+<div class="stat"><div class="num" id="stat-streak">0</div><div class="lbl">Streak</div></div>
+</div>
+
+<div class="section-title">Modules</div>
+<div class="module-list">
+<div class="module-item" onclick="goTo('learn','pitch')">
+<div class="icon" style="background:#dbeafe;color:#1e40af">🎤</div>
+<div class="info"><h4>Pitch</h4><span>30s et 2min, FR/EN</span></div>
+<div class="badge" style="background:var(--primary-light);color:var(--primary)" id="badge-pitch">0%</div>
+</div>
+<div class="module-item" onclick="goTo('learn','star')">
+<div class="icon" style="background:#d1fae5;color:#065f46">⭐</div>
+<div class="info"><h4>Exemples STAR</h4><span>CVD, Selection, Scale-up</span></div>
+<div class="badge" style="background:#d1fae5;color:#065f46" id="badge-star">0%</div>
+</div>
+<div class="module-item" onclick="goTo('learn','qa')">
+<div class="icon" style="background:#fef3c7;color:#92400e">💬</div>
+<div class="info"><h4>Questions types</h4><span>6 classiques + entreprises</span></div>
+<div class="badge" style="background:#fef3c7;color:#92400e" id="badge-qa">0%</div>
+</div>
+<div class="module-item" onclick="goTo('learn','aero')">
+<div class="icon" style="background:#ede9fe;color:#5b21b6">✈️</div>
+<div class="info"><h4>Aero / BIA</h4><span>Vol, structure, moteurs</span></div>
+<div class="badge" style="background:#ede9fe;color:#5b21b6" id="badge-aero">0%</div>
+</div>
+<div class="module-item" onclick="goTo('learn','tds')">
+<div class="icon" style="background:#fce7f3;color:#9d174d">🧪</div>
+<div class="info"><h4>TdS / Chimie</h4><span>Voie humide, Chrome VI, Nadcap</span></div>
+<div class="badge" style="background:#fce7f3;color:#9d174d" id="badge-tds">0%</div>
+</div>
+<div class="module-item" onclick="goTo('learn','vocab')">
+<div class="icon" style="background:#ccfbf1;color:#0f766e">📖</div>
+<div class="info"><h4>Vocabulaire</h4><span>Glossaire technique FR/EN</span></div>
+<div class="badge" style="background:#ccfbf1;color:#0f766e" id="badge-vocab">0%</div>
+</div>
+</div>
+
+<div class="section-title">Actions rapides</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<button class="btn btn-primary" onclick="startQuiz()">Quiz rapide</button>
+<button class="btn btn-outline" onclick="navigate('sim')">Simulation</button>
+<button class="btn btn-outline" onclick="navigate('checklist')">Checklist J-1</button>
+</div>
+</div>
+
+<!-- PAGE: APPRENDRE -->
+<div class="page" id="page-learn">
+<div id="learn-content"></div>
+</div>
+
+<!-- PAGE: QUIZ -->
+<div class="page" id="page-quiz">
+<div id="quiz-content"></div>
+</div>
+
+<!-- PAGE: SIMULATION -->
+<div class="page" id="page-sim">
+<div id="sim-content"></div>
+</div>
+
+<!-- PAGE: CHECKLIST -->
+<div class="page" id="page-checklist">
+<div class="card">
+<h3>Checklist J-1</h3>
+<p style="margin-bottom:14px">Tout preparer la veille pour etre sereine le jour J.</p>
+<div id="checklist-items"></div>
+</div>
+<div style="margin-top:16px">
+<button class="btn btn-outline btn-full" onclick="navigate('home')">← Accueil</button>
+</div>
+</div>
+</main>
+
+<nav class="nav">
+<button class="active" onclick="navigate('home')"><span class="ico">🏠</span>Accueil</button>
+<button onclick="navigate('learn')"><span class="ico">📚</span>Apprendre</button>
+<button onclick="navigate('quiz')"><span class="ico">🧠</span>Quiz</button>
+<button onclick="navigate('sim')"><span class="ico">🎯</span>Simulation</button>
 </nav>
 
-<main id="mainContent"></main>
-
 <script>
-// =====================================================================
-// DATA
-// =====================================================================
-const TABS = [
-  {id:'general', label:'General'},
-  {id:'aero', label:'Aeronautique'},
-  {id:'safran', label:'Safran'},
-  {id:'thales', label:'Thales'},
-  {id:'hutchinson', label:'Hutchinson'}
-];
+var currentLang='fr', currentCompany='general', currentPage='home', currentModule=null;
+var state=JSON.parse(localStorage.getItem('hub_entretien_v2')||'{}');
+if(!state.quizCount)state.quizCount=0;
+if(!state.simCount)state.simCount=0;
+if(!state.streak)state.streak=0;
+if(!state.lastDay)state.lastDay='';
+if(!state.modules)state.modules={};
+if(!state.checklist)state.checklist={};
+function save(){localStorage.setItem('hub_entretien_v2',JSON.stringify(state))}
 
-const PITCH_EN = `Hi, I am Caother. I am a materials engineer currently looking for opportunities in aeronautics. I hold a Master's degree in chemistry and materials science. During my internship, I worked on CVD coatings to improve the resistance of polyolefins, and I led that project from scratch through to industrialisation. The experience I have gained in polymer science has given me a strong foundation to transition into new areas such as metallic materials and surface treatments. I am genuinely motivated to contribute to a team working on advanced materials.`;
-
-const PITCH_FR = `Bonjour, je suis Caother Berriache. Je suis ingenieure en chimie et sciences des materiaux, et je cherche actuellement des opportunites dans l'aeronautique. Lors de mon experience chez Aptar, j'ai travaille sur des revetements CVD pour ameliorer la resistance des polyolefines, et j'ai porte ce projet de la preuve de concept jusqu'a l'industrialisation. L'experience que j'ai acquise en science des polymeres m'a donne une base solide pour evoluer vers de nouveaux domaines comme les materiaux metalliques et les traitements de surface. Je suis sincerement motivee pour contribuer a une equipe qui travaille sur des materiaux avances.`;
-
-const KEY_PHRASES = [
-  {en:'I hold myself to very high standards', fr:'Remplace "exigeant"'},
-  {en:'I am drawn to demanding environments', fr:'Attiree par les environnements exigeants'},
-  {en:'I thrive in demanding environments', fr:'Je m\'epanouis dans les environnements exigeants'},
-  {en:'I went the extra mile', fr:'J\'ai ete au-dela de ce qu\'on me demandait'},
-  {en:'What changes is the material, not the method', fr:'Ce qui change c\'est le materiau, pas la methode'},
-  {en:'I believe I can be productive quickly', fr:'Je pense pouvoir etre productive rapidement'}
-];
-
-const GENERAL_QA = [
-  {
-    q: 'Tell me about yourself',
-    en: PITCH_EN,
-    fr: PITCH_FR,
-    tags: ['EN','FR']
-  },
-  {
-    q: 'What is your biggest weakness?',
-    en: `Perfectionism. During my internship, I used to spend too much time trying to understand every single detail before moving forward. I realised it was slowing me down. Now I make plans, break tasks into smaller steps, and move to lab testing more quickly. I still hold myself to very high standards, but I have learned to be more efficient about it.`,
-    fr: `Le perfectionnisme. Pendant mon experience, j'avais tendance a passer trop de temps a comprendre chaque detail avant d'avancer. J'ai realise que ca me ralentissait. Maintenant, je planifie, je decoupe en etapes, et je passe plus vite aux essais en laboratoire. Je suis toujours tres exigeante avec moi-meme, mais j'ai appris a etre plus efficace dans cette demarche.`,
-    tags: ['EN','FR']
-  },
-  {
-    q: 'Tell me about a time you took initiative',
-    en: `At Aptar, we used standard methods to test the chemical resistance of materials, but the failure rate was high: 70% of the selected materials had not passed the tests against cosmetic formulations. The choices were based on experience, without any real understanding of the degradation mechanisms. I decided to investigate: I studied how formulations attacked certain polymer families depending on their chemical composition, especially swelling and ageing phenomena. From there, the material selection became much more targeted. We identified the right material faster, with fewer tests, which shortened the validation cycles. The compatibility rate went from 30 to 80%.`,
-    fr: `Chez Aptar, on testait la resistance chimique des materiaux avec des methodes standards, mais le taux d'echec etait eleve : 70% des materiaux selectionnes ne tenaient pas face aux formulations cosmetiques. Les choix reposaient sur l'experience, sans reelle comprehension des mecanismes de degradation. J'ai creuse le sujet : j'ai etudie comment les formulations attaquaient certaines familles de polymeres selon leur composition chimique, notamment les phenomenes de gonflement et de vieillissement. A partir de la, la selection matiere est devenue beaucoup plus ciblee. On identifiait le bon materiau plus rapidement, avec moins d'essais, ce qui a raccourci les cycles de validation. Le taux de compatibilite est passe de 30 a 80%.`,
-    tags: ['EN','FR','CAR','Projet 1']
-  },
-  {
-    q: 'Tell me about a challenge you overcame',
-    en: `At Aptar, 70% of the materials we selected for chemical resistance were failing the tests. The team had always worked this way, and nobody had questioned the method. The challenge was that the causes of degradation varied from one polymer family to another — there was no single explanation. I had to understand the different mechanisms — swelling, ageing — and how the chemical composition of each formulation interacted with each type of material. Once I understood these mechanisms, the selection became much more targeted. We needed fewer tests, the validation cycles were shorter, and the compatibility rate went from 30 to 80%.`,
-    fr: `Chez Aptar, 70% des materiaux qu'on selectionnait pour resister aux formulations cosmetiques echouaient aux tests de resistance chimique. L'equipe avait toujours fonctionne ainsi, et personne n'avait remis en question la methode. La difficulte, c'est que les causes de degradation variaient d'une famille de polymeres a l'autre. Il n'y avait pas une seule explication. J'ai du comprendre les differents mecanismes — gonflement, vieillissement — et comment la composition chimique de chaque formulation interagissait avec chaque type de materiau. Une fois ces mecanismes compris, la selection matiere est devenue beaucoup plus ciblee. On identifiait le bon materiau plus rapidement, avec moins d'essais, ce qui a raccourci les cycles de validation. Le taux de compatibilite est passe de 30 a 80%.`,
-    tags: ['EN','FR','CAR','Projet 1']
-  },
-  {
-    q: 'Tell me about a project you\'re proud of',
-    en: `At Aptar, the compliance rate for chemical resistance on polyolefin parts was only 20%, and no one had considered surface treatments as a solution. I led the project from start to finish: process review, selection of CVD, coordination of external partners, proof of concept development, and validation on industrial parts. What makes me proud is that I took an innovative project all the way from the laboratory to industrialisation. The compliance rate went from 20 to 100%, and the work led to two patents. It was a project where I was involved in every stage: research, development, coordination, and production.`,
-    fr: `Chez Aptar, le taux de conformite en resistance chimique sur les polyolefines n'etait que de 20%. Personne n'avait explore les traitements de surface comme solution. J'ai porte le projet de bout en bout : etat de l'art, selection du procede CVD, coordination des partenaires externes, developpement de la preuve de concept, et validation sur pieces industrielles. Ce qui me rend fiere, c'est d'avoir mene un projet innovant du laboratoire jusqu'a l'industrialisation. Le taux de conformite est passe de 20 a 100%, et le travail a debouche sur deux brevets. C'est un projet ou j'ai touche a tout : recherche, developpement, pilotage, production.`,
-    tags: ['EN','FR','CAR','Projet 2']
-  },
-  {
-    q: 'Why should we choose you?',
-    en: `I am genuinely passionate about materials science. I hold myself to very high standards, and I am drawn to demanding environments where precision and reliability matter. During my experience, I demonstrated initiative — I identified problems nobody had questioned, I went the extra mile to find solutions, and I delivered measurable results: compatibility from 30 to 80%, compliance from 20 to 100%, two patents. I believe I can be productive quickly because what changes is the material, not the method.`,
-    fr: `Je suis sincerement passionnee par les sciences des materiaux. Je suis tres exigeante avec moi-meme, et les environnements ou la precision et la fiabilite comptent me motivent. Pendant mon experience, j'ai fait preuve d'initiative : j'ai identifie des problemes que personne n'avait remis en question, je suis allee au-dela de ce qu'on me demandait pour trouver des solutions, et j'ai obtenu des resultats mesurables : compatibilite de 30 a 80%, conformite de 20 a 100%, deux brevets. Je pense pouvoir etre productive rapidement, parce que ce qui change c'est le materiau, pas la methode.`,
-    tags: ['EN','FR']
-  }
-];
-
-const CAR_CVD_EN = [
-  {
-    q: 'Initiative (CVD)',
-    en: `At Aptar, the polyolefin parts had a recurring issue with chemical resistance. The compliance rate was only 20%, and no surface treatment solution had ever been explored internally. I took the initiative to review the different processes — wet coating, CVD, plasma treatment, and sol-gel — comparing their performance, industrial feasibility, and regulatory compliance. I identified chemical vapour deposition as the most suitable approach. Then I coordinated external partners for the deposition process and developed the proof of concept, first on laboratory samples, then on industrial parts. The compliance rate went from 20 to 100%, and the project moved towards an industrialisation plan.`,
-    fr: `Chez Aptar, les pieces en polyolefines posaient un probleme recurrent de resistance chimique. Le taux de conformite etait de 20%, et aucune solution de traitement de surface n'avait ete exploree en interne. J'ai realise un etat de l'art des differents procedes — voie humide, CVD, traitement plasma, sol-gel — pour comparer leurs performances, leur faisabilite industrielle et leur conformite reglementaire. J'ai identifie le depot chimique en phase vapeur (CVD) comme l'approche la plus adaptee, puis j'ai coordonne des partenaires externes pour le procede de depot et developpe la preuve de concept, d'abord sur echantillons de laboratoire, puis sur pieces industrielles. Le taux de conformite est passe de 20 a 100%. Le projet a ete valide pour un plan d'industrialisation, et j'ai contribue techniquement a deux brevets.`
-  },
-  {
-    q: 'Challenge (CVD)',
-    en: `I was asked to improve the chemical resistance of polyolefin parts, but no surface treatment process had ever been tested internally for this application. There was no previous experience to rely on. The challenge was both technical and organisational: I had to prove that the process was viable before the company would commit resources. I reviewed the available techniques, identified CVD as the best option, found and coordinated external partners, and validated the proof of concept from laboratory scale to industrial scale. The compliance rate went from 20 to 100%, which convinced the team to move forward with industrialisation.`,
-    fr: `On me demandait d'ameliorer la resistance chimique de polyolefines, mais aucun procede de traitement de surface n'avait jamais ete teste en interne pour cette application. Il fallait partir de zero, sans retour d'experience. La difficulte etait double : technique et organisationnelle. Il fallait d'abord prouver que le procede etait viable avant que l'entreprise n'engage des ressources. J'ai mene l'etat de l'art, identifie le CVD, trouve et coordonne des partenaires externes pour le depot, puis valide la preuve de concept en passant de l'echelle laboratoire a l'echelle industrielle. Le taux de conformite est passe de 20 a 100%, ce qui a convaincu l'equipe de lancer l'industrialisation. Deux brevets ont ete deposes avec ma contribution technique.`
-  },
-  {
-    q: 'Proud of (CVD)',
-    en: `At Aptar, the compliance rate for chemical resistance on polyolefin parts was only 20%, and no one had considered surface treatments as a solution. I led the project from start to finish: process review, selection of CVD, coordination of external partners, proof of concept development, and validation on industrial parts. What makes me proud is that I took an innovative project all the way from the laboratory to industrialisation. The compliance rate went from 20 to 100%, and the work led to two patents. It was a project where I was involved in every stage: research, development, coordination, and production.`,
-    fr: `Chez Aptar, le taux de conformite en resistance chimique sur les polyolefines n'etait que de 20%. Personne n'avait explore les traitements de surface comme solution. J'ai porte le projet de bout en bout : etat de l'art, selection du procede CVD, coordination des partenaires externes, developpement de la preuve de concept, et validation sur pieces industrielles. Ce qui me rend fiere, c'est d'avoir mene un projet innovant du laboratoire jusqu'a l'industrialisation. Le taux de conformite est passe de 20 a 100%, et le travail a debouche sur deux brevets. C'est un projet ou j'ai touche a tout : recherche, developpement, pilotage, production.`
-  }
-];
-
-const CAR_MATSEL_EN = [
-  {
-    q: 'Initiative (Selection matiere)',
-    en: GENERAL_QA[2].en,
-    fr: GENERAL_QA[2].fr
-  },
-  {
-    q: 'Challenge (Selection matiere)',
-    en: GENERAL_QA[3].en,
-    fr: GENERAL_QA[3].fr
-  },
-  {
-    q: 'Proud of (Selection matiere)',
-    en: `At Aptar, the material selection for chemical resistance was based on experience, without any real understanding of why materials degraded. The failure rate had remained around 70% for a long time. I took the subject from scratch: I studied the swelling and ageing mechanisms of polymers in contact with formulations, and I identified why certain material families resisted and others did not. What makes me proud is that we moved from an empirical approach to a scientific selection. Fewer tests, shorter validation cycles, and a compatibility rate that went from 30 to 80%. It is a method the team continued to use after I left.`,
-    fr: `Chez Aptar, la selection des materiaux pour la resistance chimique reposait sur l'experience, sans reelle comprehension des mecanismes de degradation. Le taux d'echec etait de 70%. J'ai pris le sujet de zero : j'ai etudie les mecanismes de gonflement et de vieillissement des polymeres au contact des formulations, et j'ai identifie pourquoi certaines familles de materiaux resistaient et d'autres non. Ce qui me rend fiere, c'est qu'on est passe d'une approche empirique a une selection scientifique. Moins d'essais, des cycles de validation plus courts, et un taux de compatibilite passe de 30 a 80%. C'est un outil que l'equipe a continue a utiliser apres mon depart.`
-  }
-];
-
-const GLOSSARY_SURFACE = [
-  {en:'Anodic oxidation / Anodising', fr:'Oxydation anodique / Anodisation'},
-  {en:'PVD / Sputtering', fr:'Pulverisation cathodique'},
-  {en:'CVD (Chemical Vapour Deposition)', fr:'Depot chimique en phase vapeur'},
-  {en:'Electroplating', fr:'Electrodepositon / Galvanoplastie'},
-  {en:'Etching', fr:'Gravure chimique / Decapage'},
-  {en:'Milling', fr:'Fraisage'},
-  {en:'Laser engraving', fr:'Gravure laser'},
-  {en:'Screen printing', fr:'Serigraphie'},
-  {en:'Wet process', fr:'Voie humide'},
-  {en:'Dry process', fr:'Voie seche'},
-  {en:'Surface treatment', fr:'Traitement de surface'},
-  {en:'Coating', fr:'Revetement'},
-  {en:'Degreasing', fr:'Degraissage'},
-  {en:'Passivation', fr:'Passivation'},
-  {en:'Corrosion resistance', fr:'Resistance a la corrosion'},
-  {en:'Thermal barrier', fr:'Barriere thermique'}
-];
-
-const SAFRAN_DATA = {
-  company: 'Safran Aircraft Engines',
-  location: 'Corbeil-Essonnes (91)',
-  ref: '199918-175469',
-  contract: 'CDI',
-  role: 'Specialiste Traitements de Surface - IM CEI Support et Moyens Industriels F/H',
-  missions: [
-    'Industrialisation des articles aeronautiques sur les procedes de traitements de surface par voie humide',
-    'Resolution de problematiques operationnelles',
-    'Preparation et suivi des audits en lien avec la qualite production',
-    'Amelioration continue',
-    'Support technique fournisseurs, filiales et investissements',
-    'Support a la production / atelier'
-  ],
-  profile: 'Profil ingenieur ou Bac+5 avec formation materiaux et procedes (en particulier chimie). Jeune diplomee ou avec premiere experience en traitements de surface voie humide.',
-  whySafran: `Safran Aircraft Engines concoit et produit des moteurs aeronautiques aux meilleurs niveaux de performance et de fiabilite. Le CEI de Corbeil traite des pieces critiques moteur (aubes, disques turbine) par voie humide. Ce qui m'attire, c'est la double dimension du poste : industrialisation des procedes et support technique a la production, dans un environnement ou la fiabilite est critique. Ma formation en electrochimie et corrosion me donne les bases pour monter rapidement sur les procedes voie humide.`,
-  whySafranEN: `Safran Aircraft Engines designs and produces aircraft engines to the highest levels of performance and reliability. The CEI in Corbeil handles critical engine parts through wet-process surface treatments. What attracts me is the dual dimension of the role: process industrialisation and technical production support, in an environment where reliability is critical. My background in electrochemistry and corrosion gives me a strong foundation to quickly get up to speed on wet processes.`,
-  vocab: [
-    {term:'Voie humide / Wet process', desc:'Pieces plongees dans des bains chimiques (anodisation, conversion, decapage, passivation)'},
-    {term:'Anodisation sulfurique (ASA)', desc:'Couche protectrice 5-25 um, resistance usure + base peinture'},
-    {term:'Conversion chimique (TCP)', desc:'Alternative REACH a l\'Alodine CrVI, couche fine anticorrosion'},
-    {term:'Nadcap', desc:'Certification procedes speciaux aero (TdS, soudage, CND)'},
-    {term:'REACH / Chrome VI', desc:'Substitution en cours : OAC->TSA, Alodine->TCP, chromage dur->HVOF'},
-    {term:'Fragilisation par hydrogene (FPH)', desc:'Risque majeur en electrodeposition, degazage obligatoire dans les 4h'},
-    {term:'Gamme de traitement', desc:'Sequence precise qualifiee : degraissage, decapage, traitement, rincage, controle'},
-    {term:'CEI', desc:'Centre d\'Excellence Industrielle (site Corbeil)'}
-  ],
-  questions: [
-    'Quels procedes de TdS utilisez-vous dans l\'atelier ?',
-    'Quels types de pieces / alliages traitez-vous ?',
-    'Quel est le defi technique principal en ce moment ?',
-    'Comment le service methode travaille avec la production ?',
-    'Taille de l\'equipe methode ?',
-    'Programme de formation pour les nouveaux ?',
-    'Perspectives d\'evolution ?',
-    'Ou en etes-vous sur la substitution du chrome VI ?'
-  ]
+var PITCHES={
+fr:{short:"Bonjour, je suis Caother Berriache. Je suis ingénieure en chimie et sciences des matériaux, et je cherche actuellement des opportunités dans l'aéronautique. Lors de mon expérience chez Aptar, j'ai travaillé sur des revêtements CVD pour améliorer la résistance des polyéléfines, et j'ai porté ce projet de la preuve de concept jusqu'à l'industrialisation. L'expérience que j'ai acquise en science des polymères m'a donné une base solide pour évoluer vers de nouveaux domaines comme les matériaux métalliques et les traitements de surface. Je suis sincèrement motivée pour contribuer à une équipe qui travaille sur des matériaux avancés.",
+long:"Bonjour, je suis Caother Berriache, ingénieure en chimie et sciences des matériaux. J'ai acquis mon expérience chez Aptar Group, dans la R&D matériaux, à l'interface entre laboratoire et production.\n\nPendant mon expérience, j'ai mené trois projets complémentaires. Le premier : le développement complet d'un revêtement CVD sur polyéléfines pour améliorer la résistance chimique de pièces plastiques. J'ai porté ce projet de l'état de l'art jusqu'à l'industrialisation, ce qui a fait passer le taux de conformité de 20 à 100%, avec deux brevets déposés.\n\nEn parallèle, j'ai repensé la méthode de sélection matière en étudiant les mécanismes de dégradation — gonflement, hydrolyse, vieillissement. Le taux de compatibilité est passé de 30 à 80%, et l'équipe a continué à utiliser cette méthode après mon départ.\n\nEnfin, j'ai développé un élastomère TPE injectable sans PFAS, du concept au scale-up sur presse prototype.\n\nCe qui me motive aujourd'hui, c'est d'appliquer cette expertise en caractérisation, qualification et industrialisation des traitements de surface dans un secteur plus exigeant. Ce qui change, c'est le matériau, pas la méthode."},
+en:{short:"Hi, I am Caother. I am a materials engineer currently looking for opportunities in aeronautics. I hold a Master's degree in chemistry and materials science. During my internship, I worked on CVD coatings to improve the resistance of polyolefins, and I led that project from scratch through to industrialisation. The experience I have gained in polymer science has given me a strong foundation to transition into new areas such as metallic materials and surface treatments. I am genuinely motivated to contribute to a team working on advanced materials.",
+long:"Hi, I am Caother Berriache, a materials and chemistry engineer. I gained my experience at Aptar Group, in materials R&D, at the interface between laboratory and production.\n\nDuring my time there, I led three complementary projects. First: the complete development of a CVD coating on polyolefins to improve chemical resistance of plastic parts. I took this project from state of the art through to industrialisation, raising compliance from 20 to 100%, with two patents filed.\n\nIn parallel, I rethought the material selection method by studying degradation mechanisms — swelling, hydrolysis, ageing. Compatibility went from 30 to 80%, and the team continued using this method after I left.\n\nFinally, I developed a PFAS-free injectable TPE elastomer, from concept to scale-up on a prototype press.\n\nWhat motivates me today is applying this expertise in characterisation, qualification and industrialisation of surface treatments in a more demanding sector. What changes is the material, not the method."}
 };
 
-const THALES_DATA = {
-  company: 'Thales Underwater Systems / Ifremer',
-  location: 'Ifremer Centre Bretagne, Plouzane (Brest)',
-  role: 'These CIFRE - Vieillissement de vitrimeres polyurethanes en eau de mer',
-  contract: 'CIFRE (CDD 3 ans)',
-  ref: 'R0324240',
-  director: 'Pierre-Yves Le Gac (Ifremer, labo SMASH, HDR)',
-  pitchFR: `Bonjour, je suis Caother Berriache, ingenieure chimie et sciences des materiaux. J'ai deux ans d'experience en tant qu'ingenieure R&D materiaux chez Aptar, dans l'industrie du packaging cosmetique. Aujourd'hui, je suis candidate a cette these parce que mon experience sur le terrain m'a donne envie d'aller plus loin dans la comprehension des mecanismes de degradation des polymeres.\n\nChez Aptar, j'ai travaille au service Applied Sciences sur trois projets complementaires. Le premier : le developpement complet d'un elastomere thermoplastique injectable a base de polyurethane base ester, de la formulation au scale-up. Le deuxieme : le vieillissement et la compatibilite chimique, ou j'ai conduit des campagnes d'immersion prolongee et observe directement l'hydrolyse de polyurethanes base ester. De ma propre initiative, j'ai detaille chimiquement le panel pour comprendre pourquoi certaines formulations degradaient le materiau et d'autres non. Le troisieme : l'evaluation d'un revetement barriere CVD sur polyolefines.\n\nC'est cette experience de vieillissement des PU qui a provoque le declic. J'ai realise que je voulais comprendre les mecanismes en profondeur. Ce qui me motive dans ce sujet, c'est qu'il est exactement a l'intersection de ce que je sais faire et de ce que je veux apprendre. Chez Aptar, j'ai vu l'hydrolyse attaquer les liaisons ester d'un PU. Dans un vitrimere PU, ce sont ces memes liaisons ester qui permettent le rearrangement dynamique du reseau. L'eau de mer pourrait donc s'attaquer precisement a ce qui fait fonctionner le vitrimere. D'ailleurs, en lisant vos travaux sur l'hydrolyse de PU base ester en eau de mer, j'ai retrouve les memes mecanismes que j'ai observes chez Aptar, sauf que vous allez jusqu'a la modelisation cinetique et la prediction. C'est exactement ce que je veux apprendre a faire.\n\nMon parcours m'a preparee a etre operationnelle rapidement au labo. Je suis prete a m'engager pleinement sur trois ans, et je suis disponible immediatement.`,
-  pitchEN: `Hello, I am Caother Berriache, a chemistry and materials science engineer. I have two years of experience as an R&D materials engineer at Aptar, in the cosmetic packaging industry. I am applying for this thesis because my hands-on experience made me want to go deeper into understanding polymer degradation mechanisms.\n\nAt Aptar, I worked in the Applied Sciences department on three complementary projects. First: the complete development of an injectable thermoplastic elastomer based on ester-based polyurethane, from formulation to scale-up. Second: ageing and chemical compatibility, where I ran extended immersion campaigns and directly observed the hydrolysis of ester-based polyurethanes. On my own initiative, I analysed the chemical panel to understand why some formulations degraded the material and others did not. Third: evaluation of a CVD barrier coating on polyolefins.\n\nIt was that PU ageing experience that triggered my interest. I realised I wanted to understand the mechanisms in depth. What motivates me about this subject is that it sits at the exact intersection of what I know and what I want to learn. At Aptar, I saw hydrolysis attacking the ester bonds in a PU. In a vitrimer PU, those same ester bonds are what enable the dynamic network rearrangement. Seawater could therefore attack precisely what makes the vitrimer work. Reading your publications on ester-based PU hydrolysis in seawater, I recognised the same mechanisms I observed at Aptar, except you take it to kinetic modelling and lifetime prediction. That is exactly what I want to learn.\n\nMy background has prepared me to be productive quickly in the lab. I am fully committed to three years, and I am available immediately.`,
-  starExamples: [
-    {
-      title: 'Resolution scale-up TPE',
-      s: 'Le melange TPU/PU (30/70) valide en extrusion labo devait etre transfere en injection sur presse prototype.',
-      t: 'Obtenir des pieces injectees conformes (remplissage, proprietes mecaniques, stabilite dimensionnelle).',
-      a: 'Trois problemes resolus un par un : remplissage incomplet (parametres d\'injection), contamination lot PU (detectee par FTIR), optimisation iterative du ratio et des additifs.',
-      r: 'POC valide. Rondelles conformes au cahier des charges (gonflement -1% a +5%). Depot de brevet lance.',
-      sEN: 'The TPU/PU (30/70) blend validated in lab extrusion had to be transferred to injection moulding on a prototype press.',
-      tEN: 'Obtain injection-moulded parts meeting specifications (filling, mechanical properties, dimensional stability).',
-      aEN: 'Three problems solved one by one: incomplete mould filling (injection parameters), PU batch contamination (detected by FTIR), iterative optimisation of the ratio and additives.',
-      rEN: 'POC validated. Parts met specifications (swelling -1% to +5%). Patent filing initiated.'
-    },
-    {
-      title: 'Initiative panel chimique (hydrolyse vs gonflement)',
-      s: 'Les campagnes de compatibilite chimique donnaient des resultats de gonflement varies selon les formulations, sans comprendre pourquoi.',
-      t: 'Comprendre les mecanismes d\'interaction pour orienter les choix de matiere de facon rationnelle.',
-      a: 'De ma propre initiative, j\'ai detaille la composition chimique du panel (polarite, nature des solvants, pH) et croise avec les resultats. J\'ai identifie que les formulations aqueuses provoquaient de l\'hydrolyse sur les PU base ester.',
-      r: 'Distinction claire gonflement reversible vs degradation irreversible. Reorientation des choix matiere selon le type de formulation.',
-      sEN: 'Chemical compatibility campaigns gave varied swelling results across formulations, with no understanding of why.',
-      tEN: 'Understand the interaction mechanisms to make rational material selection decisions.',
-      aEN: 'On my own initiative, I analysed the chemical composition of the panel (polarity, solvent type, pH) and cross-referenced with results. I identified that aqueous formulations caused hydrolysis on ester-based PU.',
-      rEN: 'Clear distinction between reversible swelling and irreversible degradation. Material choices redirected based on formulation type.'
-    }
-  ],
-  technicalQA: [
-    {q: 'Qu\'est-ce qu\'un vitrimere ?', a: 'Polymere reticule a liaisons covalentes dynamiques. Peut etre remodele, repare et recycle tout en conservant les proprietes d\'un reseau reticule a temperature d\'usage. Au-dessus de Tv (temperature de topologie), le reseau se rearrange par echange de liaisons. Concept : Ludwik Leibler, ESPCI, 2011.', aEN: 'A crosslinked polymer with dynamic covalent bonds. Can be reshaped, repaired and recycled while retaining crosslinked network properties at service temperature. Above Tv (topology freezing temperature), the network rearranges through bond exchange. Concept by Ludwik Leibler, ESPCI, 2011.'},
-    {q: 'Mecanismes de vieillissement en eau de mer pour un vitrimere PU ?', a: 'Hydrolyse (rupture des liaisons urethane/ester par l\'eau), plastification (absorption d\'eau abaissant la Tg), gonflement par diffusion, oxydation. Specificite vitrimere : l\'eau de mer pourrait modifier la cinetique d\'echange des liaisons dynamiques.', aEN: 'Hydrolysis (water breaking urethane/ester bonds), plasticisation (water absorption lowering Tg), swelling by diffusion, oxidation. Vitrimer-specific: seawater could modify the dynamic bond exchange kinetics.'},
-    {q: 'Difference PU base ester vs base ether face a l\'hydrolyse ?', a: 'PU base ester beaucoup plus sensible a l\'hydrolyse (liaison C-O de l\'ester hydrolysable). PU base ether resiste mieux a l\'hydrolyse mais plus sensible a l\'oxydation. Arbitrage classique en formulation PU.', aEN: 'Ester-based PU is far more susceptible to hydrolysis (hydrolysable C-O ester bond). Ether-based PU resists hydrolysis better but is more sensitive to oxidation. A classic trade-off in PU formulation.'},
-    {q: 'Techniques de caracterisation pour le vieillissement ?', a: 'Gravimetrie (prise en eau, cinetique de diffusion), DSC (transitions thermiques, Tg, Tv), FTIR (liaisons urethane/ester, produits de degradation), essais mecaniques (traction, DMA), rheologie (relaxation de contrainte pour cinetique d\'echange vitrimere), tests de solubilite/taux de gel.', aEN: 'Gravimetry (water uptake, diffusion kinetics), DSC (thermal transitions, Tg, Tv), FTIR (urethane/ester bonds, degradation products), mechanical testing (tensile, DMA), rheology (stress relaxation for vitrimer exchange kinetics), solubility/gel fraction tests.'},
-    {q: 'Comment votre travail TPU est transposable aux vitrimeres PU ?', a: 'Meme chimie de base (reaction isocyanate/polyol). Mon experience donne la comprehension structure-proprietes des PU. La difference : les vitrimeres ont des liaisons echangeables. Mais les mecanismes de degradation de base (hydrolyse segments ester, plastification) restent les memes. Lien cle : chez Aptar, les liaisons ester etaient la cible de l\'hydrolyse. Dans un vitrimere PU, ces memes liaisons ester permettent l\'echange dynamique (transesterification). L\'eau de mer pourrait attaquer precisement ce qui fait fonctionner le vitrimere.', aEN: 'Same base chemistry (isocyanate/polyol reaction). My experience provides structure-property understanding of PU. The difference: vitrimers have exchangeable bonds. But the fundamental degradation mechanisms (ester segment hydrolysis, plasticisation) remain the same. Key link: at Aptar, ester bonds were the hydrolysis target. In a vitrimer PU, those same ester bonds enable dynamic exchange (transesterification). Seawater could attack precisely what makes the vitrimer work.'}
-  ],
-  questionsToAsk: [
-    'Quel type de vitrimere PU sera etudie ? Formulations deja identifiees ou a selectionner ?',
-    'Donnees preliminaires existantes ou sujet entierement exploratoire ?',
-    'La pression hydrostatique fait-elle partie du perimetre ?',
-    'Repartition du temps entre Ifremer et Thales ?',
-    'Collaborations prevues avec d\'autres labos (PIMM/ENSAM) ?',
-    'Serait-il possible de participer a la conference VIP 2026 (Brest, 1-4 juin) ?',
-    'Quelle ecole doctorale pour l\'inscription ?',
-    'Objectifs de publication ou de valorisation definis ?'
-  ],
-  leGacProfile: {
-    poste: 'Chercheur HDR, labo SMASH (Structures, Materiaux Avances et Sollicitations Hyperbares)',
-    orcid: '0000-0003-3183-1715',
-    pubs: '55+ publications',
-    hdr: 'Soutenue janvier 2023 : "Durability of polymers in marine environment"',
-    editeur: 'Polymer Degradation and Stability',
-    conference: 'Organisateur VIP 2026 (Vieillissement des Polymeres, Brest, 1-4 juin 2026)',
-    themes: 'Vieillissement polymeres milieu marin, elastomeres (PU, polychloroprene), prediction non-empirique de duree de vie',
-    doctorants: '3 en cours (aucun sur les vitrimeres — cette these ouvre une nouvelle ligne de recherche)'
-  },
-  labEquipment: 'DSC, DVS, TGA, DMA, FTIR, 40 chambres hyperbares (jusqu\'a 1000 bar), eau de mer naturelle (rade de Brest), machines de traction 10-200 kN',
-  whyThesis: `Ce sujet est le prolongement scientifique direct de mon experience. J'ai travaille sur des PU base ester, observe leur hydrolyse, et je veux comprendre ces mecanismes dans un contexte nouveau — les vitrimeres — ou les liaisons dynamiques ajoutent une dimension supplementaire. Le milieu marin ajoute une complexite que je n'ai pas encore exploree, mais les fondamentaux sont transposables. L'approche de M. Le Gac correspond a ce que je cherche : la prediction basee sur les mecanismes, pas empirique.`,
-  whyThesisEN: `This subject is the direct scientific continuation of my experience. I worked on ester-based PU, observed their hydrolysis, and I want to understand these mechanisms in a new context — vitrimers — where dynamic bonds add an extra dimension. The marine environment adds a complexity I have not yet explored, but the fundamentals are transferable. Mr Le Gac's approach matches what I am looking for: mechanism-based prediction, not empirical.`,
-  challenges: [
-    {challenge: 'Pas de Master recherche', reponse: 'Force du profil CIFRE : experience labo + industrie. Le Master en alternance = double culture des le depart.'},
-    {challenge: 'Pas d\'experience milieu marin', reponse: 'Mecanismes de base transposables (diffusion, hydrolyse, gonflement). Le but de la these est d\'apprendre le contexte marin.'},
-    {challenge: 'Vitrimeres = nouveau', reponse: 'Documentee (Leibler, Tv, transesterification). Aucun doctorant de Le Gac ne travaille sur les vitrimeres.'},
-    {challenge: 'Pas de publications', reponse: 'Brevet + CIR + rapport M2 = production scientifique en cadre industriel.'},
-    {challenge: 'Pourquoi quitter l\'industrie', reponse: 'Pas quitter : approfondir. CIFRE = rester a l\'interface industrie/recherche.'}
-  ]
-};
+var STAR_EXAMPLES=[
+{id:'cvd',title:{fr:'Projet CVD (20% → 100%)',en:'CVD Project (20% → 100%)'},
+s:{fr:"Pièces polyéléfines avec problème récurrent de résistance chimique. Taux de conformité à 20%, aucun traitement de surface exploré en interne.",en:"Polyolefin parts with recurring chemical resistance issue. Compliance at 20%, no surface treatment explored internally."},
+t:{fr:"Évaluer différents procédés — voie humide, CVD, plasma, sol-gel — comparer performance, faisabilité, conformité.",en:"Review different processes — wet coating, CVD, plasma, sol-gel — compare performance, feasibility, compliance."},
+a:{fr:"Identifié le CVD comme meilleure option. Coordonné des partenaires externes. Développé la POC du labo à l'échelle industrielle.",en:"Identified CVD as best option. Coordinated external partners. Developed POC from lab to industrial scale."},
+r:{fr:"Conformité 20→100%. Projet passé en plan d'industrialisation. 2 brevets déposés. Toutes les étapes : recherche, développement, coordination, production.",en:"Compliance 20→100%. Project moved to industrialisation plan. 2 patents filed. All stages: research, development, coordination, production."}},
+{id:'selection',title:{fr:'Sélection matière (30% → 80%)',en:'Material Selection (30% → 80%)'},
+s:{fr:"Sélection matière basée sur l'expérience, sans vraie compréhension de la dégradation. 70% d'échec en tests.",en:"Material selection based on experience, no real understanding of degradation. 70% failure rate."},
+t:{fr:"Passer d'une sélection empirique à une sélection scientifique.",en:"Move from empirical to scientific selection."},
+a:{fr:"Étudié les mécanismes gonflement/vieillissement. Identifié pourquoi certaines familles résistent. Croisé composition chimique et résultats.",en:"Studied swelling/ageing mechanisms. Identified why certain families resisted. Cross-referenced chemical composition with results."},
+r:{fr:"Moins de tests, cycles plus courts, compatibilité 30→80%. L'équipe a continué à utiliser la méthode après mon départ.",en:"Fewer tests, shorter cycles, 30→80% compatibility. Team continued using method after I left."}},
+{id:'tpe',title:{fr:'Scale-up TPE (formulation → injection)',en:'TPE Scale-up (formulation → injection)'},
+s:{fr:"Mélange TPE validé en extrusion labo devait être transféré en moulage injection sur presse prototype.",en:"TPE blend validated in lab extrusion had to be transferred to injection moulding on prototype press."},
+t:{fr:"Obtenir des pièces moulées conformes aux spécifications (remplissage, propriétés mécaniques, stabilité dimensionnelle).",en:"Obtain injection-moulded parts meeting specifications (filling, mechanical properties, dimensional stability)."},
+a:{fr:"Trois problèmes résolus un par un : remplissage moule incomplet (paramètres injection), contamination lot PU (détectée par FTIR), optimisation itérative du ratio et additifs.",en:"Three problems solved one by one: incomplete mould filling (injection parameters), PU batch contamination (detected by FTIR), iterative optimisation of ratio and additives."},
+r:{fr:"POC validée. Pièces conformes aux spécifications (gonflement -1% à +5%). Dépôt de brevet initié.",en:"POC validated. Parts met specifications (swelling -1% to +5%). Patent filing initiated."}}
+];
 
-const HUTCHINSON_DATA = {
-  company: 'Hutchinson (CRI - Centre de Recherche et Innovation)',
-  location: 'Chalette-sur-Loing (45)',
-  role: 'Ingenieure R&I Formulation Materiaux Thermodurcissables Composites',
-  contract: 'CDI',
-  whyHutchinson: `Hutchinson developpe des solutions d'etancheite, d'antivibratoire et de gestion des fluides pour l'automobile, l'aeronautique et l'industrie, avec un engagement croissant sur les composites durables. Mon experience en selection matiere, caracterisation et industrialisation s'applique a la formulation de resines thermodurcissables que developpe le Laboratoire des Interfaces Multi-Materiaux. J'y apporterais ma capacite a piloter des projets R&D en coordonnant techniciens, laboratoires et business units.`,
-  whyHutchinsonEN: `Hutchinson develops sealing, anti-vibration and fluid management solutions for automotive, aeronautics and industry, with a growing commitment to sustainable composites. My experience in material selection, characterisation and industrialisation applies directly to the thermoset resin formulation developed at their Multi-Material Interfaces Laboratory. I would bring my ability to lead R&D projects by coordinating technicians, laboratories and business units.`,
-  angles: [
-    'Formulation et polymerisation : formation couvre specifiquement la polymerisation, la reticulation, les procedes de mise en oeuvre',
-    'Composites thermodurcissables : transfert direct des competences polymeres (vieillissement, degradation, caracterisation)',
-    'R&I = Recherche & Innovation : dimension recherche plus poussee que les postes industriels classiques',
-    'Coordination multi-acteurs : experience de pilotage de projets R&D avec techniciens et prestataires externes',
-    'Alternative sans PFAS : experience directe de developpement d\'elastomere TPE sans PFAS chez Aptar',
-    'Methode de selection matiere : la methodologie (degradation, vieillissement, selection ciblee) s\'applique a tout polymere'
-  ],
-  missions: [
-    'Developpement matiere (formulation de resines thermodurcissables)',
-    'Essais et caracterisation',
-    'Pilotage de projets R&D',
-    'Interface laboratoire / production / business units'
-  ]
-};
+var QA_GENERAL=[
+{q:{fr:"Présentez-vous",en:"Tell me about yourself"},a:{fr:"Utiliser le pitch 30s. Structure : qui je suis + expérience → ce que je sais faire → pourquoi cette entreprise.",en:"Use the 30s pitch. Structure: who I am + experience → what I can do → why this company."}},
+{q:{fr:"Votre plus grand défaut ?",en:"Biggest weakness?"},a:{fr:"Le perfectionnisme. Chez Aptar, je passais trop de temps à comprendre chaque détail avant d'avancer. J'ai appris à découper en étapes et aller plus vite au labo. Je garde mes standards élevés, mais je suis plus efficace.",en:"Perfectionism. At Aptar, I used to spend too much time understanding every detail before moving forward. I learned to break tasks into steps and move to lab testing faster. I still hold high standards, but I'm more efficient."}},
+{q:{fr:"Racontez une prise d'initiative",en:"Tell me about a time you took initiative"},a:{fr:"Projet sélection matière : méthode standard donnait 70% d'échec. J'ai étudié les mécanismes de dégradation de ma propre initiative. Résultat : compatibilité 30→80%.",en:"Material selection project: standard method gave 70% failure. I studied degradation mechanisms on my own initiative. Result: compatibility 30→80%."}},
+{q:{fr:"Un défi que vous avez surmonté ?",en:"A challenge you overcame?"},a:{fr:"Projet CVD : aucune solution de traitement de surface n'existait en interne. J'ai exploré les procédés, identifié le CVD, monté la POC de zéro. Conformité 20→100%, 2 brevets.",en:"CVD project: no surface treatment solution existed internally. I explored processes, identified CVD, built POC from scratch. Compliance 20→100%, 2 patents."}},
+{q:{fr:"Un projet dont vous êtes fière ?",en:"A project you're proud of?"},a:{fr:"Le projet CVD complet : de l'état de l'art à l'industrialisation. Chaque étape : recherche, développement, coordination partenaires, validation industrielle. 20→100%, 2 brevets.",en:"The full CVD project: from state of the art to industrialisation. Every stage: research, development, partner coordination, industrial validation. 20→100%, 2 patents."}},
+{q:{fr:"Pourquoi vous choisir ?",en:"Why should we choose you?"},a:{fr:"Passionnée par les matériaux. Standards élevés. Résultats mesurables : 30→80%, 20→100%, deux brevets. Ce qui change c'est le matériau, pas la méthode.",en:"Passionate about materials. High standards. Measurable results: 30→80%, 20→100%, two patents. What changes is the material, not the method."}}
+];
 
-const EXTRA_MILE_EN = `When no surface treatment solution existed internally, I went the extra mile: I explored the processes on my own, identified CVD as the best approach, and built the proof of concept from scratch rather than waiting for someone to provide a method.`;
-const EXTRA_MILE_FR = `Quand aucune solution de traitement de surface n'existait en interne, j'ai ete au-dela de ce qu'on me demandait : j'ai explore les procedes par moi-meme, identifie le CVD, et monte la preuve de concept de zero plutot que d'attendre qu'on me donne une methode.`;
+var QA_SAFRAN=[
+{q:{fr:"Pourquoi les traitements de surface ?",en:"Why surface treatments?"},a:{fr:"Formation en électrochimie/corrosion + projet CVD = passion pour le lien surface-performance. En aéro, le TdS c'est la sécurité du vol, pas juste l'esthétique.",en:"Electrochemistry/corrosion training + CVD project = passion for surface-performance link. In aerospace, surface treatment is flight safety, not just aesthetics."}},
+{q:{fr:"Pourquoi Safran et pas un concurrent ?",en:"Why Safran over a competitor?"},a:{fr:"Leader propulsion. TdS = sécurité moteur (navigabilité). Corbeil à 15min. Formée par M. Knittel (ex-Safran). Programme RISE = innovation continue.",en:"Propulsion leader. Surface treatments = engine safety (airworthiness). Corbeil 15min away. Trained by M. Knittel (former Safran). RISE program = continuous innovation."}},
+{q:{fr:"Pas d'expérience voie humide. Comment monter ?",en:"No wet-process experience. How will you ramp up?"},a:{fr:"Mon état de l'art incluait la voie humide. Les fondamentaux d'électrochimie sont directement transposables. Même méthodologie : plans de tests, qualification, paramètres critiques.",en:"My state of the art included wet process. Electrochemistry fundamentals transfer directly. Same methodology: test plans, qualification, critical parameters."}},
+{q:{fr:"Que savez-vous de Nadcap ?",en:"What do you know about Nadcap?"},a:{fr:"Certification procédés spéciaux aéro (TdS, soudage, CND). Audits exigeants : maîtrise des procédés + traçabilité. Pas d'expérience directe mais rigueur documentaire transposable.",en:"Special aerospace processes certification (surface treatments, welding, NDT). Demanding audits: process mastery + traceability. No direct experience but documentary rigor transfers."}},
+{q:{fr:"Le chrome VI, vous en pensez quoi ?",en:"What do you think about Chromium VI?"},a:{fr:"CMR, Annexe XIV de REACH. Substitution en cours : TSA au lieu d'OAC, TCP au lieu d'Alodine, HVOF au lieu de chromage dur. Je connais REACH depuis Aptar.",en:"CMR, REACH Annex XIV. Ongoing substitution: TSA instead of OAC, TCP instead of Alodine, HVOF instead of hard chrome. I know REACH from Aptar."}},
+{q:{fr:"Où vous voyez-vous dans 5 ans ?",en:"Where do you see yourself in 5 years?"},a:{fr:"Experte en TdS, piloter des projets d'industrialisation ou de substitution Chrome VI. Évolution vers un rôle de chef de projet.",en:"Surface treatment expert, leading industrialisation or Chrome VI substitution projects. Evolution toward project manager role."}}
+];
 
-// =====================================================================
-// STATE
-// =====================================================================
-const STORE_KEY = 'hub_entretien_v1';
-let state = {tab:'general', checks:{}, timerRunning:false, timerSeconds:0, timerInterval:null};
+var AERO_MODULES=[
+{id:'vol',title:{fr:'Comment vole un avion',en:'How does a plane fly'},content:{fr:"<b>4 forces en vol :</b><br>• Portance (vers le haut, générée par les ailes)<br>• Poids (vers le bas, gravité)<br>• Poussée (vers l'avant, moteurs)<br>• Traînée (vers l'arrière, frottement air)<br><br>En vol stable : Portance = Poids, Poussée = Traînée.<br><br>La portance est créée par la forme de l'aile (profil aérodynamique) : l'air circule plus vite au-dessus qu'en dessous, créant une dépression.",en:"<b>4 forces in flight:</b><br>• Lift (upward, generated by wings)<br>• Weight (downward, gravity)<br>• Thrust (forward, engines)<br>• Drag (backward, air friction)<br><br>In stable flight: Lift = Weight, Thrust = Drag.<br><br>Lift is created by the wing shape (airfoil): air flows faster above than below, creating low pressure."}},
+{id:'struct',title:{fr:'Structure d\'un avion',en:'Aircraft structure'},content:{fr:"<b>Fuselage</b> : semi-monocoque (cadres + lisses + revêtement). Contient passagers/fret.<br><br><b>Voilure</b> : longerons + nervures. Génère la portance. Contient le carburant.<br><br><b>Empennage</b> : stabilisateurs horizontal (tangage) et vertical (lacet).<br><br><b>Train d'atterrissage</b> : escamotable, absorbe le choc à l'atterrissage.<br><br><b>GMP</b> : Groupe MotoPropulseur (moteurs + nacelles + pylônes).",en:"<b>Fuselage</b>: semi-monocoque (frames + stringers + skin). Contains passengers/cargo.<br><br><b>Wing</b>: spars + ribs. Generates lift. Contains fuel.<br><br><b>Empennage</b>: horizontal (pitch) and vertical (yaw) stabilizers.<br><br><b>Landing gear</b>: retractable, absorbs landing impact.<br><br><b>Powerplant</b>: engines + nacelles + pylons."}},
+{id:'turbo',title:{fr:'Le turboréacteur',en:'The turbojet engine'},content:{fr:"<b>Principe :</b> aspirer air → comprimer → brûler kérosène → éjecter gaz<br><br><b>4 sections :</b><br>1. Entrée d'air (ralentit et canalise)<br>2. Compresseur (augmente pression, multi-étages)<br>3. Chambre de combustion (injection kérosène, ~1500°C)<br>4. Turbine (récupère énergie, entraîne le compresseur)<br><br><b>Poussée</b> = éjection de gaz à haute vitesse (principe action/réaction, 3e loi de Newton).",en:"<b>Principle:</b> intake air → compress → burn kerosene → eject gas<br><br><b>4 sections:</b><br>1. Air intake (slows and channels)<br>2. Compressor (increases pressure, multi-stage)<br>3. Combustion chamber (kerosene injection, ~1500°C)<br>4. Turbine (recovers energy, drives compressor)<br><br><b>Thrust</b> = high-speed gas ejection (action/reaction, Newton's 3rd law)."}},
+{id:'flux',title:{fr:'Simple flux vs Double flux',en:'Single vs Dual spool'},content:{fr:"<b>Simple flux :</b> tout l'air traverse compresseur+chambre+turbine. Usage militaire.<br><br><b>Double flux :</b> gros ventilateur (fan) devant. L'air se divise :<br>• Flux chaud (interne) : compresseur+chambre+turbine<br>• Flux froid (externe) : contourne le moteur, fournit ~80% de la poussée<br><br><b>Taux de dilution</b> = flux froid / flux chaud<br>Plus élevé = moins bruyant, moins gourmand.<br><br><b>LEAP</b> (Safran/GE) : taux ~11, 15% moins de consommation que le CFM56.",en:"<b>Single spool:</b> all air goes through compressor+chamber+turbine. Military use.<br><br><b>Dual spool (turbofan):</b> large fan at front. Air splits:<br>• Hot flow (internal): compressor+chamber+turbine<br>• Cold flow (external): bypasses engine, provides ~80% of thrust<br><br><b>Bypass ratio</b> = cold flow / hot flow<br>Higher = quieter, more fuel-efficient.<br><br><b>LEAP</b> (Safran/GE): ratio ~11, 15% less fuel than CFM56."}},
+{id:'mat',title:{fr:'Matériaux aéronautiques',en:'Aerospace materials'},content:{fr:"<b>Duralumin</b> (Al-Cu) : base de l'aviation métallique, léger et résistant.<br><b>Titane</b> : léger, résiste à la chaleur (disques turbine, compresseur HP).<br><b>Composites</b> (fibres C/verre + résine) : légers, formes complexes, fuselage/voilure.<br><b>Aciers</b> : pièces mécaniquement sollicitées (train d'atterrissage).<br><b>Superalliages base Ni</b> : aubes turbine HP (>1000°C).<br><br><b>Sélection</b> : température + masse + résistance mécanique + coût + fatigue.",en:"<b>Duralumin</b> (Al-Cu): aviation metal baseline, light and strong.<br><b>Titanium</b>: light, heat-resistant (turbine discs, HP compressor).<br><b>Composites</b> (C/glass fiber + resin): light, complex shapes, fuselage/wing.<br><b>Steel</b>: mechanically stressed parts (landing gear).<br><b>Ni-base superalloys</b>: HP turbine blades (>1000°C).<br><br><b>Selection</b>: temperature + mass + mechanical resistance + cost + fatigue."}}
+];
 
-function saveState(){
-  try{localStorage.setItem(STORE_KEY, JSON.stringify({checks:state.checks}))}catch(e){}
-}
-function loadState(){
-  try{
-    const d = JSON.parse(localStorage.getItem(STORE_KEY));
-    if(d && d.checks) state.checks = d.checks;
-  }catch(e){}
-}
+var TDS_MODULES=[
+{id:'voiehumide',title:{fr:'Traitements de surface voie humide',en:'Wet-process surface treatments'},content:{fr:"<b>Principe :</b> pièces plongées dans des bains chimiques successifs.<br><br><b>Étapes typiques :</b> dégraissage → décapage → traitement → rinçage → contrôle<br><br><b>Procédés courants :</b><br>• Anodisation (couche d'oxyde protectrice sur aluminium)<br>• Conversion chimique (couche fine anticorrosion)<br>• Électrodéposition (dépôt métallique par électrolyse)<br>• Passivation (stabilisation surface)<br>• Décapage (préparation/nettoyage surface)<br><br><b>Paramètres critiques :</b> concentration bains, température, temps d'immersion, agitation, pH.",en:"<b>Principle:</b> parts immersed in successive chemical baths.<br><br><b>Typical steps:</b> degreasing → etching → treatment → rinsing → inspection<br><br><b>Common processes:</b><br>• Anodizing (protective oxide layer on aluminum)<br>• Chemical conversion (thin anti-corrosion layer)<br>• Electroplating (metallic deposit by electrolysis)<br>• Passivation (surface stabilization)<br>• Etching (surface preparation/cleaning)<br><br><b>Critical parameters:</b> bath concentration, temperature, immersion time, agitation, pH."}},
+{id:'anod',title:{fr:'Anodisation',en:'Anodizing'},content:{fr:"<b>ASA</b> (Anodisation Sulfurique Aéronautique) :<br>• Couche 5-25 µm, résistance usure + base peinture<br>• Bain d'acide sulfurique, pièce = anode<br>• L'aluminium s'oxyde en surface (Al₂O₃)<br><br><b>OAC</b> (Oxydation Anodique Chromique) :<br>• Couche fine (2-5 µm), excellente anticorrosion<br>• Utilisait le chrome VI (CMR → en substitution)<br><br><b>TSA</b> (Tartric-Sulfuric Acid) :<br>• Remplaçant REACH de l'OAC<br>• Performance équivalente sans chrome VI",en:"<b>ASA</b> (Sulfuric Acid Anodizing):<br>• Layer 5-25 µm, wear resistance + paint base<br>• Sulfuric acid bath, part = anode<br>• Aluminum oxidizes at surface (Al₂O₃)<br><br><b>CAA</b> (Chromic Acid Anodizing):<br>• Thin layer (2-5 µm), excellent anticorrosion<br>• Used chromium VI (CMR → being substituted)<br><br><b>TSA</b> (Tartric-Sulfuric Acid):<br>• REACH replacement for CAA<br>• Equivalent performance without chrome VI"}},
+{id:'reach',title:{fr:'REACH et Chrome VI',en:'REACH and Chromium VI'},content:{fr:"<b>Chrome VI</b> = CMR (cancérogène, mutagène, reprotoxique)<br>Inscrit à l'Annexe XIV de REACH → autorisation obligatoire.<br><br><b>Substitutions en cours :</b><br>• OAC → TSA (anodisation tartrique-sulfurique)<br>• Alodine (CrVI) → TCP (Trivalent Chromium Process)<br>• Chromage dur → HVOF ou SiC electroless<br><br><b>Enjeux :</b><br>• Requalification de chaque procédé (coûteux, long)<br>• Performances parfois inférieures → optimisation nécessaire<br>• Nadcap doit revalider chaque substitution<br>• Calendrier serré : autorisations temporaires expirent",en:"<b>Chromium VI</b> = CMR (carcinogenic, mutagenic, reprotoxic)<br>Listed in REACH Annex XIV → authorization required.<br><br><b>Ongoing substitutions:</b><br>• CAA → TSA (tartric-sulfuric anodizing)<br>• Alodine (CrVI) → TCP (Trivalent Chromium Process)<br>• Hard chrome → HVOF or electroless SiC<br><br><b>Challenges:</b><br>• Requalification of each process (costly, long)<br>• Sometimes lower performance → optimization needed<br>• Nadcap must revalidate each substitution<br>• Tight timeline: temporary authorizations expiring"}},
+{id:'nadcap',title:{fr:'Nadcap',en:'Nadcap'},content:{fr:"<b>Nadcap</b> = National Aerospace and Defense Contractors Accreditation Program<br><br>Certification des procédés spéciaux en aéronautique :<br>• Traitements de surface<br>• Soudage<br>• CND (Contrôles Non Destructifs)<br>• Traitements thermiques<br>• Revêtements<br><br><b>Principe :</b> audit par des pairs (experts du secteur), pas un organisme générique.<br><b>Fréquence :</b> tous les 12-24 mois selon mérite.<br><b>Exigences :</b> maîtrise des procédés + traçabilité complète + conformité spécifications clients.",en:"<b>Nadcap</b> = National Aerospace and Defense Contractors Accreditation Program<br><br>Special process certification in aerospace:<br>• Surface treatments<br>• Welding<br>• NDT (Non-Destructive Testing)<br>• Heat treatments<br>• Coatings<br><br><b>Principle:</b> peer audit (industry experts), not generic body.<br><b>Frequency:</b> every 12-24 months based on merit.<br><b>Requirements:</b> process mastery + full traceability + compliance with customer specs."}},
+{id:'fph',title:{fr:'Fragilisation par hydrogène',en:'Hydrogen embrittlement'},content:{fr:"<b>FPH</b> = risque majeur en électrodéposition sur aciers HP.<br><br><b>Mécanisme :</b> l'hydrogène produit pendant l'électrolyse diffuse dans l'acier, fragilise les joints de grains → rupture fragile sans déformation.<br><br><b>Prévention :</b><br>• Dégazage obligatoire dans les 4h après dépôt (étuvage 190°C, 4-24h)<br>• Contrôle des paramètres de bain (densité courant, température)<br>• Éviter sur aciers >1000 MPa sans précautions spéciales<br><br><b>Pièces concernées :</b> trains d'atterrissage, boulonnerie HP, ressorts.",en:"<b>Hydrogen embrittlement</b> = major risk in electroplating on high-strength steels.<br><br><b>Mechanism:</b> hydrogen produced during electrolysis diffuses into steel, weakens grain boundaries → brittle fracture without deformation.<br><br><b>Prevention:</b><br>• Mandatory baking within 4h after plating (190°C, 4-24h)<br>• Bath parameter control (current density, temperature)<br>• Avoid on steels >1000 MPa without special precautions<br><br><b>Parts concerned:</b> landing gear, HP bolts, springs."}}
+];
 
-// =====================================================================
-// RENDERING
-// =====================================================================
-function render(){
-  renderNav();
-  renderPage();
-}
+var VOCAB=[
+{fr:"Oxydation anodique / Anodisation",en:"Anodic oxidation / Anodising"},
+{fr:"PVD / Pulvérisation cathodique",en:"PVD / Sputtering"},
+{fr:"CVD (Dépôt chimique en phase vapeur)",en:"CVD (Chemical Vapour Deposition)"},
+{fr:"Électrodéposition / Galvanoplastie",en:"Electroplating"},
+{fr:"Gravure chimique / Décapage",en:"Etching"},
+{fr:"Voie humide",en:"Wet process"},
+{fr:"Voie sèche",en:"Dry process"},
+{fr:"Traitement de surface",en:"Surface treatment"},
+{fr:"Revêtement",en:"Coating"},
+{fr:"Dégraissage",en:"Degreasing"},
+{fr:"Passivation",en:"Passivation"},
+{fr:"Résistance à la corrosion",en:"Corrosion resistance"},
+{fr:"Barrière thermique",en:"Thermal barrier"},
+{fr:"Anodisation sulfurique (ASA)",en:"Sulfuric Acid Anodizing (SAA)"},
+{fr:"Conversion chimique (TCP)",en:"Chemical conversion (TCP)"},
+{fr:"Fragilisation par hydrogène (FPH)",en:"Hydrogen embrittlement (HE)"},
+{fr:"Gamme de traitement",en:"Process sequence / Treatment route"},
+{fr:"Taux de dilution",en:"Bypass ratio"},
+{fr:"Aube de turbine",en:"Turbine blade"},
+{fr:"Chambre de combustion",en:"Combustion chamber"},
+{fr:"Navigabilité",en:"Airworthiness"},
+{fr:"Essai de traction",en:"Tensile test"},
+{fr:"Dureté",en:"Hardness"},
+{fr:"Fatigue",en:"Fatigue"}
+];
 
-function renderNav(){
-  const nav = document.getElementById('navTabs');
-  nav.innerHTML = TABS.map(t =>
-    `<button class="nav-btn${t.id===state.tab?' active':''}" onclick="switchTab('${t.id}')">${t.label}</button>`
-  ).join('');
-}
+var QUIZ_BANK=[
+{q:{fr:"Quel est le taux de dilution du LEAP ?",en:"What is the LEAP bypass ratio?"},options:[{fr:"~5",en:"~5"},{fr:"~11",en:"~11"},{fr:"~8",en:"~8"},{fr:"~15",en:"~15"}],correct:1,cat:'aero'},
+{q:{fr:"Que signifie CMR ?",en:"What does CMR stand for?"},options:[{fr:"Cancérogène, Mutagène, Reprotoxique",en:"Carcinogenic, Mutagenic, Reprotoxic"},{fr:"Chimie des Matériaux Réactifs",en:"Reactive Materials Chemistry"},{fr:"Contrôle des Matières Recyclées",en:"Recycled Materials Control"},{fr:"Corrosion des Métaux Rares",en:"Rare Metals Corrosion"}],correct:0,cat:'tds'},
+{q:{fr:"Quel procédé remplace l'OAC (chrome VI) ?",en:"Which process replaces CAA (chromium VI)?"},options:[{fr:"TSA (tartrique-sulfurique)",en:"TSA (tartric-sulfuric)"},{fr:"PVD",en:"PVD"},{fr:"Sol-gel",en:"Sol-gel"},{fr:"HVOF",en:"HVOF"}],correct:0,cat:'tds'},
+{q:{fr:"Dans un double flux, quel % de la poussée vient du flux froid ?",en:"In a turbofan, what % of thrust comes from bypass air?"},options:[{fr:"~50%",en:"~50%"},{fr:"~65%",en:"~65%"},{fr:"~80%",en:"~80%"},{fr:"~95%",en:"~95%"}],correct:2,cat:'aero'},
+{q:{fr:"Que fait la turbine dans un réacteur ?",en:"What does the turbine do in a jet engine?"},options:[{fr:"Comprime l'air",en:"Compresses air"},{fr:"Injecte le kérosène",en:"Injects kerosene"},{fr:"Récupère l'énergie des gaz pour entraîner le compresseur",en:"Recovers energy from gas to drive the compressor"},{fr:"Refroidit les gaz d'échappement",en:"Cools exhaust gas"}],correct:2,cat:'aero'},
+{q:{fr:"Qu'est-ce que Nadcap ?",en:"What is Nadcap?"},options:[{fr:"Norme ISO pour l'aéronautique",en:"ISO standard for aerospace"},{fr:"Certification procédés spéciaux aéro par des pairs",en:"Aerospace special process certification by peers"},{fr:"Logiciel de simulation thermique",en:"Thermal simulation software"},{fr:"Protocole de test non-destructif",en:"Non-destructive testing protocol"}],correct:1,cat:'tds'},
+{q:{fr:"Quel est le risque majeur de l'électrodéposition sur acier HP ?",en:"Major risk of electroplating on high-strength steel?"},options:[{fr:"Corrosion galvanique",en:"Galvanic corrosion"},{fr:"Fragilisation par hydrogène (FPH)",en:"Hydrogen embrittlement (HE)"},{fr:"Délamination",en:"Delamination"},{fr:"Fissuration à chaud",en:"Hot cracking"}],correct:1,cat:'tds'},
+{q:{fr:"Délai max pour le dégazage après électrodéposition ?",en:"Max delay for baking after electroplating?"},options:[{fr:"1 heure",en:"1 hour"},{fr:"4 heures",en:"4 hours"},{fr:"12 heures",en:"12 hours"},{fr:"24 heures",en:"24 hours"}],correct:1,cat:'tds'},
+{q:{fr:"Quel matériau pour les aubes de turbine HP (>1000°C) ?",en:"Material for HP turbine blades (>1000°C)?"},options:[{fr:"Titane",en:"Titanium"},{fr:"Duralumin",en:"Duralumin"},{fr:"Superalliage base nickel",en:"Nickel-base superalloy"},{fr:"Composite carbone",en:"Carbon composite"}],correct:2,cat:'aero'},
+{q:{fr:"TCP remplace quel procédé ?",en:"TCP replaces which process?"},options:[{fr:"Anodisation sulfurique",en:"Sulfuric anodizing"},{fr:"Alodine (chrome VI)",en:"Alodine (chromium VI)"},{fr:"Chromage dur",en:"Hard chrome"},{fr:"Nickelage chimique",en:"Electroless nickel"}],correct:1,cat:'tds'},
+{q:{fr:"Taux de conformité après votre projet CVD ?",en:"Compliance rate after your CVD project?"},options:[{fr:"80%",en:"80%"},{fr:"95%",en:"95%"},{fr:"100%",en:"100%"},{fr:"90%",en:"90%"}],correct:2,cat:'parcours'},
+{q:{fr:"Taux de compatibilité après sélection matière ?",en:"Compatibility rate after material selection?"},options:[{fr:"60%",en:"60%"},{fr:"70%",en:"70%"},{fr:"80%",en:"80%"},{fr:"90%",en:"90%"}],correct:2,cat:'parcours'},
+{q:{fr:"Quelles forces sont égales en vol stable ?",en:"Which forces are equal in stable flight?"},options:[{fr:"Portance=Poids et Poussée=Traînée",en:"Lift=Weight and Thrust=Drag"},{fr:"Portance=Poussée et Poids=Traînée",en:"Lift=Thrust and Weight=Drag"},{fr:"Toutes sont égales",en:"All are equal"},{fr:"Portance=Traînée",en:"Lift=Drag"}],correct:0,cat:'aero'},
+{q:{fr:"Épaisseur typique d'une couche ASA ?",en:"Typical ASA layer thickness?"},options:[{fr:"0.5-2 µm",en:"0.5-2 µm"},{fr:"5-25 µm",en:"5-25 µm"},{fr:"50-100 µm",en:"50-100 µm"},{fr:"100-200 µm",en:"100-200 µm"}],correct:1,cat:'tds'},
+{q:{fr:"Combien de brevets déposés sur le projet CVD ?",en:"Patents filed on the CVD project?"},options:[{fr:"1",en:"1"},{fr:"2",en:"2"},{fr:"3",en:"3"},{fr:"4",en:"4"}],correct:1,cat:'parcours'},
+{q:{fr:"Structure semi-monocoque = ?",en:"Semi-monocoque structure = ?"},options:[{fr:"Cadres + lisses + revêtement",en:"Frames + stringers + skin"},{fr:"Longerons + nervures",en:"Spars + ribs"},{fr:"Nid d'abeille + peaux",en:"Honeycomb + skins"},{fr:"Treillis soudé",en:"Welded truss"}],correct:0,cat:'aero'},
+{q:{fr:"Température chambre de combustion ?",en:"Combustion chamber temperature?"},options:[{fr:"~500°C",en:"~500°C"},{fr:"~1000°C",en:"~1000°C"},{fr:"~1500°C",en:"~1500°C"},{fr:"~2000°C",en:"~2000°C"}],correct:2,cat:'aero'},
+{q:{fr:"HVOF remplace quel procédé au chrome VI ?",en:"HVOF replaces which chrome VI process?"},options:[{fr:"Anodisation chromique",en:"Chromic anodizing"},{fr:"Alodine",en:"Alodine"},{fr:"Chromage dur",en:"Hard chrome plating"},{fr:"Passivation chromique",en:"Chromic passivation"}],correct:2,cat:'tds'},
+{q:{fr:"Le CEI de Corbeil traite quels types de pièces ?",en:"What parts does Corbeil CEI treat?"},options:[{fr:"Fuselage et voilure",en:"Fuselage and wings"},{fr:"Aubes, disques turbine (pièces critiques moteur)",en:"Blades, turbine discs (critical engine parts)"},{fr:"Trains d'atterrissage uniquement",en:"Landing gear only"},{fr:"Boulonnerie standard",en:"Standard bolts"}],correct:1,cat:'tds'},
+{q:{fr:"Quelle méthode a identifié la contamination du lot PU ?",en:"Method that identified PU batch contamination?"},options:[{fr:"DSC",en:"DSC"},{fr:"FTIR",en:"FTIR"},{fr:"DRX",en:"XRD"},{fr:"Microscopie optique",en:"Optical microscopy"}],correct:1,cat:'parcours'}
+];
 
-function switchTab(id){
-  state.tab = id;
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+var CHECKLIST_ITEMS=[
+"Répéter le pitch à voix haute (30s chrono)",
+"Répéter le pitch long (1:30-2:00)",
+"Relire la fiche entreprise et l'annonce",
+"Préparer 3 questions à poser",
+"Vérifier l'itinéraire et le temps de trajet",
+"Préparer la tenue professionnelle",
+"Imprimer CV + LM (2 exemplaires)",
+"Charger le téléphone",
+"Mettre le réveil 1h avant le départ",
+"Préparer un carnet et un stylo",
+"Relire ses exemples STAR",
+"Boire de l'eau, manger léger"
+];
 
-function renderPage(){
-  const main = document.getElementById('mainContent');
-  switch(state.tab){
-    case 'general': main.innerHTML = renderGeneral(); break;
-    case 'aero': main.innerHTML = renderAero(); break;
-    case 'safran': main.innerHTML = renderSafran(); break;
-    case 'thales': main.innerHTML = renderThales(); break;
-    case 'hutchinson': main.innerHTML = renderHutchinson(); break;
-  }
-  restoreChecks();
+var KEY_PHRASES=[
+{fr:"Je me tiens à des standards élevés",en:"I hold myself to very high standards"},
+{fr:"Je suis attirée par les environnements exigeants",en:"I am drawn to demanding environments"},
+{fr:"Je m'épanouis dans les environnements exigeants",en:"I thrive in demanding environments"},
+{fr:"J'ai été au-delà de ce qu'on me demandait",en:"I went the extra mile"},
+{fr:"Ce qui change c'est le matériau, pas la méthode",en:"What changes is the material, not the method"},
+{fr:"Je pense pouvoir être productive rapidement",en:"I believe I can be productive quickly"}
+];
+
+function navigate(page){
+currentPage=page;
+document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+var el=document.getElementById('page-'+page);
+if(el)el.classList.add('active');
+document.querySelectorAll('.nav button').forEach(function(b,i){
+b.classList.toggle('active',['home','learn','quiz','sim'][i]===page);
+});
+if(page==='learn'&&!currentModule)renderLearnMenu();
+if(page==='quiz')renderQuizStart();
+if(page==='sim')renderSimStart();
+if(page==='checklist')renderChecklist();
+if(page==='home')updateDashboard();
+window.scrollTo(0,0);
 }
 
-// --- GENERAL ---
-function renderGeneral(){
-  let h = `<h1 class="page-title">General</h1>
-<p class="page-sub">Pitch, questions classiques, phrases cles. Base commune pour tous les entretiens.</p>`;
-
-  // Progress
-  const total = GENERAL_QA.length + CAR_CVD_EN.length + CAR_MATSEL_EN.length + KEY_PHRASES.length + 2;
-  h += `<div class="progress-bar"><div class="progress-fill" id="genProgress" style="width:0%"></div></div>`;
-
-  // Timer
-  h += `<div class="section-label">Pitch (30 secondes)</div>`;
-  h += `<div class="timer-wrap">
-    <button class="timer-btn" id="timerBtn" onclick="toggleTimer()">Start</button>
-    <div class="timer-display" id="timerDisp">0:00</div>
-    <div class="timer-label">Objectif : 30s</div>
-  </div>`;
-  h += renderAccordion('pitch_en', 'The 30-second pitch (EN)', `<p style="line-height:1.8;font-size:.88rem">${PITCH_EN}</p>
-<div class="remember"><b>Timing :</b> 30 secondes max. Pause apres "materials science" et apres "industrialisation".</div>`, 'EN');
-  h += renderAccordion('pitch_fr', 'Le pitch 30 secondes (FR)', `<p style="line-height:1.8;font-size:.88rem">${PITCH_FR}</p>
-<div class="remember"><b>Timing :</b> 30 secondes max. Pause apres "sciences des materiaux" et apres "industrialisation".</div>`, 'FR');
-
-  // 6 Common questions
-  h += `<div class="section-label">Questions classiques</div>`;
-  GENERAL_QA.forEach((qa, i) => {
-    let body = `<p class="en-text" style="font-size:.84rem;line-height:1.7;font-style:normal;color:#333">${qa.en}</p>`;
-    if(qa.fr){
-      body += `<div style="margin-top:.8rem;padding-top:.6rem;border-top:1px dashed var(--border)">
-        <span class="card-lang fr" style="display:inline-block;margin-bottom:.4rem">FR</span>
-        <p style="font-size:.82rem;line-height:1.7;color:var(--muted)">${qa.fr}</p></div>`;
-    }
-    h += renderAccordion(`gen_qa_${i}`, `${i+1}. ${qa.q}`, body, qa.tags ? qa.tags[0] : 'EN');
-  });
-
-  // CAR answers CVD
-  h += `<div class="section-label">CAR - Projet CVD (20 -> 100%)</div>`;
-  CAR_CVD_EN.forEach((qa, i) => {
-    let body = `<p style="font-size:.84rem;line-height:1.7">${qa.en}</p>`;
-    if(qa.fr){
-      body += `<div style="margin-top:.8rem;padding-top:.6rem;border-top:1px dashed var(--border)">
-        <span class="card-lang fr" style="display:inline-block;margin-bottom:.4rem">FR</span>
-        <p style="font-size:.82rem;line-height:1.7;color:var(--muted)">${qa.fr}</p></div>`;
-    }
-    h += renderAccordion(`car_cvd_${i}`, qa.q, body, 'EN/FR');
-  });
-
-  // CAR answers Material Selection
-  h += `<div class="section-label">CAR - Selection matiere (30 -> 80%)</div>`;
-  CAR_MATSEL_EN.forEach((qa, i) => {
-    let body = `<p style="font-size:.84rem;line-height:1.7">${qa.en}</p>`;
-    if(qa.fr){
-      body += `<div style="margin-top:.8rem;padding-top:.6rem;border-top:1px dashed var(--border)">
-        <span class="card-lang fr" style="display:inline-block;margin-bottom:.4rem">FR</span>
-        <p style="font-size:.82rem;line-height:1.7;color:var(--muted)">${qa.fr}</p></div>`;
-    }
-    h += renderAccordion(`car_mat_${i}`, qa.q, body, 'EN/FR');
-  });
-
-  // Extra mile
-  h += `<div class="section-label">Go the extra mile</div>`;
-  h += renderAccordion('extra_mile', '"I went the extra mile"', `
-    <p style="font-size:.84rem;line-height:1.7"><span class="key">EN:</span> ${EXTRA_MILE_EN}</p>
-    <div style="margin-top:.6rem;padding-top:.5rem;border-top:1px dashed var(--border)">
-    <p style="font-size:.82rem;line-height:1.7;color:var(--muted)"><span style="font-weight:700;color:var(--acc)">FR:</span> ${EXTRA_MILE_FR}</p></div>
-    <div class="remember"><b>Consigne :</b> la repeter a voix haute 5 fois.</div>`, 'EN/FR');
-
-  // Key phrases
-  h += `<div class="section-label">Phrases cles a retenir</div>`;
-  KEY_PHRASES.forEach(p => {
-    h += `<div class="phrase-card">
-      <div class="phrase-icon">&#9758;</div>
-      <div><div class="phrase-en">"${p.en}"</div><div class="phrase-fr">${p.fr}</div></div>
-    </div>`;
-  });
-
-  return h;
+function goTo(page,module){
+currentModule=module;
+navigate(page);
+if(page==='learn')renderModule(module);
 }
 
-// --- AERO ---
-function renderAero(){
-  let h = `<h1 class="page-title">Aeronautique</h1>
-<p class="page-sub">Preparation sectorielle. Vocabulaire technique, argument de transfert, pourquoi l'aeronautique.</p>`;
-
-  h += `<div class="section-label">Why aeronautics?</div>`;
-  h += renderAccordion('aero_why', 'Why are you interested in aeronautics?', `
-    <p style="font-size:.84rem;line-height:1.7"><span class="key">EN:</span> I am interested in surface treatments used in engine applications, because of the direct impact on the durability and reliability of critical components. Turbine coatings, for example, protect blades and vanes from high temperature, wear, and oxidation. The requirements in aeronautics are among the most demanding in any industry, and that is exactly the kind of environment where I thrive.</p>
-    <div style="margin-top:.6rem;padding-top:.5rem;border-top:1px dashed var(--border)">
-    <p style="font-size:.82rem;line-height:1.7;color:var(--muted)"><span style="font-weight:700;color:var(--acc)">FR:</span> Je m'interesse aux traitements de surface appliques aux moteurs aeronautiques, parce qu'ils ont un impact direct sur la durabilite et la fiabilite de composants critiques. Les revetements de turbine, par exemple, protegent les aubes contre les hautes temperatures, l'usure et l'oxydation. L'aeronautique a les exigences les plus elevees de toute l'industrie, et c'est exactement le type d'environnement qui me motive.</p></div>`, 'EN');
-
-  h += `<div class="section-label">Transfer argument</div>`;
-  h += renderAccordion('aero_transfer', 'How does your experience transfer to metallics?', `
-    <p style="font-size:.84rem;line-height:1.7"><span class="key">EN:</span> During my Master's degree, we studied all material families including metallics. My experience in CVD coating and surface treatment methodology transfers directly to metallic applications. What changes is the material, not the method. I know how to characterise, qualify, and industrialise surface treatments. The degradation mechanisms are different for metals — corrosion instead of swelling — but the approach is the same: understand the mechanism, test, validate, scale up.</p>
-    <div class="tip-box" style="margin-top:.6rem"><b>Key sentence:</b> "What changes is the material, not the method."</div>
-    <div class="remember"><b>Training time argument:</b> "I would actually argue that the training time would be minimal. Everything I have done in the polymer field transfers directly to metallics."</div>`, 'EN');
-
-  h += `<div class="section-label">Glossaire traitements de surface</div>`;
-  h += `<div class="glossary-grid">`;
-  GLOSSARY_SURFACE.forEach(g => {
-    h += `<div class="glossary-item"><div class="glossary-en">${g.en}</div><div class="glossary-fr">${g.fr}</div></div>`;
-  });
-  h += `</div>`;
-
-  h += `<div class="fr-placeholder">Section francaise — a completer avec la prof.</div>`;
-
-  return h;
+function setLang(l){
+currentLang=l;
+document.querySelectorAll('.lang-toggle button').forEach(function(b){b.classList.toggle('active',b.textContent.toLowerCase()===l)});
+if(currentPage==='learn'&&currentModule)renderModule(currentModule);
+else if(currentPage==='learn')renderLearnMenu();
 }
 
-// --- SAFRAN ---
-function renderSafran(){
-  let h = `<h1 class="page-title">Safran</h1>
-<p class="page-sub">CDI - Specialiste Traitements de Surface - Corbeil-Essonnes</p>`;
-
-  // Company header
-  h += `<div class="company-header">
-    <h2>${SAFRAN_DATA.role}</h2>
-    <div class="meta">
-      <span><b>Entreprise :</b> ${SAFRAN_DATA.company}</span>
-      <span><b>Lieu :</b> ${SAFRAN_DATA.location}</span>
-      <span><b>Ref :</b> ${SAFRAN_DATA.ref}</span>
-      <span><b>Contrat :</b> ${SAFRAN_DATA.contract}</span>
-    </div>
-  </div>`;
-
-  // Missions
-  h += `<div class="section-label">Missions du poste</div>`;
-  h += `<div class="card" style="padding:1rem"><ul style="font-size:.84rem;line-height:1.8;padding-left:1.2rem;color:#333">`;
-  SAFRAN_DATA.missions.forEach(m => h += `<li>${m}</li>`);
-  h += `</ul><div class="tip-box" style="margin-top:.6rem"><b>Profil recherche :</b> ${SAFRAN_DATA.profile}</div></div>`;
-
-  // Why Safran
-  h += `<div class="section-label">Pourquoi Safran ?</div>`;
-  h += renderAccordion('safran_why_fr', 'Pourquoi Safran ? (FR)', `<p style="font-size:.84rem;line-height:1.7">${SAFRAN_DATA.whySafran}</p>`, 'FR');
-  h += renderAccordion('safran_why_en', 'Why Safran? (EN)', `<p style="font-size:.84rem;line-height:1.7">${SAFRAN_DATA.whySafranEN}</p>`, 'EN');
-
-  // Mapping competences -> missions
-  h += `<div class="section-label">Correspondance profil / poste</div>`;
-  h += renderAccordion('safran_match', 'Mon experience vs. les missions', `
-    <div style="font-size:.84rem;line-height:1.7">
-      <p><span class="key">Industrialisation TdS voie humide</span> : j'ai pilote l'industrialisation d'un depot CVD de la preuve de concept aux pieces industrielles. La voie humide est differente techniquement, mais la demarche est la meme : gamme de traitement, parametres critiques, qualification.</p>
-      <p style="margin-top:.5rem"><span class="key">Resolution de problematiques</span> : chez Aptar, j'ai identifie et resolu des problemes de resistance chimique que personne n'avait questionnes (taux d'echec 70%, methode non remise en cause).</p>
-      <p style="margin-top:.5rem"><span class="key">Audits qualite</span> : experience de la tracabilite, des specifications, du suivi qualite en environnement industriel.</p>
-      <p style="margin-top:.5rem"><span class="key">Support technique</span> : coordination fournisseurs et partenaires externes pour le depot CVD, support production quotidien.</p>
-      <p style="margin-top:.5rem"><span class="key">Amelioration continue</span> : la methodologie de selection matiere que j'ai developpee (30->80%) est un outil d'amelioration continue adopte par l'equipe.</p>
-    </div>`, 'FR');
-
-  // Technical vocab
-  h += `<div class="section-label">Vocabulaire technique du poste</div>`;
-  h += `<div class="card" style="padding:1rem">`;
-  SAFRAN_DATA.vocab.forEach(v => {
-    h += `<div style="margin-bottom:.5rem"><span class="key">${v.term}</span><br><span style="font-size:.8rem;color:var(--muted)">${v.desc}</span></div>`;
-  });
-  h += `</div>`;
-
-  // Forbidden words
-  h += `<div class="section-label">Mots interdits</div>`;
-  h += `<div class="warn-box"><b>JAMAIS dire :</b> Parylene C, TPU, PU, alternance, Evry-Courcouronnes<br>
-    <span style="color:var(--green);font-weight:600">Dire :</span> R&D industrielle, depot CVD sur polyolefines, elastomere TPE, Ile-de-France</div>`;
-
-  // Questions to ask
-  h += `<div class="section-label">Questions a poser</div>`;
-  h += `<div class="card" style="padding:1rem"><ul style="font-size:.84rem;line-height:1.8;padding-left:1.2rem">`;
-  SAFRAN_DATA.questions.forEach(q => h += `<li>${q}</li>`);
-  h += `</ul></div>`;
-
-  h += `<div class="fr-placeholder">Section francaise — a completer avec la prof.</div>`;
-
-  return h;
+function setCompany(c){
+currentCompany=c;
+document.querySelectorAll('.ctab').forEach(function(b){b.classList.toggle('active',
+(c==='general'&&b.textContent==='Tous')||(c!=='general'&&b.textContent.toLowerCase()===c))});
+if(currentPage==='learn'&&currentModule==='qa')renderModule('qa');
 }
 
-// --- THALES ---
-function renderThales(){
-  const d = THALES_DATA;
-  let h = `<h1 class="page-title">Thales / Ifremer</h1>
-<p class="page-sub">These CIFRE - Vitrimeres PU - Vieillissement en eau de mer (3 ans)</p>`;
-
-  h += `<div class="company-header">
-    <h2>${d.role}</h2>
-    <div class="meta">
-      <span><b>Partenaires :</b> ${d.company}</span>
-      <span><b>Lieu :</b> ${d.location}</span>
-      <span><b>Ref :</b> ${d.ref}</span>
-      <span><b>Contrat :</b> ${d.contract}</span>
-      <span><b>Directeur :</b> ${d.director}</span>
-      <span><b>Duree :</b> 3 ans</span>
-    </div>
-  </div>`;
-
-  // Pitch 2min30
-  h += `<div class="section-label">Pitch (2min30)</div>`;
-  h += `<div class="timer-wrap">
-    <button class="timer-btn" id="thalesTimerBtn" onclick="toggleThalesTimer()">Start</button>
-    <div class="timer-display" id="thalesTimerDisp">0:00</div>
-    <div class="timer-label">Objectif : 2min30</div>
-  </div>`;
-  h += renderAccordion('thales_pitch_fr', 'Pitch complet (FR)', `<p style="font-size:.84rem;line-height:1.8;white-space:pre-line">${d.pitchFR}</p>
-    <div class="remember"><b>Points a ne PAS dire :</b> ne pas reciter les cours du Master, ne pas lister les techniques comme un catalogue, ne pas s'excuser pour le Master en alternance, ne pas mentionner Parylene C ni les grades commerciaux.</div>`, 'FR');
-  h += renderAccordion('thales_pitch_en', 'Full pitch (EN)', `<p style="font-size:.84rem;line-height:1.8;white-space:pre-line">${d.pitchEN}</p>`, 'EN');
-
-  // Why this thesis
-  h += `<div class="section-label">Pourquoi cette these ?</div>`;
-  h += renderAccordion('thales_why_fr', 'Pourquoi CE sujet ? (FR)', `<p style="font-size:.84rem;line-height:1.7">${d.whyThesis}</p>`, 'FR');
-  h += renderAccordion('thales_why_en', 'Why THIS subject? (EN)', `<p style="font-size:.84rem;line-height:1.7">${d.whyThesisEN}</p>`, 'EN');
-
-  // STAR examples
-  h += `<div class="section-label">Exemples STAR</div>`;
-  d.starExamples.forEach((star, i) => {
-    h += renderAccordion(`thales_star_${i}`, star.title, `
-      <div style="font-size:.84rem;line-height:1.7">
-        <p><span class="star-label star-s">S</span> ${star.s}</p>
-        <p><span class="star-label star-t">T</span> ${star.t}</p>
-        <p><span class="star-label star-a">A</span> ${star.a}</p>
-        <p><span class="star-label star-r">R</span> ${star.r}</p>
-      </div>
-      <div style="margin-top:.8rem;padding-top:.6rem;border-top:1px dashed var(--border)">
-        <span class="card-lang" style="display:inline-block;margin-bottom:.4rem">EN</span>
-        <div style="font-size:.82rem;line-height:1.7;color:var(--muted)">
-          <p><span class="star-label star-s">S</span> ${star.sEN}</p>
-          <p><span class="star-label star-t">T</span> ${star.tEN}</p>
-          <p><span class="star-label star-a">A</span> ${star.aEN}</p>
-          <p><span class="star-label star-r">R</span> ${star.rEN}</p>
-        </div>
-      </div>`, 'FR/EN');
-  });
-
-  // Technical Q&A
-  h += `<div class="section-label">Questions techniques</div>`;
-  d.technicalQA.forEach((qa, i) => {
-    h += renderAccordion(`thales_tech_${i}`, qa.q, `
-      <p style="font-size:.84rem;line-height:1.7">${qa.a}</p>
-      <div style="margin-top:.8rem;padding-top:.6rem;border-top:1px dashed var(--border)">
-        <span class="card-lang" style="display:inline-block;margin-bottom:.4rem">EN</span>
-        <p style="font-size:.82rem;line-height:1.7;color:var(--muted)">${qa.aEN}</p>
-      </div>`, 'FR/EN');
-  });
-
-  // Pierre-Yves Le Gac profile
-  h += `<div class="section-label">Directeur de these : Pierre-Yves Le Gac</div>`;
-  h += renderAccordion('thales_legac', 'Profil complet', `
-    <div style="font-size:.84rem;line-height:1.7">
-      <p><span class="key">Poste :</span> ${d.leGacProfile.poste}</p>
-      <p><span class="key">ORCID :</span> ${d.leGacProfile.orcid} (${d.leGacProfile.pubs})</p>
-      <p><span class="key">HDR :</span> ${d.leGacProfile.hdr}</p>
-      <p><span class="key">Editeur :</span> ${d.leGacProfile.editeur}</p>
-      <p><span class="key">Conference :</span> ${d.leGacProfile.conference}</p>
-      <p><span class="key">Themes :</span> ${d.leGacProfile.themes}</p>
-      <p style="margin-top:.4rem"><span class="key">Doctorants :</span> ${d.leGacProfile.doctorants}</p>
-      <div class="tip-box" style="margin-top:.6rem"><b>Ce qu'il cherche :</b> un bras experimental autonome et rigoureux, quelqu'un qui connait les fondamentaux polymeres, le pont avec l'enjeu industriel Thales, et quelqu'un avec qui il va travailler 3 ans.</div>
-    </div>`, 'FR');
-
-  // Lab equipment
-  h += `<div class="section-label">Equipements du labo SMASH</div>`;
-  h += `<div class="card" style="padding:1rem"><p style="font-size:.84rem;line-height:1.7">${d.labEquipment}</p></div>`;
-
-  // Challenges they might raise
-  h += `<div class="section-label">Points qu'ils pourraient challenger</div>`;
-  d.challenges.forEach((c, i) => {
-    h += renderAccordion(`thales_chall_${i}`, c.challenge, `
-      <p style="font-size:.84rem;line-height:1.7;color:var(--green);font-weight:600">${c.reponse}</p>`, 'FR');
-  });
-
-  // Questions to ask
-  h += `<div class="section-label">Questions a poser a Le Gac</div>`;
-  h += `<div class="card" style="padding:1rem"><ul style="font-size:.84rem;line-height:1.8;padding-left:1.2rem">`;
-  d.questionsToAsk.forEach(q => h += `<li>${q}</li>`);
-  h += `</ul></div>`;
-
-  // Forbidden words
-  h += `<div class="section-label">Mots interdits</div>`;
-  h += `<div class="warn-box"><b>JAMAIS dire :</b> Parylene C, grades commerciaux Aptar, pretentions salariales en premier<br>
-    <span style="color:var(--green);font-weight:600">Dire :</span> elastomere TPE, depot CVD, R&D industrielle</div>`;
-
-  // Thales context
-  h += `<div class="section-label">Contexte Thales Underwater Systems</div>`;
-  h += renderAccordion('thales_context', 'Thales UWS et enjeux materiaux', `
-    <div style="font-size:.84rem;line-height:1.7">
-      <p><span class="key">Activite :</span> Sonars, systemes acoustiques sous-marins, defense navale</p>
-      <p><span class="key">Pourquoi les polymeres sont critiques :</span> les enveloppes polymeres isolent les composants piezoelectriques du milieu marin. Permeabilite et degradation = enjeux de fiabilite directe.</p>
-      <p><span class="key">Enjeux :</span> fiabilite long terme en milieu marin (dizaines d'annees), permeabilite des enveloppes, duree de vie des equipements</p>
-      <p><span class="key">Vitrimeres :</span> innovation potentielle (reparabilite, recyclabilite) mais faut prouver la durabilite</p>
-      <p style="margin-top:.4rem"><span class="key">Habilitation :</span> possible habilitation secret defense requise (procedure administrative, enquete de securite)</p>
-    </div>`, 'FR');
-
-  return h;
+function updateDashboard(){
+document.getElementById('stat-quiz').textContent=state.quizCount;
+document.getElementById('stat-sim').textContent=state.simCount;
+document.getElementById('stat-streak').textContent=state.streak;
+['pitch','star','qa','aero','tds','vocab'].forEach(function(m){
+var el=document.getElementById('badge-'+m);
+if(el)el.textContent=(state.modules[m]||0)+'%';
+});
 }
 
-// --- HUTCHINSON ---
-function renderHutchinson(){
-  let h = `<h1 class="page-title">Hutchinson</h1>
-<p class="page-sub">CDI - Ingenieure R&I Formulation Materiaux Composites - CRI Chalette-sur-Loing</p>`;
-
-  h += `<div class="company-header">
-    <h2>${HUTCHINSON_DATA.role}</h2>
-    <div class="meta">
-      <span><b>Entreprise :</b> Hutchinson (CRI)</span>
-      <span><b>Lieu :</b> ${HUTCHINSON_DATA.location}</span>
-      <span><b>Contrat :</b> ${HUTCHINSON_DATA.contract}</span>
-      <span><b>Secteur :</b> Auto, aero, industrie</span>
-    </div>
-  </div>`;
-
-  // Missions
-  h += `<div class="section-label">Missions du poste</div>`;
-  h += `<div class="card" style="padding:1rem"><ul style="font-size:.84rem;line-height:1.8;padding-left:1.2rem;color:#333">`;
-  HUTCHINSON_DATA.missions.forEach(m => h += `<li>${m}</li>`);
-  h += `</ul></div>`;
-
-  // Why Hutchinson
-  h += `<div class="section-label">Pourquoi Hutchinson ?</div>`;
-  h += renderAccordion('hutch_why_fr', 'Pourquoi Hutchinson ? (FR)', `<p style="font-size:.84rem;line-height:1.7">${HUTCHINSON_DATA.whyHutchinson}</p>`, 'FR');
-  h += renderAccordion('hutch_why_en', 'Why Hutchinson? (EN)', `<p style="font-size:.84rem;line-height:1.7">${HUTCHINSON_DATA.whyHutchinsonEN}</p>`, 'EN');
-
-  // Angles
-  h += `<div class="section-label">Angles de candidature</div>`;
-  h += renderAccordion('hutch_angles', 'Points forts pour ce poste', `
-    <ul style="font-size:.84rem;line-height:1.8;padding-left:1.2rem">
-    ${HUTCHINSON_DATA.angles.map(a => `<li>${a}</li>`).join('')}
-    </ul>
-    <div class="tip-box" style="margin-top:.6rem"><b>Argument cle :</b> l'experience polymeres (vieillissement, degradation, selection matiere) se transfere directement aux composites thermodurcissables. La methodologie reste identique.</div>`, 'FR');
-
-  // Company info
-  h += `<div class="section-label">L'entreprise</div>`;
-  h += renderAccordion('hutch_info', 'Hutchinson en bref', `
-    <div style="font-size:.84rem;line-height:1.7">
-      <p><span class="key">Groupe :</span> Filiale de TotalEnergies</p>
-      <p><span class="key">Domaines :</span> etancheite, antivibratoire, gestion des fluides, composites</p>
-      <p><span class="key">Marches :</span> automobile, aeronautique, industrie, defense, spatial</p>
-      <p><span class="key">CRI :</span> Centre de Recherche et Innovation a Chalette-sur-Loing (45) — le laboratoire R&D central du groupe</p>
-      <p><span class="key">Labo :</span> Laboratoire des Interfaces Multi-Materiaux — formulation resines thermodurcissables, composites durables</p>
-      <p style="margin-top:.5rem"><span class="key">Specificite :</span> ce poste est plus oriente recherche/innovation que les postes industriels classiques. Dimension formulation et developpement matiere.</p>
-    </div>`, 'FR');
-
-  // Questions to ask
-  h += `<div class="section-label">Questions a poser</div>`;
-  h += `<div class="card" style="padding:1rem"><ul style="font-size:.84rem;line-height:1.8;padding-left:1.2rem">
-    <li>Quels types de resines thermodurcissables developpe le laboratoire ?</li>
-    <li>Quels sont les principaux defis en formulation composites durables ?</li>
-    <li>Comment le CRI travaille avec les sites de production ?</li>
-    <li>Taille de l'equipe du Laboratoire des Interfaces Multi-Materiaux ?</li>
-    <li>Quel est le ratio recherche fondamentale / developpement applique ?</li>
-    <li>Perspectives d'evolution au sein du CRI ?</li>
-  </ul></div>`;
-
-  h += `<div class="fr-placeholder">Section francaise — a completer avec la prof.</div>`;
-
-  return h;
+function updateStreak(){
+var today=new Date().toISOString().slice(0,10);
+if(state.lastDay===today)return;
+var yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
+state.streak=(state.lastDay===yesterday)?state.streak+1:1;
+state.lastDay=today;
+save();
 }
 
-// =====================================================================
-// HELPERS
-// =====================================================================
-function renderAccordion(id, title, body, lang){
-  const langClass = lang && lang.includes('FR') ? 'fr' : '';
-  return `<div class="card" id="card_${id}">
-    <div class="card-head" onclick="toggleCard('${id}')">
-      <input type="checkbox" class="card-check" data-id="${id}" onclick="event.stopPropagation();toggleCheck('${id}',this.checked)">
-      <div class="card-title">${title}</div>
-      ${lang ? `<span class="card-lang ${langClass}">${lang}</span>` : ''}
-      <span class="card-arrow">&#9660;</span>
-    </div>
-    <div class="card-body">${body}</div>
-  </div>`;
+function renderLearnMenu(){
+var c=document.getElementById('learn-content');
+var t=currentLang==='fr';
+c.innerHTML='<div class="section-title">'+(t?'Choisir un module':'Choose a module')+'</div>'+
+'<div class="module-list">'+
+'<div class="module-item" onclick="renderModule(\'pitch\')"><div class="icon" style="background:#dbeafe;color:#1e40af">🌤️</div><div class="info"><h4>Pitch</h4><span>'+(t?'30s et version longue, FR/EN':'30s and long version, FR/EN')+'</span></div></div>'+
+'<div class="module-item" onclick="renderModule(\'star\')"><div class="icon" style="background:#d1fae5;color:#065f46">⭐</div><div class="info"><h4>'+(t?'Exemples STAR':'STAR Examples')+'</h4><span>CVD, Sélection, TPE</span></div></div>'+
+'<div class="module-item" onclick="renderModule(\'qa\')"><div class="icon" style="background:#fef3c7;color:#92400e">💬</div><div class="info"><h4>'+(t?'Questions types':'Common Questions')+'</h4><span>'+(t?'Classiques + entreprises':'Classic + company-specific')+'</span></div></div>'+
+'<div class="module-item" onclick="renderModule(\'aero\')"><div class="icon" style="background:#ede9fe;color:#5b21b6">✈️</div><div class="info"><h4>Aero / BIA</h4><span>'+(t?'Vol, structure, moteurs':'Flight, structure, engines')+'</span></div></div>'+
+'<div class="module-item" onclick="renderModule(\'tds\')"><div class="icon" style="background:#fce7f3;color:#9d174d">🧪</div><div class="info"><h4>TdS / Chimie</h4><span>'+(t?'Voie humide, Chrome VI, Nadcap':'Wet process, Chrome VI, Nadcap')+'</span></div></div>'+
+'<div class="module-item" onclick="renderModule(\'vocab\')"><div class="icon" style="background:#ccfbf1;color:#0f766e">📖</div><div class="info"><h4>'+(t?'Vocabulaire':'Vocabulary')+'</h4><span>'+(t?'Glossaire technique bilingue':'Bilingual technical glossary')+'</span></div></div>'+
+'<div class="module-item" onclick="renderModule(\'phrases\')"><div class="icon" style="background:#fef9c3;color:#854d0e">🔑</div><div class="info"><h4>'+(t?'Phrases clés':'Key Phrases')+'</h4><span>'+(t?'À répéter à voix haute':'Repeat out loud')+'</span></div></div>'+
+'</div>';
+currentModule=null;
 }
 
-function toggleCard(id){
-  const card = document.getElementById('card_'+id);
-  card.classList.toggle('open');
+function renderModule(mod){
+currentModule=mod;
+var c=document.getElementById('learn-content');
+var t=currentLang==='fr';
+var html='<button class="btn btn-outline" onclick="renderLearnMenu()" style="margin-bottom:16px">← '+(t?'Retour':'Back')+'</button>';
+
+if(mod==='pitch'){
+html+='<div class="section-title">'+(t?'Pitch 30 secondes':'30-Second Pitch')+'</div>'+
+'<div class="pitch-text">'+PITCHES[currentLang].short+'</div>'+
+'<div class="section-title">'+(t?'Pitch long (1:30-2:00)':'Long Pitch (1:30-2:00)')+'</div>'+
+'<div class="pitch-text" style="white-space:pre-line">'+PITCHES[currentLang].long+'</div>'+
+'<div style="margin-top:16px;display:flex;gap:10px">'+
+'<button class="btn btn-primary" onclick="startPitchTimer(30)">Chrono 30s</button>'+
+'<button class="btn btn-outline" onclick="startPitchTimer(120)">Chrono 2min</button></div>'+
+'<div id="pitch-timer-area"></div>';
+markModuleDone('pitch');
+}
+else if(mod==='star'){
+html+='<div class="section-title">'+(t?'Exemples STAR':'STAR Examples')+'</div>';
+STAR_EXAMPLES.forEach(function(ex){
+html+='<div class="star-card"><h4 style="margin-bottom:10px">'+ex.title[currentLang]+'</h4>'+
+'<div><span class="letter s-letter">S</span>'+ex.s[currentLang]+'</div>'+
+'<div style="margin-top:8px"><span class="letter t-letter">T</span>'+ex.t[currentLang]+'</div>'+
+'<div style="margin-top:8px"><span class="letter a-letter">A</span>'+ex.a[currentLang]+'</div>'+
+'<div style="margin-top:8px"><span class="letter r-letter">R</span>'+ex.r[currentLang]+'</div></div>';
+});
+markModuleDone('star');
+}
+else if(mod==='qa'){
+var questions=QA_GENERAL;
+var title=t?'Questions classiques':'Classic Questions';
+if(currentCompany==='safran'){questions=QA_SAFRAN;title=t?'Questions Safran':'Safran Questions';}
+html+='<div class="section-title">'+title+'</div>';
+questions.forEach(function(item){
+html+='<div class="card"><h3>'+item.q[currentLang]+'</h3>'+
+'<button class="reveal-btn" onclick="toggleReveal(this)">'+(t?'Voir la réponse':'Show answer')+'</button>'+
+'<div class="hidden-content"><p>'+item.a[currentLang]+'</p></div></div>';
+});
+markModuleDone('qa');
+}
+else if(mod==='aero'){
+html+='<div class="section-title">Aero / BIA</div>';
+AERO_MODULES.forEach(function(m){
+html+='<div class="card"><h3>'+m.title[currentLang]+'</h3><div style="margin-top:8px;font-size:13px;line-height:1.7;color:var(--text2)">'+m.content[currentLang]+'</div></div>';
+});
+markModuleDone('aero');
+}
+else if(mod==='tds'){
+html+='<div class="section-title">TdS / Chimie</div>';
+TDS_MODULES.forEach(function(m){
+html+='<div class="card"><h3>'+m.title[currentLang]+'</h3><div style="margin-top:8px;font-size:13px;line-height:1.7;color:var(--text2)">'+m.content[currentLang]+'</div></div>';
+});
+markModuleDone('tds');
+}
+else if(mod==='vocab'){
+html+='<div class="section-title">'+(t?'Glossaire technique':'Technical Glossary')+'</div><div class="card">';
+VOCAB.forEach(function(v){
+html+='<div class="vocab-item"><span class="vocab-fr">'+v.fr+'</span><span class="vocab-en">'+v.en+'</span></div>';
+});
+html+='</div><div style="margin-top:16px"><button class="btn btn-primary btn-full" onclick="startFlashcards()">'+(t?'Mode Flashcards':'Flashcard Mode')+'</button></div>';
+markModuleDone('vocab');
+}
+else if(mod==='phrases'){
+html+='<div class="section-title">'+(t?'Phrases clés à mémoriser':'Key Phrases to Memorize')+'</div>';
+KEY_PHRASES.forEach(function(p){
+html+='<div class="card" style="cursor:pointer" onclick="this.querySelector(\'.hidden-content\').classList.toggle(\'show\')">'+
+'<h3 style="font-size:14px">'+p[currentLang]+'</h3>'+
+'<div class="hidden-content"><p style="color:var(--primary)">'+p[currentLang==='fr'?'en':'fr']+'</p></div></div>';
+});
+}
+else if(mod==='flashcards'){renderFlashcardCard();return;}
+c.innerHTML=html;
 }
 
-function toggleCheck(id, checked){
-  state.checks[id] = checked;
-  saveState();
-  updateProgress();
+function toggleReveal(btn){
+var content=btn.nextElementSibling;
+content.classList.toggle('show');
+var t=currentLang==='fr';
+btn.textContent=content.classList.contains('show')?(t?'Masquer':'Hide'):(t?'Voir la réponse':'Show answer');
 }
 
-function restoreChecks(){
-  document.querySelectorAll('.card-check').forEach(cb => {
-    const id = cb.dataset.id;
-    if(state.checks[id]) cb.checked = true;
-  });
-  updateProgress();
+function markModuleDone(mod){
+if(!state.modules[mod]||state.modules[mod]<50)state.modules[mod]=50;
+save();
 }
 
-function updateProgress(){
-  const bar = document.getElementById('genProgress');
-  if(!bar) return;
-  const allChecks = document.querySelectorAll('.card-check');
-  if(allChecks.length === 0) return;
-  const checked = [...allChecks].filter(c => c.checked).length;
-  bar.style.width = Math.round(checked/allChecks.length*100)+'%';
+var pitchInterval=null;
+function startPitchTimer(seconds){
+if(pitchInterval)clearInterval(pitchInterval);
+var remaining=seconds;
+var area=document.getElementById('pitch-timer-area');
+area.innerHTML='<div class="timer" id="pitch-time">'+formatTime(remaining)+'</div><button class="btn btn-outline btn-full" onclick="stopPitchTimer()">Stop</button>';
+pitchInterval=setInterval(function(){
+remaining--;
+var el=document.getElementById('pitch-time');
+if(!el){clearInterval(pitchInterval);return;}
+el.textContent=formatTime(remaining);
+if(remaining<=5)el.className='timer danger';
+else if(remaining<=10)el.className='timer warning';
+if(remaining<=0){clearInterval(pitchInterval);el.textContent=(currentLang==='fr'?'Temps !':'Time!');el.className='timer danger';}
+},1000);
+}
+function stopPitchTimer(){if(pitchInterval)clearInterval(pitchInterval);var a=document.getElementById('pitch-timer-area');if(a)a.innerHTML='';}
+function formatTime(s){var m=Math.floor(Math.abs(s)/60);var sec=Math.abs(s)%60;return(s<0?'-':'')+m+':'+String(sec).padStart(2,'0');}
+
+var fcIndex=0,fcDeck=[];
+function startFlashcards(){
+fcDeck=VOCAB.slice().sort(function(){return Math.random()-.5});
+fcIndex=0;
+currentModule='flashcards';
+renderFlashcardCard();
+}
+function renderFlashcardCard(){
+var c=document.getElementById('learn-content');
+var t=currentLang==='fr';
+if(fcIndex>=fcDeck.length){
+c.innerHTML='<div class="card" style="text-align:center;padding:40px"><h3>'+(t?'Terminé !':'Done!')+'</h3><p style="margin-top:8px">'+fcDeck.length+' '+(t?'cartes revues':'cards reviewed')+'</p><button class="btn btn-primary" style="margin-top:16px" onclick="renderModule(\'vocab\')">OK</button></div>';
+state.modules.vocab=100;save();return;
+}
+var item=fcDeck[fcIndex];
+var front=currentLang==='fr'?item.fr:item.en;
+var back=currentLang==='fr'?item.en:item.fr;
+c.innerHTML='<button class="btn btn-outline" onclick="renderModule(\'vocab\')" style="margin-bottom:16px">← '+(t?'Retour':'Back')+'</button>'+
+'<div style="text-align:center;color:var(--text2);font-size:13px;margin-bottom:8px">'+(fcIndex+1)+' / '+fcDeck.length+'</div>'+
+'<div class="flashcard" id="fc" onclick="document.getElementById(\'fc\').classList.toggle(\'flipped\')">'+
+'<div class="flashcard-inner"><div class="flashcard-face flashcard-front">'+front+'</div><div class="flashcard-face flashcard-back">'+back+'</div></div></div>'+
+'<div style="display:flex;gap:10px;justify-content:center;margin-top:16px">'+
+'<button class="btn btn-outline" onclick="fcIndex++;renderFlashcardCard()">→ '+(t?'Suivante':'Next')+'</button></div>';
 }
 
-// =====================================================================
-// TIMER
-// =====================================================================
-function toggleTimer(){
-  const btn = document.getElementById('timerBtn');
-  const disp = document.getElementById('timerDisp');
-  if(!btn || !disp) return;
-
-  if(state.timerRunning){
-    clearInterval(state.timerInterval);
-    state.timerRunning = false;
-    btn.textContent = 'Reset';
-    btn.onclick = resetTimer;
-  } else {
-    state.timerSeconds = 0;
-    state.timerRunning = true;
-    btn.textContent = 'Stop';
-    disp.className = 'timer-display';
-    state.timerInterval = setInterval(() => {
-      state.timerSeconds++;
-      const m = Math.floor(state.timerSeconds/60);
-      const s = state.timerSeconds%60;
-      disp.textContent = m+':'+(s<10?'0':'')+s;
-      if(state.timerSeconds >= 30 && state.timerSeconds < 35){
-        disp.className = 'timer-display warn';
-      } else if(state.timerSeconds >= 35){
-        disp.className = 'timer-display over';
-      }
-    }, 1000);
-  }
+var quizQuestions=[],quizIndex=0,quizScore=0,quizAnswered=false;
+function renderQuizStart(){
+var c=document.getElementById('quiz-content');
+var t=currentLang==='fr';
+c.innerHTML='<div class="card" style="text-align:center;padding:30px">'+
+'<h3 style="font-size:18px;margin-bottom:12px">'+(t?'Quiz rapide':'Quick Quiz')+'</h3>'+
+'<p style="margin-bottom:20px">'+(t?'10 questions aléatoires sur tous les modules':'10 random questions across all modules')+'</p>'+
+'<button class="btn btn-primary btn-full" onclick="startQuiz()">Start</button></div>';
+}
+function startQuiz(){
+navigate('quiz');
+quizQuestions=QUIZ_BANK.slice().sort(function(){return Math.random()-.5}).slice(0,10);
+quizIndex=0;quizScore=0;
+renderQuizQuestion();
+}
+function renderQuizQuestion(){
+if(quizIndex>=quizQuestions.length){renderQuizResult();return;}
+quizAnswered=false;
+var q=quizQuestions[quizIndex];
+var c=document.getElementById('quiz-content');
+var optsHtml='';
+q.options.forEach(function(o,i){
+optsHtml+='<button class="quiz-option" onclick="answerQuiz('+i+')">'+o[currentLang]+'</button>';
+});
+c.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">'+
+'<span class="tag" style="background:var(--surface);color:var(--text2)">'+(quizIndex+1)+'/'+quizQuestions.length+'</span>'+
+'<span class="tag" style="background:var(--primary-light);color:var(--primary)">'+quizScore+' pts</span></div>'+
+'<div class="card"><h3 style="font-size:15px;margin-bottom:16px">'+q.q[currentLang]+'</h3>'+
+'<div id="quiz-opts">'+optsHtml+'</div></div>'+
+'<div id="quiz-feedback" style="margin-top:12px"></div>';
+}
+function answerQuiz(idx){
+if(quizAnswered)return;
+quizAnswered=true;
+var q=quizQuestions[quizIndex];
+var btns=document.querySelectorAll('.quiz-option');
+btns.forEach(function(b,i){
+if(i===q.correct)b.classList.add('correct');
+if(i===idx&&i!==q.correct)b.classList.add('wrong');
+});
+if(idx===q.correct)quizScore++;
+var t=currentLang==='fr';
+document.getElementById('quiz-feedback').innerHTML='<button class="btn btn-primary btn-full" onclick="quizIndex++;renderQuizQuestion()">'+(t?'Suivant →':'Next →')+'</button>';
+}
+function renderQuizResult(){
+state.quizCount++;updateStreak();save();
+var pct=Math.round(quizScore/quizQuestions.length*100);
+var emoji=pct>=80?'🎉':pct>=60?'👍':'📚';
+var t=currentLang==='fr';
+var msg=pct>=80?(t?'Excellent !':'Excellent!'):pct>=60?(t?'Bien, continue !':'Good, keep going!'):(t?'Revois les modules !':'Review the modules!');
+document.getElementById('quiz-content').innerHTML='<div class="card" style="text-align:center;padding:30px">'+
+'<div style="font-size:48px;margin-bottom:12px">'+emoji+'</div>'+
+'<h3 style="font-size:20px">'+quizScore+' / '+quizQuestions.length+'</h3>'+
+'<p style="margin:8px 0;color:var(--text2)">'+pct+'% — '+msg+'</p>'+
+'<div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
+'<button class="btn btn-primary" onclick="startQuiz()">'+(t?'Recommencer':'Retry')+'</button>'+
+'<button class="btn btn-outline" onclick="navigate(\'home\')">'+(t?'Accueil':'Home')+'</button></div></div>';
 }
 
-function resetTimer(){
-  const btn = document.getElementById('timerBtn');
-  const disp = document.getElementById('timerDisp');
-  if(!btn || !disp) return;
-  clearInterval(state.timerInterval);
-  state.timerRunning = false;
-  state.timerSeconds = 0;
-  disp.textContent = '0:00';
-  disp.className = 'timer-display';
-  btn.textContent = 'Start';
-  btn.onclick = toggleTimer;
+var simQuestions=[],simIndex=0,simTimer=null,simTime=0;
+var SIM_QUESTIONS=[
+{q:{fr:"Présentez-vous en 2 minutes.",en:"Introduce yourself in 2 minutes."},guide:{fr:"Utiliser le pitch long. Structure : formation → expérience Aptar (3 projets) → motivation sectorielle. Finir par «Ce qui change c'est le matériau, pas la méthode».",en:"Use the long pitch. Structure: education → Aptar experience (3 projects) → sector motivation. End with 'What changes is the material, not the method'."}},
+{q:{fr:"Pourquoi les traitements de surface ?",en:"Why surface treatments?"},guide:{fr:"Formation électrochimie/corrosion + projet CVD = passion lien surface-performance. En aéro, TdS = sécurité du vol.",en:"Electrochemistry/corrosion training + CVD project = passion for surface-performance link. In aerospace, surface treatment = flight safety."}},
+{q:{fr:"Racontez un projet technique complexe.",en:"Tell me about a complex technical project."},guide:{fr:"Projet CVD : conformité 20%, diagnostic, choix procédé, coordination partenaires, POC, industrialisation → 100%, 2 brevets.",en:"CVD project: 20% compliance, diagnostics, process selection, partner coordination, POC, industrialisation → 100%, 2 patents."}},
+{q:{fr:"Comment gérez-vous une non-conformité urgente ?",en:"How do you handle an urgent non-conformity?"},guide:{fr:"TPE : dégradation chimique inattendue. FTIR pour identifier, vieillissement accéléré pour confirmer, grades alternatifs en parallèle. Production maintenue, compatibilité 30→80%.",en:"TPE: unexpected chemical degradation. FTIR to identify, accelerated aging to confirm, alternative grades in parallel. Production maintained, compatibility 30→80%."}},
+{q:{fr:"Votre plus grand défaut ?",en:"Your biggest weakness?"},guide:{fr:"Perfectionnisme. Avant : trop de temps sur chaque détail. Maintenant : découper en étapes, aller au labo plus vite. Standards élevés maintenus, mais plus efficace.",en:"Perfectionism. Before: too much time on every detail. Now: break into steps, get to lab faster. High standards maintained, but more efficient."}},
+{q:{fr:"Pas d'expérience voie humide. Comment comptez-vous monter en compétence ?",en:"No wet-process experience. How will you ramp up?"},guide:{fr:"État de l'art incluait voie humide. Fondamentaux électrochimie directement transposables. Même méthodologie : plans de tests, qualification, paramètres critiques.",en:"State of the art included wet process. Electrochemistry fundamentals directly transferable. Same methodology: test plans, qualification, critical parameters."}},
+{q:{fr:"Où vous voyez-vous dans 5 ans ?",en:"Where do you see yourself in 5 years?"},guide:{fr:"Experte TdS, piloter industrialisation ou substitution Chrome VI. Évolution chef de projet.",en:"Surface treatment expert, lead industrialisation or Chrome VI substitution. Project manager evolution."}},
+{q:{fr:"Pourquoi devrions-nous vous choisir ?",en:"Why should we choose you?"},guide:{fr:"Passionnée matériaux. Standards élevés. Résultats : 30→80%, 20→100%, 2 brevets. Initiative + méthode + résultats. Ce qui change = le matériau, pas la méthode.",en:"Passionate about materials. High standards. Results: 30→80%, 20→100%, 2 patents. Initiative + method + results. What changes = material, not method."}},
+{q:{fr:"Des questions pour nous ?",en:"Do you have questions for us?"},guide:{fr:"TOUJOURS dire oui. Quels procédés dans l'atelier ? Types de pièces/alliages ? Défi technique principal ? Taille équipe ? Où en êtes-vous sur la substitution Chrome VI ?",en:"ALWAYS say yes. Which processes in the workshop? Part types/alloys? Main technical challenge? Team size? Where are you on Chrome VI substitution?"}}
+];
+
+function renderSimStart(){
+var c=document.getElementById('sim-content');
+var t=currentLang==='fr';
+c.innerHTML='<div class="card" style="text-align:center;padding:30px">'+
+'<h3 style="font-size:18px;margin-bottom:8px">'+(t?'Simulation d\'entretien':'Interview Simulation')+'</h3>'+
+'<p style="margin-bottom:20px;color:var(--text2)">'+(t?'Réponds à voix haute. Timer de 2 minutes par question.':'Answer out loud. 2-minute timer per question.')+'</p>'+
+'<button class="btn btn-primary btn-full" onclick="startSim()">'+(t?'Commencer':'Start')+'</button></div>';
+}
+function startSim(){
+simQuestions=SIM_QUESTIONS.slice().sort(function(){return Math.random()-.5}).slice(0,5);
+simIndex=0;
+renderSimQuestion();
+}
+function renderSimQuestion(){
+if(simIndex>=simQuestions.length){renderSimEnd();return;}
+simTime=0;
+var q=simQuestions[simIndex];
+var c=document.getElementById('sim-content');
+var t=currentLang==='fr';
+c.innerHTML='<div style="display:flex;justify-content:space-between;margin-bottom:12px">'+
+'<span class="tag" style="background:var(--surface);color:var(--text2)">Q'+(simIndex+1)+'/'+simQuestions.length+'</span></div>'+
+'<div class="sim-question">'+q.q[currentLang]+'</div>'+
+'<div class="timer" id="sim-timer">0:00</div>'+
+'<div style="display:flex;gap:10px;justify-content:center">'+
+'<button class="btn btn-primary" onclick="showSimGuide()">'+(t?'J\'ai fini':'Done')+'</button>'+
+'<button class="btn btn-outline" onclick="skipSimQ()">'+(t?'Passer':'Skip')+'</button></div>'+
+'<div id="sim-guide"></div>';
+if(simTimer)clearInterval(simTimer);
+simTimer=setInterval(function(){
+simTime++;
+var el=document.getElementById('sim-timer');
+if(!el){clearInterval(simTimer);return;}
+el.textContent=formatTime(simTime);
+if(simTime>=120)el.className='timer danger';
+else if(simTime>=90)el.className='timer warning';
+else el.className='timer';
+},1000);
+}
+function showSimGuide(){
+if(simTimer)clearInterval(simTimer);
+var q=simQuestions[simIndex];
+var t=currentLang==='fr';
+document.getElementById('sim-guide').innerHTML='<div class="answer-guide">'+
+'<h4>'+(t?'Points clés à couvrir':'Key points to cover')+'</h4>'+
+'<p>'+q.guide[currentLang]+'</p></div>'+
+'<button class="btn btn-primary btn-full" style="margin-top:12px" onclick="simIndex++;renderSimQuestion()">'+(t?'Question suivante →':'Next question →')+'</button>';
+}
+function skipSimQ(){if(simTimer)clearInterval(simTimer);simIndex++;renderSimQuestion();}
+function renderSimEnd(){
+if(simTimer)clearInterval(simTimer);
+state.simCount++;updateStreak();save();
+var t=currentLang==='fr';
+document.getElementById('sim-content').innerHTML='<div class="card" style="text-align:center;padding:30px">'+
+'<div style="font-size:48px;margin-bottom:12px">🎯</div>'+
+'<h3>'+(t?'Simulation terminée !':'Simulation complete!')+'</h3>'+
+'<p style="margin:8px 0;color:var(--text2)">'+simQuestions.length+' questions</p>'+
+'<div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
+'<button class="btn btn-primary" onclick="startSim()">'+(t?'Recommencer':'Retry')+'</button>'+
+'<button class="btn btn-outline" onclick="navigate(\'home\')">'+(t?'Accueil':'Home')+'</button></div></div>';
 }
 
-// Thales timer (2min30 target)
-let thalesTimerState = {running:false, seconds:0, interval:null};
-function toggleThalesTimer(){
-  const btn = document.getElementById('thalesTimerBtn');
-  const disp = document.getElementById('thalesTimerDisp');
-  if(!btn || !disp) return;
-  if(thalesTimerState.running){
-    clearInterval(thalesTimerState.interval);
-    thalesTimerState.running = false;
-    btn.textContent = 'Reset';
-    btn.onclick = resetThalesTimer;
-  } else {
-    thalesTimerState.seconds = 0;
-    thalesTimerState.running = true;
-    btn.textContent = 'Stop';
-    disp.className = 'timer-display';
-    thalesTimerState.interval = setInterval(() => {
-      thalesTimerState.seconds++;
-      const m = Math.floor(thalesTimerState.seconds/60);
-      const s = thalesTimerState.seconds%60;
-      disp.textContent = m+':'+(s<10?'0':'')+s;
-      if(thalesTimerState.seconds >= 150 && thalesTimerState.seconds < 165){
-        disp.className = 'timer-display warn';
-      } else if(thalesTimerState.seconds >= 165){
-        disp.className = 'timer-display over';
-      }
-    }, 1000);
-  }
-}
-function resetThalesTimer(){
-  const btn = document.getElementById('thalesTimerBtn');
-  const disp = document.getElementById('thalesTimerDisp');
-  if(!btn || !disp) return;
-  clearInterval(thalesTimerState.interval);
-  thalesTimerState = {running:false, seconds:0, interval:null};
-  disp.textContent = '0:00';
-  disp.className = 'timer-display';
-  btn.textContent = 'Start';
-  btn.onclick = toggleThalesTimer;
+function renderChecklist(){
+var c=document.getElementById('checklist-items');
+c.innerHTML=CHECKLIST_ITEMS.map(function(item,i){
+return '<div class="checklist-item">'+
+'<input type="checkbox" id="ck'+i+'" '+(state.checklist[i]?'checked':'')+' onchange="state.checklist['+i+']=this.checked;save()">'+
+'<label for="ck'+i+'">'+item+'</label></div>';
+}).join('');
 }
 
-// =====================================================================
-// INIT
-// =====================================================================
-loadState();
-render();
+updateDashboard();
 </script>
 </body>
 </html>
