@@ -3,7 +3,13 @@ const TOKEN=PASS_HASH.slice(0,32);
 
 export async function onRequest(context){
   const cookie=context.request.headers.get('Cookie')||'';
-  if(cookie.includes('_hub_auth='+TOKEN))return context.next();
+  if(cookie.includes('_hub_auth='+TOKEN)){
+    const resp=await context.next();
+    const nr=new Response(resp.body,resp);
+    nr.headers.set('Cache-Control','no-cache, no-store, must-revalidate');
+    nr.headers.set('Pragma','no-cache');
+    return nr;
+  }
   if(context.request.method==='POST'){
     const form=await context.request.formData();
     const pass=form.get('pass')||'';

@@ -1,0 +1,8 @@
+{
+  "name": "Mes Hubs",
+  "short_name": "Hubs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#1e3a5f"
+}

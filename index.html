@@ -6,13 +6,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#1e3a5f">
-<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTWVzIEh1YnMiLCJzaG9ydF9uYW1lIjoiSHVicyIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZjhmYWZjIiwidGhlbWVfY29sb3IiOiIjMWUzYTVmIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCw8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDEwMCAxMDAnPjxyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyByeD0nMjAnIGZpbGw9JyMxZTNhNWYnLz48dGV4dCB4PSc1MCcgeT0nNjgnIGZvbnQtc2l6ZT0nNDAnIHRleHQtYW5jaG9yPSdtaWRkbGUnPvCfjpM8L3RleHQ+PC9zdmc+IiwidHlwZSI6ImltYWdlL3N2Zyt4bWwiLCJzaXplcyI6ImFueSJ9XX0=">
+<link rel="manifest" href="/manifest.json">
 <title>Mes Hubs</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#f8fafc;color:#1a1a2e;min-height:100vh;-webkit-font-smoothing:antialiased}
-header{background:white;border-bottom:1px solid #e5e7eb;padding:20px 24px;text-align:center}
-@media(display-mode:standalone){body{padding-top:60px}}
+header{background:white;border-bottom:1px solid #e5e7eb;padding:20px 24px;padding-top:calc(20px + env(safe-area-inset-top,0px));text-align:center;position:sticky;top:0;z-index:100}
 header h1{font-size:22px;font-weight:800}
 header p{font-size:13px;color:#6b7280;margin-top:4px}
 main{max-width:960px;margin:0 auto;padding:32px 24px}
@@ -26,6 +25,9 @@ h2:first-of-type{margin-top:0}
 .info h3{font-size:15px;font-weight:700;margin-bottom:4px}
 .info p{font-size:13px;color:#6b7280;line-height:1.4}
 .tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;margin-top:6px}
+.hdr-inner{display:flex;align-items:center;justify-content:center;position:relative}
+#refresh-btn{position:absolute;right:0;background:none;border:2px solid #e5e7eb;border-radius:12px;padding:10px 14px;font-size:20px;cursor:pointer;line-height:1;transition:all .2s}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 @media(max-width:480px){.grid{grid-template-columns:1fr}main{padding:20px 16px}}
 body.dark{background:#0f172a;color:#e2e8f0}
 body.dark header{background:#1e293b;border-color:#334155}
@@ -36,12 +38,14 @@ body.dark .info p{color:#94a3b8}
 </style>
 </head>
 <body>
-<header style="display:flex;align-items:center;justify-content:center;gap:12px;position:relative;padding-top:max(20px, env(safe-area-inset-top,60px))">
+<header>
+<div class="hdr-inner">
 <div style="text-align:center;flex:1">
 <h1>Mes Hubs</h1>
-<p>Tous mes outils de formation et de préparation <span style="font-size:10px;color:#bbb">v3</span></p>
+<p>Tous mes outils de formation et de préparation <span style="font-size:10px;color:#bbb">v4</span></p>
 </div>
-<button onclick="forceUpdate()" title="Mettre à jour" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:2px solid #e5e7eb;border-radius:12px;padding:10px 14px;font-size:20px;cursor:pointer;line-height:1;transition:all .2s" id="refresh-btn">🔄</button>
+<button onclick="forceUpdate()" title="Mettre à jour" id="refresh-btn">🔄</button>
+</div>
 </header>
 <main>
 
@@ -132,30 +136,24 @@ body.dark .info p{color:#94a3b8}
 <script>
 async function purgeAll(){
 if('serviceWorker' in navigator){
-const regs=await navigator.serviceWorker.getRegistrations();
-for(const r of regs)await r.unregister();
+var regs=await navigator.serviceWorker.getRegistrations();
+for(var r of regs)await r.unregister();
 }
 if('caches' in window){
-const keys=await caches.keys();
-for(const k of keys)await caches.delete(k);
+var keys=await caches.keys();
+for(var k of keys)await caches.delete(k);
 }
 }
 async function forceUpdate(){
 var btn=document.getElementById('refresh-btn');
 btn.style.animation='spin .6s ease';
 await purgeAll();
-location.reload(true);
+window.location.href=window.location.pathname+'?_cb='+Date.now();
 }
 async function resetCache(){
 if(!confirm('Purger le cache et recharger ?\n(Vos données localStorage sont conservées.)'))return;
 await purgeAll();
-location.reload(true);
-}
-</script>
-<style>@keyframes spin{from{transform:translateY(-50%) rotate(0)}to{transform:translateY(-50%) rotate(360deg)}}</style>
-<script>
-if(window.navigator.standalone || window.matchMedia('(display-mode:standalone)').matches){
-document.body.style.paddingTop='60px';
+window.location.href=window.location.pathname+'?_cb='+Date.now();
 }
 </script>
 </body>
