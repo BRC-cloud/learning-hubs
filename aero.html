@@ -12,7 +12,7 @@
 :root{--pri:#1e3a5f;--pri2:#2563eb;--acc:#f97316;--bg:#f8fafc;--card:#fff;--text:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--green:#059669;--red:#dc2626;--yellow:#d97706;--purple:#7c3aed;--teal:#0d9488;--shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 12px 32px rgba(0,0,0,.12);--ease:cubic-bezier(.23,1,.32,1)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.6}
-nav{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);padding:0 24px;padding-top:env(safe-area-inset-top,0px);display:flex;align-items:center;gap:8px;height:calc(56px + env(safe-area-inset-top,0px));overflow-x:auto;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+nav{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);padding:0 24px;padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px;display:flex;align-items:center;gap:8px;overflow-x:auto;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 nav h1{font-weight:700;font-size:16px;color:var(--pri2);white-space:nowrap;margin-right:16px}
 .nav-tabs{display:flex;gap:4px;overflow-x:auto;align-items:center}
 .nav-btn{background:none;color:var(--muted);border:none;padding:8px 16px;border-radius:8px;font-size:14px;cursor:pointer;white-space:nowrap;transition:all .2s var(--ease);font-weight:500}
