@@ -39,7 +39,7 @@ body.dark .info p{color:#94a3b8}
 <header style="display:flex;align-items:center;justify-content:center;gap:12px;position:relative;padding-top:max(20px, env(safe-area-inset-top,60px))">
 <div style="text-align:center;flex:1">
 <h1>Mes Hubs</h1>
-<p>Tous mes outils de formation et de préparation</p>
+<p>Tous mes outils de formation et de préparation <span style="font-size:10px;color:#bbb">v3</span></p>
 </div>
 <button onclick="forceUpdate()" title="Mettre à jour" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:2px solid #e5e7eb;border-radius:12px;padding:10px 14px;font-size:20px;cursor:pointer;line-height:1;transition:all .2s" id="refresh-btn">🔄</button>
 </header>
@@ -154,14 +154,8 @@ location.reload(true);
 </script>
 <style>@keyframes spin{from{transform:translateY(-50%) rotate(0)}to{transform:translateY(-50%) rotate(360deg)}}</style>
 <script>
-if('serviceWorker' in navigator){
-navigator.serviceWorker.register('/sw.js').then(reg=>{
-reg.addEventListener('updatefound',()=>{
-const nw=reg.installing;
-nw.addEventListener('statechange',()=>{if(nw.state==='activated')location.reload()});
-});
-if(reg.waiting)location.reload();
-});
+if(window.navigator.standalone || window.matchMedia('(display-mode:standalone)').matches){
+document.body.style.paddingTop='60px';
 }
 </script>
 </body>
