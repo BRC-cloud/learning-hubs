@@ -1546,7 +1546,7 @@ Thank you so much for..." oninput="saveHomework()"></textarea>
     <div id="sync-status"></div>
     <div id="sync-form">
       <label style="font-size:13px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px">GitHub Personal Access Token</label>
-      <input type="text" id="sync-token" placeholder="ghp_xxxxxxxxxxxx ou github_pat_..." style="width:100%;margin-bottom:8px">
+      <input type="password" id="sync-token" placeholder="ghp_xxxxxxxxxxxx ou github_pat_..." style="width:100%;margin-bottom:8px">
       <div style="font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.6">
         <strong>Cree ton token :</strong><br>
         1. Va sur <a href="https://github.com/settings/tokens?type=beta" target="_blank" style="color:var(--accent)">github.com/settings/tokens</a> &rarr; Fine-grained token<br>
@@ -3265,7 +3265,7 @@ function doSearch(query) {
   });
 
   if (results.length === 0) {
-    resultsDiv.innerHTML = `<p style="padding:24px;color:var(--text2);text-align:center">Aucun resultat pour "${query}"</p>`;
+    resultsDiv.innerHTML = `<p style="padding:24px;color:var(--text2);text-align:center">Aucun resultat pour "${query.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}"</p>`;
     return;
   }
 

@@ -2022,7 +2022,7 @@ function doSearch(query){
       });
     });
   });
-  if(!results.length){el.innerHTML='<p style="color:var(--muted);font-size:.82rem;text-align:center">Aucun résultat pour "'+query+'".</p>';return}
+  if(!results.length){el.innerHTML='<p style="color:var(--muted);font-size:.82rem;text-align:center">Aucun résultat pour "'+query.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'".</p>';return}
   const re=new RegExp('('+query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
   el.innerHTML=results.slice(0,30).map(r=>{
     const hl=s=>s.replace(re,'<mark>$1</mark>');

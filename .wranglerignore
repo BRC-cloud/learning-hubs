@@ -1,0 +1,5 @@
+deploy.sh
+.git
+.gitignore
+.wranglerignore
+.env
