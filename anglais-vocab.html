@@ -100,8 +100,8 @@ p { margin-bottom: 12px; color: var(--text2); }
 .btn-primary:hover { background: var(--accent2); }
 .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
 .btn-secondary:hover { background: var(--border); }
-.btn-success { background: var(--green); color: #000; }
-.btn-danger { background: var(--red); color: #000; }
+.btn-success { background: var(--green); color: #fff; }
+.btn-danger { background: var(--red); color: #fff; }
 .btn-sm { padding: 6px 14px; font-size: 13px; }
 
 /* TAGS */
@@ -577,7 +577,7 @@ input[type="text"]:focus, select:focus { outline: none; border-color: var(--acce
 .mob-header .mob-home{font-size:20px;text-decoration:none;padding:6px 10px;border-radius:8px;line-height:1}
 
 @media(max-width:768px){
-  #search-overlay{padding-top:20px}
+  #search-overlay{padding-top:calc(20px + env(safe-area-inset-top,0px))}
   #search-box{width:95%;max-height:90vh;border-radius:12px}
   .add-lesson-form .grid-3{grid-template-columns:1fr!important}
   .bot-nav{display:block}
