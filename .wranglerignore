@@ -3,3 +3,5 @@ deploy.sh
 .gitignore
 .wranglerignore
 .env
+tesla-batteries.html
+naturalisation/
