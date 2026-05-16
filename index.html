@@ -10,8 +10,9 @@
 <title>Mes Hubs</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#f8fafc;color:#1a1a2e;min-height:100vh;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#f8fafc;color:#1a1a2e;min-height:100vh;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px)}
 header{background:white;border-bottom:1px solid #e5e7eb;padding:20px 24px;text-align:center}
+@supports(padding-top:env(safe-area-inset-top)){body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:white;z-index:999}body.dark::before{background:#1e293b}}
 header h1{font-size:22px;font-weight:800}
 header p{font-size:13px;color:#6b7280;margin-top:4px}
 main{max-width:960px;margin:0 auto;padding:32px 24px}
@@ -35,7 +36,7 @@ body.dark .info p{color:#94a3b8}
 </style>
 </head>
 <body>
-<header style="display:flex;align-items:center;justify-content:center;gap:12px;position:relative;padding-top:calc(20px + env(safe-area-inset-top,0px))">
+<header style="display:flex;align-items:center;justify-content:center;gap:12px;position:relative;padding-top:max(20px, env(safe-area-inset-top,60px))">
 <div style="text-align:center;flex:1">
 <h1>Mes Hubs</h1>
 <p>Tous mes outils de formation et de préparation</p>
