@@ -568,7 +568,7 @@ input[type="text"]:focus, select:focus { outline: none; border-color: var(--acce
 .sync-modal-box{background:var(--surface);border-radius:16px;padding:28px;max-width:440px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 
 /* MOBILE HEADER */
-.mob-header{display:none;position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding-top:env(safe-area-inset-top,0);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.mob-header{display:none;position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding-top:calc(8px + env(safe-area-inset-top,0px));box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .mob-header-inner{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;gap:8px}
 .mob-header .mob-title{font-size:16px;font-weight:700;color:var(--accent);flex:1;text-align:center}
 .mob-header .mob-actions{display:flex;gap:2px;align-items:center}
