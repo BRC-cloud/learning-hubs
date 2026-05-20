@@ -12,7 +12,7 @@
 :root{--pri:#1e3a5f;--pri2:#2563eb;--acc:#f97316;--bg:#f8fafc;--card:#fff;--text:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--green:#059669;--red:#dc2626;--yellow:#d97706;--purple:#7c3aed;--teal:#0d9488;--shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 12px 32px rgba(0,0,0,.12);--ease:cubic-bezier(.23,1,.32,1)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.6}
-nav{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);padding:0 24px;padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px;display:flex;align-items:center;gap:8px;overflow-x:auto;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+nav{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);padding:calc(8px + env(safe-area-inset-top,0px)) 24px 8px;display:flex;align-items:center;gap:8px;overflow-x:auto;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 nav h1{font-weight:700;font-size:16px;color:var(--pri2);white-space:nowrap;margin-right:16px}
 .nav-tabs{display:flex;gap:4px;overflow-x:auto;align-items:center}
 .nav-btn{background:none;color:var(--muted);border:none;padding:8px 16px;border-radius:8px;font-size:14px;cursor:pointer;white-space:nowrap;transition:all .2s var(--ease);font-weight:500}
@@ -217,7 +217,7 @@ body.dark .bot-nav{background:var(--card);border-color:var(--border)}
 body.dark .more-menu{background:var(--card);border-color:var(--border)}
 @media(max-width:768px){
   .nav-tabs{display:none!important}
-  nav{justify-content:center;min-height:44px;padding:0 16px;padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px}
+  nav{justify-content:space-between;min-height:44px;padding:calc(8px + env(safe-area-inset-top,0px)) 16px 8px}
   nav h1{margin:0;font-size:15px}
   main{padding:16px 14px 88px}
   .bot-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--card);border-top:1px solid var(--border);padding:4px 0 calc(4px + env(safe-area-inset-bottom,0));box-shadow:0 -2px 10px rgba(0,0,0,.08)}
@@ -236,8 +236,8 @@ body.dark .more-menu{background:var(--card);border-color:var(--border)}
 </head>
 <body>
 <nav>
-<a href="./" style="font-size:1.1rem;text-decoration:none;padding:4px 8px;border-radius:8px;transition:background .2s" title="Retour aux hubs">🏠</a>
-<h1>Learning Hub <span style="font-size:11px;opacity:.5">v24</span></h1>
+<a href="./" style="font-size:1.6rem;text-decoration:none;padding:8px 12px;border-radius:8px;transition:background .2s;line-height:1" title="Retour aux hubs">🏠</a>
+<h1>Learning Hub <span style="font-size:11px;opacity:.5">v25</span></h1>
 <div class="nav-tabs">
 <button class="nav-btn active" data-nav="dashboard" onclick="showPage('dashboard')">Accueil</button>
 <button class="nav-btn" data-nav="modules" onclick="showPage('modules')">Modules</button>
@@ -300,7 +300,6 @@ body.dark .more-menu{background:var(--card);border-color:var(--border)}
 <button id="moreBtn" onclick="toggleMore(event)"><span>⋯</span>Plus</button>
 </div>
 <div class="more-menu" id="moreMenu">
-<button onclick="location.href='./'">🏠 Mes Hubs</button>
 <button onclick="showPage('glossary');closeMore()">📖 Glossaire</button>
 <button onclick="showPage('memo');closeMore()">📝 Mémo</button>
 <button onclick="showPage('settings');closeMore()">⚙️ Réglages</button>
@@ -1548,7 +1547,9 @@ function openCourse(cId){
     if(doneCount===0){html+=`<div class="lvl-btn locked"><div class="lock-icon">📖</div><h4>${name}</h4><p>Coche au moins 1 cours pour débloquer</p></div>`;return}
     if(!unlocked){html+=`<div class="lvl-btn locked"><div class="lock-icon">🔒</div><h4>${name}</h4><p>Obtiens 75 % au N${lvlNum-1} d'abord</p></div>`;return}
     const partial=doneCount<lessonCount?` (${filtered.length}/${qs.length} — coche plus de cours pour en débloquer)`:'';
-    html+=`<div class="lvl-btn" onclick="startQuiz('${cId}','${lvl}')"><h4>${name}</h4><p>${filtered.length} questions${partial}</p>${best?`<div class="score">${best}%</div>`:''}</div>`;
+    const quizSize=Math.min(filtered.length,S.qps);
+    const quizNote=filtered.length>S.qps?` — quiz de ${quizSize} questions`:'';
+    html+=`<div class="lvl-btn" onclick="startQuiz('${cId}','${lvl}')"><h4>${name}</h4><p>${filtered.length} questions${partial}${quizNote}</p>${best?`<div class="score">${best}%</div>`:''}</div>`;
   });
   html+=`</div>`;
 
@@ -1590,8 +1591,9 @@ let quiz={qs:[],cur:0,res:[],cId:'',lvl:'',_map:null,_sel:new Set(),_answered:fa
 function startQuiz(cId,lvl){
   const filtered=getFilteredQuestions(cId,lvl);
   const allQs=C[cId][lvl]||[];
-  const qs=filtered.map((q,i)=>{const origIdx=allQs.indexOf(q);return{...q,id:getQId(cId,lvl,origIdx>=0?origIdx:i),cId}});
+  let qs=filtered.map((q,i)=>{const origIdx=allQs.indexOf(q);return{...q,id:getQId(cId,lvl,origIdx>=0?origIdx:i),cId}});
   shuffleArr(qs);
+  if(qs.length>S.qps)qs=qs.slice(0,S.qps);
   quiz={qs,cur:0,res:[],cId,lvl,_map:null,_sel:new Set(),_answered:false};
   showPage('quiz');
   renderQuiz();
